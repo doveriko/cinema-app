@@ -1,6 +1,6 @@
 <template>
   <div>
-    <app-header></app-header>
+    <app-navbar></app-navbar>
     <main>
       <router-view></router-view>
     </main>
@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import header from './components/header.vue';
+import navbar from './components/navbar.vue';
 
 
 export default {
@@ -18,7 +18,7 @@ export default {
         }
     },
     components: {
-      'app-header' : header
+      'app-navbar' : navbar
     },
     methods: {
 

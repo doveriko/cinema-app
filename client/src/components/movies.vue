@@ -1,5 +1,5 @@
 <template>
-  <p>Profile</p>
+  <p>MOVIES</p>
 </template>
 
 <script>

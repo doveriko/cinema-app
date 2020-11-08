@@ -1,5 +1,5 @@
 <template>
-  <p>HOLA, SOY TU INDEX</p>
+  <p>LOG IN</p>
 </template>
 
 <script>
