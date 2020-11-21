@@ -6,10 +6,24 @@ const bodyParser = require('body-parser');
 const logger = require('morgan');
 require('dotenv').config();
 
-const ticketsRouter = require('./routes/tickets');
 const usersRouter = require('./routes/users');
+const moviesRouter = require('./routes/movies');
+const ordersRouter = require('./routes/orders');
 
 const app = express();
+const sequelize = require ('./database/db');
+require('./models/associations');
+
+// Routes
+app.get('/', function (req, res) {
+  res.send('Hello, World!')
+})
+
+sequelize.sync({ force: false }).then(() => {
+  console.log("Connected to database");
+}).catch(error => {
+  console.log("An error has ocurred", error);
+})
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,8 +36,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Router middleware
-app.use('/tickets', ticketsRouter);
 app.use('/users', usersRouter);
+app.use('/movies', moviesRouter);
+app.use('/orders', ordersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

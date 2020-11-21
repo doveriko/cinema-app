@@ -1,12 +1,10 @@
 var express = require('express');
 var router = express.Router();
-
-var TYPES = require('tedious').TYPES;
-var db = require('../dboperations');
+const User = require('../models/User');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.get('/', (req, res, next) => {
+  res.send("Welcome to your USERS router")
 });
 
 module.exports = router;
