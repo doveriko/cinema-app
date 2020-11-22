@@ -3,9 +3,7 @@ const sequelize = require('../database/db');
 
 class Session extends Model {}
 Session.init({
-    title: DataTypes.STRING,
-    description: DataTypes.TEXT,
-    imageUrl: DataTypes.STRING
+    time: DataTypes.DATE
 }, {
     sequelize,
     modelName: "session",

@@ -19,8 +19,7 @@ User.init({
                 msg: "El nombre tiene que ser entre 3 y 255 caracteres"
             }
         },
-    },
-  
+    }, 
     email: {
         type: DataTypes.STRING,
         validate: {
