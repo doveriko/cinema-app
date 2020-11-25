@@ -6,8 +6,13 @@ const sequelize = new Sequelize(
     dbconfig.username,
     dbconfig.password, {
         host: dbconfig.host,
-        dialect: 'mssql'
-    },
-);
+        server: dbconfig.server,
+        dialect: 'mssql',
+        dialectOptions: {
+        options: {
+            encrypt: true,
+        }
+    }
+    });
 
 module.exports = sequelize;

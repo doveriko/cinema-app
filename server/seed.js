@@ -1,8 +1,9 @@
-const sequelize = require('../database/db');
-const User = require('../models/User');
-const Movie = require('../models/Movie');
-const Session = require('../models/Session');
-require('../models/associations');
+const sequelize = require('./database/db');
+const User = require('./models/User');
+const Movie = require('./models/Movie');
+const Session = require('./models/Session');
+require('./models/associations');
+require('dotenv').config();
 
 // User
 const users = [
@@ -37,9 +38,8 @@ const sessions = [
     { time: '2017-10-01 13:30:00', movieId: 2 },
     { time: '2017-10-01 18:30:00', movieId: 2 },
     { time: '2017-10-01 13:30:00', movieId: 3 },
-    { time: '2017-10-01 18s:30:00', movieId: 3 }
+    { time: '2017-10-01 18:30:00', movieId: 3 }
 ];
-
 
 sequelize.sync({ force: false }).then(() => {
     // Connection established

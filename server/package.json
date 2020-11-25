@@ -19,7 +19,7 @@
     "mssql": "^6.2.3",
     "pug": "2.0.0-beta11",
     "sequelize": "^6.3.5",
-    "tedious": "^6.7.0"
+    "tedious": "^5.0.3"
   },
   "devDependencies": {
     "nodemon": "^2.0.5"
