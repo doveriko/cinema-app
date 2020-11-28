@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const Movie = require('../models/Movie');
+const Session = require('../models/Session');
 
 // GET all movies /movies
 router.get('/', (req, res, next) => {
@@ -9,7 +10,7 @@ router.get('/', (req, res, next) => {
             model: Session,
             attributes: ['time']
         },
-        attributes: ['name', 'description', 'imageUrl'] // Optional?
+        attributes: ['title', 'description', 'imageUrl'] // Optional?
     }).then(movies => {
         res.json(movies);
     })

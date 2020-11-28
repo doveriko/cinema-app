@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
   User.findAll({
       include: {
           model: Order,
-          attributes: ['userId']
+          attributes: ['id', 'sessionId']
       },
       attributes: ['name', 'email']
   }).then(users => res.json(users));

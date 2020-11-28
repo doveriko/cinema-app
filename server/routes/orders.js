@@ -1,22 +1,26 @@
 var express = require('express');
 var router = express.Router();
 const Order = require('../models/Order');
+const Session = require('../models/Session');
+const User = require('../models/User');
 
-// GET one user's orders /users/:id/orders
+// GET all orders from one user /users/:id/orders
 router.get('/:id/orders', (req, res) => {
     User.findByPk(req.params.id).then(user => {
-        user.getOrder().then(orders => {
+        user.getOrders().then(orders => {
             res.json(orders);
         })
     });
 });
 
-// GET one specific order from a user /users/:id/orders/:id
+// GET one specific order from a user /users/:userId/orders/:orderId
 router.get('/:userId/orders/:orderId', (req, res) => {
     User.findByPk(req.params.userId).then(user => {
-        user.getOrder().then(orders => {
+        user.getOrders().then(orders => {
             let orderId = req.params.orderId;
-            let myOrder = orders.find( order => order.id === orderId);
+            let myOrder = [];
+            myOrder = orders.find( order => order.id === orderId);
+            console.log("ALL ORDERS -->", orders);
             res.json(myOrder);
         })
     });
@@ -25,8 +29,8 @@ router.get('/:userId/orders/:orderId', (req, res) => {
 // POST one order /users/:id/orders/
 router.post('/:id/orders', (req, res) => {
     Order.create({
-        userId: req.params.id, // Provisional...
-        sessionId: req.body.sessionId // Provisional...
+        userId: req.params.id, // Provisional
+        sessionId: req.body.sessionId // Provisional
     }).then(order => {
         res.json(order);
         })
