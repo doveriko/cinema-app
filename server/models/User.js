@@ -29,7 +29,16 @@ User.init({
             }
         }
     },
-    password: DataTypes.STRING
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            len: {
+                args: [6, 255],
+                msg: "La contraseña tiene que tener al menos 6 caracteres"
+            }
+        }
+    }
 }, {
     sequelize,
     modelName: "user",

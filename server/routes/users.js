@@ -3,6 +3,9 @@ var router = express.Router();
 const User = require('../models/User');
 const Order = require('../models/Order');
 
+// Authentication controller
+const AuthController = require('../controllers/AuthController')
+
 // GET all users /users
 router.get('/', (req, res) => {
   User.findAll({
@@ -21,18 +24,11 @@ router.get('/:id', (req, res) => {
       })
 });
 
-// CREATE one user /users
-router.post('/', (req, res) => {
-  User.create({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password // Will change with authentication
-  }).then(user => {
-      res.json(user);
-  }).catch(err => {
-      res.json(err);
-  })
-});
+// CREATE one user (Sign up) /users/signup
+router.post('/signup', AuthController.signUp);
+
+// Log in a user /users/login
+router.post('/login', AuthController.logIn);
 
 // UPDATE one user /users/:id
 router.patch('/:id', (req, res) => {

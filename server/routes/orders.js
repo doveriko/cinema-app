@@ -17,11 +17,11 @@ router.get('/:id/orders', (req, res) => {
 router.get('/:userId/orders/:orderId', (req, res) => {
     User.findByPk(req.params.userId).then(user => {
         user.getOrders().then(orders => {
-            let orderId = req.params.orderId;
+            let orderId = req.params.orderId; 
             let myOrder = [];
             myOrder = orders.find( order => order.id === orderId);
             console.log("ALL ORDERS -->", orders);
-            res.json(myOrder);
+            res.json(myOrder); // Not working
         })
     });
 });
