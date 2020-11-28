@@ -4,8 +4,11 @@ const Order = require('../models/Order');
 const Session = require('../models/Session');
 const User = require('../models/User');
 
+//Middleware to protect private routes
+const auth = require('../middlewares/auth');
+
 // GET all orders from one user /users/:id/orders
-router.get('/:id/orders', (req, res) => {
+router.get('/:id/orders', auth, (req, res) => {
     User.findByPk(req.params.id).then(user => {
         user.getOrders().then(orders => {
             res.json(orders);
