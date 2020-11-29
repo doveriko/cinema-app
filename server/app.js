@@ -4,6 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
+const cors = require('cors');
 require('dotenv').config();
 
 const usersRouter = require('./routes/users');
@@ -17,14 +18,23 @@ require('./models/associations');
 
 // Routes
 app.get('/', function (req, res) {
-  res.send('Hello, World!')
+  res.send({ message: "Hello from back-end!" });
 })
 
 sequelize.sync({ force: false }).then(() => {
   console.log("Connected to database");
 }).catch(error => {
   console.log("An error has ocurred", error);
-})
+});
+
+app.use(
+  cors({
+    credentials: true,
+    origin: [
+      process.env.PUBLIC_DOMAIN,
+      "http://localhost:3000"],
+  }),
+);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
