@@ -7,7 +7,7 @@ This is a full-stack project of a cinema booking site created to learn and combi
 ##### Prerequisites
 
 - [x] Have [**Git**](https://gitforwindows.org/), **[Node.js](https://nodejs.org/en/download/)** and **npm** installed (optional: [nvm](https://github.com/nvm-sh/nvm)).
-- [x] Front-end and back-end decided to be created under one same repository on [**GitHub**](https://docs.github.com/en/free-pro-team@latest/github/using-git/adding-a-remote).
+- [x] Front-end and back-end opted to be created under one same repository on [**GitHub**](https://docs.github.com/en/free-pro-team@latest/github/using-git/adding-a-remote).
 
 ```cli
 mkdir cinema-app
@@ -161,7 +161,7 @@ Order:
 }
 ```
 
-###### **Models relationship**:
+Models associations:
 
 ```javascript
 User.hasMany(Order);
@@ -174,43 +174,35 @@ Session.hasMany(Order);
 Order.belongsTo(Session);
 ```
 
+Database schema adapted from 'SQL for beginners' course on Udemy:
 
-
-![img](https://lh4.googleusercontent.com/qj70AJEOhbcogLJoL66w49V_xnzKQqv3xIKvkN5NNymNeiTlnq35UO3NM_l96dWLvcW5zboAfow4HUmrkE8J-XrJ7VJns2HzcEI7Ps0RA3J5NdcLxqnRJtJ3PC5VpOn_b9MnXcwm)
+![image-20201215191747798](C:\Users\AMORENOPENA\AppData\Roaming\Typora\typora-user-images\image-20201215191747798.png)
 
 #### API
 
-ok
+| HTTP Method | URL                         | Description                                                  |
+| ----------- | --------------------------- | ------------------------------------------------------------ |
+| GET      | `/users`           | Route for testing purposes. A user will only have access to his profile. |
+| GET      | `/users/:id`      | User private access to personal profile. |
+| POST        | `/users/signup`    | User registration in sign up page. |
+| POST      | `/users/login` | User log in.                         |
+| PATCH     | `/users/:id`   | User profile edition. |
+| DELETE   | `/users/:id` | User profile deletion.     |
+| GET         | `/movies`                        | Display of all movies available                              |
+| GET         | `/movies/:id`                    | Show details of one specific movie                           |
+| POST        | `/movies`                        | Route for testing purposes, to seed the database with movies. |
+| POST        | `/sessions`                      | Route for testing purposes, to seed the database with sessions assigned to movies. |
+| GET         | `/users/:id/orders`              | Show all orders from one user. Private route.                |
+| GET         | `/users/:userId/orders/:orderId` | Show one specific order from a user. Private route.          |
+| POST        | `/users/:id/orders/`             | Complete an order. Private route.                            |
 
+All routes tested in Postman.
 
-## API Endpoints (backend routes)
+Authentication created with **JSON Web Tokens** (**JWT**).
 
-| HTTP Method | URL                         | Request Body                 | Success status | Error Status | Description                                                  |
-| ----------- | --------------------------- | :--------------------------: | -------------- | ------------ | ------------------------------------------------------------ |
-|             |                |                                            |                |              |                                                              |
-| POST        | `/auth/signup`                | {name, surname, username, email, password} | 201            | 404          | Checks if fields not empty (422) and user not exists (409), then create user with encrypted password, and store user in session |
-| POST        | `/auth/login`                | {username, password}         | 200            | 401        | Checks if fields not empty (422), if user exists (404), and if password matches (401), then stores user in session |
-| POST        | `/auth/logout`                | (empty)                      | 204            | 400          | Logs out the user. Destroys the session.                    |
-| GET         | `/lists`          |                              | 200 | 400          | Show all lists                                     |
-| GET         | `/lists/:id`        | {id}                         |                |              | Show specific list by id                           |
-| POST        | `/lists` | {name, tasks, status, private} | 201            | 400          | Create and save a new list                          |
-| PUT         | `/lists/:id`   | {name, status, private, contributors} | 200            | 400          | edit list by id                                    |
-| DELETE      | `/lists/:id` | {id}                         | 201            | 400          | delete list by id                                   |
+### Courses
 
-
-
-## Links
-
-#### [Trello](https://trello.com/b/CZkVbfro/to-do-mix) 
-
-[Client repository Link](https://)
-
-[Server repository Link](https://)
-
-[Deployed App Link](http://)
-
-#### [Slides](https://docs.google.com/presentation/d/15JxsPhwzZCTvGTaRzZ6YfQ6UZbrzIejMkqFbhfK6vQk/edit?usp=sharing)
-
-
-
-
+- [Tim Buchalka's Learn Programming Academy](https://mantugroup.udemy.com/user/learn-programming-academy/) SQL course on Udemy.
+- [Maximilian Schwarzmüller](https://www.udemy.com/course/vuejs-2-the-complete-guide/) Vue.js course on Udemy.
+- [The Net Ninja](https://youtu.be/5LYrN_cAJoA) Vue.js course on YouTube.
+- [AZR Media](https://youtube.com/playlist?list=PLn9Y084aviLmTy5TO6sw6Ky6NjEO5uCme) Sequelize ORM & Authentication with JWT course on YouTube.
