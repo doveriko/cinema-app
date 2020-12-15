@@ -174,9 +174,9 @@ Session.hasMany(Order);
 Order.belongsTo(Session);
 ```
 
-Database schema adapted from 'SQL for beginners' course on Udemy:
+Database schema adapted from Learn Programming Academy 'SQL for beginners' course on Udemy:
 
-![image-20201215191747798](C:\Users\AMORENOPENA\AppData\Roaming\Typora\typora-user-images\image-20201215191747798.png)
+![img](https://lh3.googleusercontent.com/4K0yB6lA-vZ7vu5t7L7ehb4vq3wsyDt-LV7pHU7F_C8bfLLn0J_-F5D0dBuFFJ2rchaFNASNSQZLmcWxWkGKPgPa8PL1gT-z8K_40VZlNDjEKWsECC7pO4MmlHpJNl_9aviRgp3x)
 
 #### API
 
@@ -200,7 +200,7 @@ All routes tested in Postman.
 
 Authentication created with **JSON Web Tokens** (**JWT**).
 
-### Courses
+### Ccourses
 
 - [Tim Buchalka's Learn Programming Academy](https://mantugroup.udemy.com/user/learn-programming-academy/) SQL course on Udemy.
 - [Maximilian Schwarzmüller](https://www.udemy.com/course/vuejs-2-the-complete-guide/) Vue.js course on Udemy.
