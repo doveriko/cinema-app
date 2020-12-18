@@ -16,6 +16,12 @@ git init
 git remote add origin https://github.com/user/repo.git
 ```
 
+**Wireframes**
+
+![](C:\Users\AMORENOPENA\Desktop\ok.png)
+
+Wireframes designed with [Mockflow](https://www.mockflow.com/).
+
 ### Front-end
 
 ```cli
@@ -200,7 +206,7 @@ All routes tested in Postman.
 
 Authentication created with **JSON Web Tokens** (**JWT**).
 
-### Ccourses
+### Courses
 
 - [Tim Buchalka's Learn Programming Academy](https://mantugroup.udemy.com/user/learn-programming-academy/) SQL course on Udemy.
 - [Maximilian Schwarzmüller](https://www.udemy.com/course/vuejs-2-the-complete-guide/) Vue.js course on Udemy.
