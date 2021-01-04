@@ -12,6 +12,7 @@ router.get('/', (req, res, next) => {
         },
         attributes: ['title', 'description', 'imageUrl'] // Optional?
     }).then(movies => {
+        res.header("Access-Control-Allow-Origin", "*");
         res.json(movies);
     })
 });

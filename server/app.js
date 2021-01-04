@@ -18,6 +18,7 @@ require('./models/associations');
 
 // Routes
 app.get('/', function (req, res) {
+  // res.header("Access-Control-Allow-Origin", "*");
   res.send({ message: "Hello from back-end!" });
 })
 
@@ -31,14 +32,21 @@ app.use(
   cors({
     credentials: true,
     origin: [
-      process.env.PUBLIC_DOMAIN,
-      "http://localhost:3000"],
-  }),
+      process.env.PUBLIC_DOMAIN],
+  })
 );
 
+ app.use((req, res, next) => {
+   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+   res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, OPTIONS, DELETE');
+   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+   res.setHeader('Access-Control-Allow-Credentials', true);
+   next();
+ });
+
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());

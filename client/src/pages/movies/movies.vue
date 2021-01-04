@@ -8,7 +8,7 @@ import axios from "axios";
 export default {
     mounted () {
     axios
-      .get('http://localhost:3000', { withCredentials: true })
+      .get('http://localhost:3000', { withCredentials: false })
       .then(res => { console.log(res.data.message)})
     }
 
