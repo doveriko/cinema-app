@@ -1,31 +1,45 @@
 <template>
-  <p>MOVIES</p>
+  <div>
+    <p>MOVIES</p>
+    <base-card>
+      <movie-item
+        v-for="movie in movieList"
+        :key="movie.id"
+        :id="movie.id"
+        :title="movie.title"
+        :imageUrl="movie.imageUrl"
+      >
+      </movie-item>
+    </base-card>
+  </div>
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
+import movieItem from '../../components/movieItem.vue';
 
 export default {
-    mounted () {
-    axios
-      .get('http://localhost:3000', { withCredentials: false })
-      .then(res => { console.log(res.data.message)})
+  components: { movieItem },
+  data() {
+    return {
+      movieList: []
     }
-
-  // axios({
-  //   method: "GET",
-  //   url: "http://localhost:5000/",
-  //   headers: {
-  //     "Content-Type": "application/json"
-  //   }
-  // }).then(res => {
-  //   console.log(res.data.message);
-  // });
-
-}
-
+  },
+  created() {
+    this.loadMovies();
+  },
+  methods: {
+    loadMovies() {
+      axios
+        .get('http://localhost:3000' + '/movies', { withCredentials: false })
+        .then(response => {
+          this.movieList = response.data;
+          console.log(response.data);
+        })
+        .catch(err => console.log(err));
+    }
+  }
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

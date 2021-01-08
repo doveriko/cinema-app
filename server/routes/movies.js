@@ -10,7 +10,7 @@ router.get('/', (req, res, next) => {
             model: Session,
             attributes: ['time']
         },
-        attributes: ['title', 'description', 'imageUrl'] // Optional?
+        attributes: ['id', 'title', 'description', 'imageUrl'] // Optional?
     }).then(movies => {
         res.header("Access-Control-Allow-Origin", "*");
         res.json(movies);
@@ -19,8 +19,9 @@ router.get('/', (req, res, next) => {
 
 // GET one movie /movies/:id
 router.get('/:id', (req, res) => {
-    Movie.findByPk(req.params.id).then(post => {
-        res.json(post);
+    Movie.findByPk(req.params.id).then(movie => {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.json(movie);
     })
 })
 
