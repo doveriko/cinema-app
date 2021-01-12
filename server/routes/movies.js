@@ -19,7 +19,10 @@ router.get('/', (req, res, next) => {
 
 // GET one movie /movies/:id
 router.get('/:id', (req, res) => {
-    Movie.findByPk(req.params.id).then(movie => {
+    Movie.findByPk(req.params.id, { include: {
+        model: Session,
+        attributes: ['time']
+    } }).then(movie => {
         res.header("Access-Control-Allow-Origin", "*");
         res.json(movie);
     })
