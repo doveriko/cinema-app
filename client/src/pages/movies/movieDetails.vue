@@ -3,7 +3,7 @@
     <p>MOVIE DETAILS</p>
     <p></p>
     <!-- <filters-bar v-for="session in sessions" :key="session.id" :time="session.time"></filters-bar> -->
-    <filters-bar :sessions="sessions"></filters-bar>
+    <filters-bar :sessions="sessions" @save-order="saveOrder" ></filters-bar>
   </div>
 </template>
 
@@ -39,6 +39,10 @@ export default {
         })
         .catch((err) => console.log(err));
     },
+    saveOrder(data) {
+      this.$store.dispatch('saveOrder', data);
+      // this.$store.dispatch('orders/saveOrder', data);
+    }
   },
 };
 </script>

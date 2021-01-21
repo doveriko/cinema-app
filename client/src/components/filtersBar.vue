@@ -1,6 +1,7 @@
 <template>
   <div>
-    <select name="" id="" @change="selectedDay()" v-model="day">
+    <form @submit.prevent="saveOrder">
+    <select @change="selectedDay()" v-model="day">
       <option :value="null" selected disabled>Select day</option>
       <option value="1">Monday</option>
       <option value="2">Tuesday</option>
@@ -21,6 +22,8 @@
         {{ timeFormatted }}
       </option>
     </select>
+    <button>SUBMIT</button>
+    </form>
   </div>
 </template>
 
@@ -67,6 +70,13 @@ export default {
         self.dayFormatted = sessionTime;
       });
     },
+    saveOrder() {
+      const orderData = {
+        userId: 105,
+        sessionId: 4
+      }
+      this.$emit('save-order', orderData)
+    }
   },
 };
 </script>

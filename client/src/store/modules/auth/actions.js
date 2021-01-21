@@ -3,26 +3,18 @@ import axios from "axios";
 class Auth {
   constructor() {
     this.auth = axios.create({
-      baseURL: process.env.API_URL,
+      baseURL: process.env.REACT_APP_API_URL,
       withCredentials: true
     });
   }
 
-  signup( context, payload ) {
+  signup( username, password, email,  name, surname) {
     return this.auth
-      .post("/users/signup", {
-        name : payload.name,
-        email: payload. email,
-        password: payload.password
-      })
-      .then(({ data }) => data )
-      .catch( err => console.log(err))
-      // .then(
-      //   context.commit('setUser', {
-      //   token: data.token,
-      //   userId: data.userId
-      // }))
-      // .catch( err => console.log(err))
+      .post("/auth/signup", { username, password, email,  name, surname })
+      .then(({ data }) => { 
+        return data
+      });
+    // .then((response) => response.data);
   }
 
   login( username, password ) {
@@ -30,7 +22,7 @@ class Auth {
       .post("/auth/login", { username, password })
       .then(({ data }) => { 
         return data
-      })
+      });
     // .then((response) => response.data);
   }
 

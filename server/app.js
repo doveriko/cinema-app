@@ -28,13 +28,15 @@ sequelize.sync({ force: false }).then(() => {
   console.log("An error has ocurred", error);
 });
 
-app.use(
-  cors({
-    credentials: true,
-    origin: [
-      process.env.PUBLIC_DOMAIN],
-  })
-);
+// app.use(
+//   cors({
+//     credentials: true,
+//     origin: [
+//       process.env.PUBLIC_DOMAIN],
+//   })
+// );
+
+app.use(cors())
 
  app.use((req, res, next) => {
    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
