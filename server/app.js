@@ -12,21 +12,15 @@ const moviesRouter = require('./routes/movies');
 const ordersRouter = require('./routes/orders');
 const sessionsRouter = require('./routes/sessions');
 
-const app = express();
 const sequelize = require ('./database/db');
 require('./models/associations');
-
-// Routes
-app.get('/', function (req, res) {
-  // res.header("Access-Control-Allow-Origin", "*");
-  res.send({ message: "Hello from back-end!" });
-})
-
 sequelize.sync({ force: false }).then(() => {
   console.log("Connected to database");
 }).catch(error => {
   console.log("An error has ocurred", error);
 });
+
+const app = express();
 
 // app.use(
 //   cors({
@@ -36,19 +30,32 @@ sequelize.sync({ force: false }).then(() => {
 //   })
 // );
 
-app.use(cors())
+app.use(cors());
 
- app.use((req, res, next) => {
-   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-   res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, OPTIONS, DELETE');
-   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-   res.setHeader('Access-Control-Allow-Credentials', true);
-   next();
- });
+// Routes
+
+
+app.get('/', function (req, res) {
+  res.send({ message: "Hello from back-end!" });
+})
+
+app.use(function(req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+// app.use((req, res, next) => {
+//   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+//   res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, OPTIONS, DELETE');
+//   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//   res.setHeader('Access-Control-Allow-Credentials', true);
+//   next();
+// })
 
 // view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());

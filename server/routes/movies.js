@@ -12,7 +12,6 @@ router.get('/', (req, res, next) => {
         },
         attributes: ['id', 'title', 'description', 'imageUrl'] // Optional?
     }).then(movies => {
-        res.header("Access-Control-Allow-Origin", "*");
         res.json(movies);
     })
 });
@@ -23,7 +22,6 @@ router.get('/:id', (req, res) => {
         model: Session,
         attributes: ['time']
     } }).then(movie => {
-        res.header("Access-Control-Allow-Origin", "*");
         res.json(movie);
     })
 })

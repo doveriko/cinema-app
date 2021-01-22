@@ -4,7 +4,7 @@ const User = require('../models/User');
 const Order = require('../models/Order');
 
 // Authentication controller
-// const AuthController = require('../controllers/AuthController')
+const AuthController = require('../controllers/AuthController')
 
 // GET all users /users
 router.get('/', (req, res) => {
@@ -25,18 +25,17 @@ router.get('/:id', (req, res) => {
 });
 
 // CREATE one user (Sign up) /users/signup
-router.post('/signup', (req, res) => {
-  User.create({
-      name: req.body.name, // Provisional
-      email: req.body.email,
-      password: req.body.password // Provisional
-  }).then(user => {
-      res.header("Access-Control-Allow-Origin", "*");
-      res.json(user);
-      })
-});
+// router.post('/signup', (req, res) => {
+//   User.create({
+//       name: req.body.name, // Provisional
+//       email: req.body.email,
+//       password: req.body.password // Provisional
+//   }).then(user => {
+//       res.json(user);
+//       })
+// });
 
-// router.post('/signup', AuthController.signUp);
+router.post('/signup', AuthController.signUp);
 
 // Log in a user /users/login
 // router.post('/login', AuthController.logIn);

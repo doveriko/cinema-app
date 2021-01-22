@@ -50,16 +50,13 @@ module.exports = {
     // Register
     signUp(req, res) {
 
-        // Encriptamos la contraseña
         let password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.rounds));
 
-        // Crear un usuario
-        User.create({
-            name: req.body.name,
-            email: req.body.email,
-            password: password
-        }).then(user => {
-
+            User.create({
+                name: req.body.name,
+                email: req.body.email,
+                password: password
+            }).then(user => {
             // Creamos el token
             let token = jwt.sign({ user: user }, authConfig.secret, {
                 expiresIn: authConfig.expires
@@ -73,7 +70,5 @@ module.exports = {
         }).catch(err => {
             res.status(500).json(err);
         });
-
     }
-
 }
