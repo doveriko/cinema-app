@@ -5,11 +5,11 @@ import getters from './getters.js';
 export default {
   state() {
     return {
+      userId: null,
       name: "",
       email: "",
-      password: "",
-      userId: null,
-      token: null
+      token: "",
+      err: ""
     };
   },
   mutations,

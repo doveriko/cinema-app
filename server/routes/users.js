@@ -38,7 +38,7 @@ router.get('/:id', (req, res) => {
 router.post('/signup', AuthController.signUp);
 
 // Log in a user /users/login
-// router.post('/login', AuthController.logIn);
+router.post('/login', AuthController.logIn);
 
 // UPDATE one user /users/:id
 router.patch('/:id', (req, res) => {

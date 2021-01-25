@@ -17,12 +17,14 @@ module.exports = (req, res, next) => {
         // Comprobar la validez de este token
         jwt.verify(token, authConfig.secret, (err, decoded) => {
 
-        // Decoded es el usuario ("payload") que obtuvimos tras el signup -> jwt.sign({ user: user })
+        // Decoded es la info del usuario ("payload") que obtuvimos tras el signup -> jwt.sign({ user: user }),
+        // que nos es devuelta en el objeto "decoded" al llamar a la función jwt.verify
         // console.log(decoded)
 
             if(err) {
                 res.status(500).json({ msg: "Ha ocurrido un problema al decodificar el token", err });
             } else {
+                // req.user = decoded;
                 User.findByPk(decoded.user.id).then(user => {
                     req.user = user;
                     next();

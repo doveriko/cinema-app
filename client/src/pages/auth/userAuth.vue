@@ -1,10 +1,11 @@
 <template>
   <base-card>
-    <form @submit.prevent="submitForm">
-      <div class="form-control">
+    <!-- <form @submit.prevent="submitForm"> -->
+    <form @submit.prevent="logueao">
+      <!-- <div class="form-control">
         <label for="name">Name</label>
         <input type="text" id="name" v-model.trim="name" />
-      </div>
+      </div> -->
       <div class="form-control">
         <label for="email">E-Mail</label>
         <input type="email" id="email" v-model.trim="email" />
@@ -21,6 +22,7 @@
       <base-button type="button" mode="flat" @click="switchAuthMode">{{
         switchModeButtonCaption
       }}</base-button>
+      <p :show="errorMessage">{{ errorMessage }}</p>
     </form>
   </base-card>
 </template>
@@ -34,9 +36,13 @@ export default {
       password: "",
       formIsValid: true,
       mode: "login",
+      error: "",
     };
   },
   computed: {
+    errorMessage() {
+      return this.$store.state.auth.err;
+    },
     submitButtonCaption() {
       if (this.mode === "login") {
         return "Login";
@@ -67,12 +73,31 @@ export default {
       // if (this.mode === "login") {
       //   // ...
       // } else {
+
+      try {
         this.$store.dispatch("signup", {
           name: this.name,
           email: this.email,
           password: this.password,
         });
+        // const redirectUrl = "/" + (this.$route.query.redirect || "movies");
+        // this.$router.replace(redirectUrl);
+      } catch (err) {
+        this.error = err.message || "Failed to authenticate, try later.";
+      }
       // }
+    },
+    logueao() {
+      try {
+        this.$store.dispatch("login", {
+          email: this.email,
+          password: this.password,
+        });
+        // const redirectUrl = "/" + (this.$route.query.redirect || "movies");
+        // this.$router.replace(redirectUrl);
+      } catch (err) {
+        this.error = err.message || "Failed to authenticate, try later.";
+      }
     },
     switchAuthMode() {
       if (this.mode === "login") {
