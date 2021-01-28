@@ -1,43 +1,62 @@
-import axios from "axios";
+import axios from 'axios';
 
-class Auth {
-  constructor() {
-    this.auth = axios.create({
-      baseURL: process.env.REACT_APP_API_URL,
-      withCredentials: true
-    });
-  }
+export default {
+  async signup(context, payload) {
+    
 
-  signup( username, password, email,  name, surname) {
-    return this.auth
-      .post("/auth/signup", { username, password, email,  name, surname })
-      .then(({ data }) => { 
-        return data
+    let newUser = {
+      name: payload.name,
+      email: payload.email,
+      password: payload.password,
+    };
+
+    let { name, email, password } = newUser;
+    
+    await axios
+      .post("http://localhost:3000" + "/users/signup",
+        { name, email, password },
+        { withCredentials: false }
+      )
+      .then((response) => {
+        // newUser.userId = response.data.user.id;
+        newUser.token = response.data.token;
+        newUser.err = response.data.err;
+        console.log("respuesta", response);
+      })
+      .catch((err) => console.log("SE VIENE PACA", err));
+
+    context.commit('setUser', newUser);
+  },
+
+  async login(context, payload) {
+    let registeredUser = {
+      email: payload.email,
+      password: payload.password,
+    };
+
+    let { email, password } = registeredUser;
+
+    await axios
+      .post("http://localhost:3000" + "/users/login",
+        { email, password },
+        { withCredentials: false }
+      )
+      .then((response) => {
+        if (response.data.err) {
+          console.log("response.data.err", response.data.err)
+          registeredUser.err = response.data.err;
+        }
+        else {
+          registeredUser.msg = response.data.err;
+          registeredUser.userId = response.data.user.id;
+          registeredUser.token = response.data.token;
+          registeredUser.name = response.data.user.name;
+        }
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    // .then((response) => response.data);
-  }
 
-  login( username, password ) {
-    return this.auth
-      .post("/auth/login", { username, password })
-      .then(({ data }) => { 
-        return data
-      });
-    // .then((response) => response.data);
-  }
-
-  logout() {
-    return this.auth.post("/auth/logout", {}).then(({ data }) => data);
-    // return this.auth.post("/auth/logout", {}).then((response) => response.data);
-  }
-
-  me() {
-    return this.auth.get("/auth/me").then(({ data }) => data);
-    // return this.auth.get("/auth/me").then((response) => response.data);
+    context.commit('setUser', registeredUser);
   }
 }
-
-const authService = new Auth();
-// `authService` is the object with the above axios request methods
-
-export default authService;

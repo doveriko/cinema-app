@@ -8,24 +8,25 @@ User.init({
         allowNull: false,
         // validate: {
         //     notNull: {
-        //         msg: "El campo no puede ser nulo"
+        //         msg: "This field cannot be empty"
         //     },
         //     isAlpha: {
         //         args: true,
-        //         msg: "El nombre solo puede contener letras"
+        //         msg: "The name must only contain letters"
         //     },
         //     len: {
         //         args: [3, 255],
-        //         msg: "El nombre tiene que ser entre 3 y 255 caracteres"
+        //         msg: "The name entered is too short"
         //     }
         // },
     }, 
     email: {
         type: DataTypes.STRING,
+        allowNull: false,
         // validate: {
         //     isEmail: {
         //         args: true,
-        //         msg: "El campo tiene que ser un correo valido"
+        //         err: "Please enter a valid e-mail"
         //     }
         // }
     },
@@ -35,7 +36,7 @@ User.init({
         // validate: {
         //     len: {
         //         args: [6, 255],
-        //         msg: "La contraseña tiene que tener al menos 6 caracteres"
+        //         err: "The password must contain at least six characters"
         //     }
         // }
     }

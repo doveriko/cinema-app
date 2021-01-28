@@ -25,16 +25,6 @@ router.get('/:id', (req, res) => {
 });
 
 // CREATE one user (Sign up) /users/signup
-// router.post('/signup', (req, res) => {
-//   User.create({
-//       name: req.body.name, // Provisional
-//       email: req.body.email,
-//       password: req.body.password // Provisional
-//   }).then(user => {
-//       res.json(user);
-//       })
-// });
-
 router.post('/signup', AuthController.signUp);
 
 // Log in a user /users/login
