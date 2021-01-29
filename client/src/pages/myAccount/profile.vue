@@ -12,8 +12,6 @@ export default {
     };
   },
   computed: {
-    btnText() {
-    },
   },
   methods: {        
   },

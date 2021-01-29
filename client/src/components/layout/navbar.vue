@@ -1,14 +1,28 @@
 <template>
     <nav>
         <ul>
-            <li><router-link to="/" exact>Movies</router-link></li>
-            <li><router-link to="/my-account" exact>My Account</router-link></li>
+            <div class="nav-home">
+                <li><router-link to="/" exact>Movies</router-link></li>
+            </div>
+            <div class="nav-my-account">
+                <li><router-link to="/my-account" exact>My Account</router-link></li>
+                <p v-if="isLoggedIn" class="username">{{username}}</p>
+            </div>
         </ul>
     </nav>
 </template>
 
 <script>
-export default {}
+export default {
+    computed: {
+        isLoggedIn() {
+            return this.$store.getters.isAuthenticated;
+        },
+        username() {
+            return this.$store.state.auth.name;
+        }
+    }
+}
 </script>
 
 <style scoped>
@@ -16,6 +30,9 @@ ul{
     list-style-type: none;
     text-align: center;
     margin: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1em;
 }
 li{
     display: inline-block;
@@ -35,5 +52,13 @@ nav{
 .router-link-active{
     background: #eee;
     color: #444;
+}
+.nav-my-account {
+    display: flex;
+}
+
+p.username {
+    margin: 0;
+    color: lightsalmon
 }
 </style>

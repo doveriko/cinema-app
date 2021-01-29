@@ -1,11 +1,15 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import createPersistedState from 'vuex-persistedstate';
 import authModule from './modules/auth/index.js';
 import ordersModule from './modules/orders/index.js'
 
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
+  plugins: [createPersistedState({
+    storage: window.sessionStorage,
+})],
   modules: {
     auth: authModule,
     orders: ordersModule

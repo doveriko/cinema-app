@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 import VueRouter from 'vue-router';
-import Routes from './routes';
+import routes from './routes';
 import { store } from './store/index';
 
 // Register components
@@ -15,8 +15,18 @@ Vue.use(VueRouter);
 
 // Register routes
 const router = new VueRouter({
-  routes: Routes,
+  routes: routes,
   mode: 'history'
+});
+
+router.beforeEach(function(to, _, next) {
+  if (to.meta.requiresAuth && !store.getters.isAuthenticated) {
+    next('/auth');
+  } else if (to.meta.requiresUnauth && store.getters.isAuthenticated) {
+    next('/movies');
+  } else {
+    next();
+  }
 });
 
 new Vue({
