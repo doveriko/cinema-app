@@ -1,6 +1,7 @@
 <template>
   <div>
     <h3>Profile</h3>
+    <button @click="destroySession">LOG OUT</button>
   </div>
   
 </template>
@@ -13,7 +14,13 @@ export default {
   },
   computed: {
   },
-  methods: {        
+  methods: {  
+    destroySession() {
+      window.sessionStorage.clear();
+      const redirectUrl = "/" + (this.$route.query.redirect || "movies");
+      this.$router.replace(redirectUrl);
+      window.location.reload();
+    }   
   },
 };
 </script>
