@@ -1,8 +1,8 @@
 <template>
   <div>
-    <form @submit.prevent="saveOrder">
+    <form @submit.prevent="saveSession">
     <select @change="selectedDay()" v-model="day">
-      <option :value="null" selected disabled>Select day</option>
+      <option value="" disabled selected>Select day</option>
       <option value="1">Monday</option>
       <option value="2">Tuesday</option>
       <option value="3">Wednesday</option>
@@ -12,14 +12,16 @@
       <option value="0">Sunday</option>
     </select>
 
-    <select v-if="filteredSessions.length > 0">
-      <option value="0" selected disabled>Select session</option>
+    <select @change="selectedSession()" v-model="sessionId">
+      <option value="" disabled selected>Select session</option>
+      <option v-if="filteredSessions.length === 0" value="" disabled>No sessions available</option>
       <option
         v-for="session in filteredSessions"
         :key="session.id"
-        :value="session.time"
+        :id="session.id"
+        :value="session.id"
       >
-        {{ timeFormatted }}
+        {{ session.timeFormatted }}
       </option>
     </select>
     <button>SUBMIT</button>
@@ -37,45 +39,42 @@ export default {
   data() {
     return {
       day: "",
-      filteredSessions: [],
+      sessionId: "",
+      filteredSessions: []
     };
   },
-  computed: {
-    timeFormatted() {
-      return this.dayFormatted;
-    },
+  updated() {
+    console.log("this.filteredSessions", this.filteredSessions);
   },
   methods: {
     selectedDay() {
-      console.log("Selected day ->", this.day);
       this.filteredSessions = [];
-      this.sessionDay();
-    },
-    sessionDay() {
-      var self = this;
-      this.sessions.map(function (session) {
-        let dayNum = new Date(session.time).getDay();
-        console.log("Session days in numbers ->", dayNum);
-        if (dayNum == self.day) {
-          self.filteredSessions.push(session);
-        }
-        self.filterSessions();
-      });
-      console.log("this.filteredSessions", self.filteredSessions);
+      this.filterSessions();
     },
     filterSessions() {
       var self = this;
-      this.filteredSessions.map(function (session) {
-        let sessionTime = session.time.slice(11, 16);
-        self.dayFormatted = sessionTime;
+      this.sessions.map(function (session) {
+        let dayNum = new Date(session.time).getDay();
+        if (dayNum == self.day) {
+          self.filteredSessions.push(session);
+        }
+        self.formatTime();
       });
     },
-    saveOrder() {
-      const orderData = {
-        userId: 105,
-        sessionId: 4
+    formatTime() {
+      this.filteredSessions.map(function (session) {
+        let sessionTime = session.time.slice(11, 16);
+        session.timeFormatted = sessionTime;
+      });
+    },
+    selectedSession() {
+      console.log("this.sessionId", this.sessionId);
+    },
+    saveSession() {
+      const sessionId = {
+        sessionId : this.sessionId
       }
-      this.$emit('save-order', orderData)
+      this.$emit('save-session', sessionId)
     }
   },
 };

@@ -1,6 +1,8 @@
 export default {
-    saveOrder(state, payload) {
-        state.userId = payload.userId,
+    saveSession(state, payload) {
         state.sessionId = payload.sessionId
+    },
+    saveUser(state, payload) {
+        state.userId = payload.userId
     }
 }

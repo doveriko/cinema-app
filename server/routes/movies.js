@@ -8,7 +8,7 @@ router.get('/', (req, res, next) => {
     Movie.findAll({
         include: {
             model: Session,
-            attributes: ['time']
+            attributes: ['id', 'time', 'movieId']
         },
         attributes: ['id', 'title', 'description', 'imageUrl'] // Optional?
     }).then(movies => {
@@ -20,7 +20,7 @@ router.get('/', (req, res, next) => {
 router.get('/:id', (req, res) => {
     Movie.findByPk(req.params.id, { include: {
         model: Session,
-        attributes: ['time']
+        attributes: ['id', 'time', 'movieId']
     } }).then(movie => {
         res.json(movie);
     })

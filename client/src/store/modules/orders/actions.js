@@ -1,9 +1,14 @@
 export default {
-    saveOrder(context, data) {
-        const orderData = {
-            userId: data.userId,
+    saveSession(context, data) {
+        const session = {
             sessionId: data.sessionId
         }
-    context.commit('saveOrder', orderData)
+    context.commit('saveSession', session)
+    },
+    saveUser(context, data) {
+        const userId = {
+            userId: data.userId
+        }
+    context.commit('saveUser', userId)
     }
 }

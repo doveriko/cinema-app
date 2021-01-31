@@ -14,13 +14,7 @@ export default {
   },
   computed: {
   },
-  methods: {  
-    destroySession() {
-      window.sessionStorage.clear();
-      const redirectUrl = "/" + (this.$route.query.redirect || "movies");
-      this.$router.replace(redirectUrl);
-      window.location.reload();
-    }   
+  methods: {   
   },
 };
 </script>

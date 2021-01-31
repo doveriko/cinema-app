@@ -3,7 +3,7 @@
     <p>MOVIE DETAILS</p>
     <p></p>
     <!-- <filters-bar v-for="session in sessions" :key="session.id" :time="session.time"></filters-bar> -->
-    <filters-bar :sessions="sessions" @save-order="saveOrder" ></filters-bar>
+    <filters-bar :sessions="sessions" @save-session="saveSession" ></filters-bar>
   </div>
 </template>
 
@@ -35,12 +35,12 @@ export default {
         })
         .then((response) => {
           this.selectedMovie = response.data;
-          console.log(this.selectedMovie);
+          console.log("TU PELI", this.selectedMovie);
         })
         .catch((err) => console.log(err));
     },
-    saveOrder(data) {
-      this.$store.dispatch('saveOrder', data);
+    saveSession(data) {
+      this.$store.dispatch('saveSession', data);
       // this.$store.dispatch('orders/saveOrder', data);
     }
   },
