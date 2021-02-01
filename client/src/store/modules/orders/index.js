@@ -7,6 +7,7 @@ export default {
       return {
           userId: null,
           sessionId: null,
+          movieTitle: "",
           pendingOrder: false
       };
     },

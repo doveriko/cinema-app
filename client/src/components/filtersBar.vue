@@ -12,7 +12,7 @@
       <option value="0">Sunday</option>
     </select>
 
-    <select v-model="sessionId">
+    <select @change="selectedSession()" v-model="sessionId">
       <option value="" disabled selected>Select session</option>
       <option v-if="filteredSessions.length === 0" value="" disabled>No sessions available</option>
       <option
@@ -25,6 +25,7 @@
       </option>
     </select>
     <base-button>SUBMIT</base-button>
+    <p>{{errorMessage}}</p>
     </form>
   </div>
 </template>
@@ -35,28 +36,40 @@ export default {
     sessions: {
       type: Array,
     },
+    title: {
+      type: String
+    }
   },
   data() {
     return {
       day: "",
       sessionId: "",
-      filteredSessions: []
+      filteredSessions: [],
+      selectorChecker: [],
+      selectionError: {
+        noSession: null,
+        differentDay: false
+      },
+      errorMessage: "",
     };
   },
-  computed: {
-    submitLink() {
-      if (!this.$store.getters.isAuthenticated) return "/auth?redirect=checkout"
-      else return "/checkout"
-    }
-  },
   updated() {
-    console.log("this.filteredSessions", this.filteredSessions);
-    console.log("this.sessionId", this.sessionId);
+    if (this.selectorChecker.length === 0) this.selectionError.differentDay = true;
+    else this.selectionError.differentDay = false;
+
+    if (this.sessionId === "") this.selectionError.noSession = true;
+    else this.selectionError.noSession = false;
   },
   methods: {
     selectedDay() {
       this.filteredSessions = [];
+      this.selectorChecker = [];
+      this.errorMessage = "";
       this.filterSessions();
+    },
+    selectedSession() {
+      this.selectorChecker = this.filteredSessions.find(session => session.id === this.sessionId);
+      this.errorMessage = "";
     },
     filterSessions() {
       var self = this;
@@ -76,14 +89,19 @@ export default {
     },
     saveSession() {
       const sessionId = {
-        sessionId : this.sessionId
+        sessionId : this.sessionId,
+        movieTitle: this.title
       }
       this.$emit('save-session', sessionId)
 
-      let redirectUrl
-        if (!this.$store.getters.isAuthenticated) redirectUrl = "/auth?redirect=checkout";
-        else redirectUrl = "/checkout";
-      this.$router.replace(redirectUrl);
+      if (!this.selectionError.noSession && !this.selectionError.differentDay && this.selectionError.noSession != null) {
+          let redirectUrl
+            if (!this.$store.getters.isAuthenticated) redirectUrl = "/auth?redirect=checkout";
+            else redirectUrl = "/checkout";
+          this.$router.replace(redirectUrl);
+      } else {
+        this.errorMessage = "Please, select a valid session"
+      }
     }
   },
 };

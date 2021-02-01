@@ -1,8 +1,13 @@
 <template>
   <div>
       <h1>CHECKOUT</h1>
-      <router-link to="/login">LOG IN</router-link>
-      <router-link to="/signup">SIGNUP</router-link>
+
+<h3>Booking details:</h3>
+<div>Pelicula</div>
+<div>Dia y hora</div>
+<p>Complete order?</p>
+<button>COMPLETE</button>
+
   </div>
 </template>
 

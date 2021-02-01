@@ -1,7 +1,8 @@
 export default {
     saveSession(context, data) {
         const session = {
-            sessionId: data.sessionId
+            sessionId: data.sessionId,
+            movieTitle: data.movieTitle
         }
     context.commit('saveSession', session)
     },

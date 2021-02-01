@@ -16,7 +16,7 @@ export default {
     movieDetails() {
       return this.$route.path + '/' + this.id;
     }
-  },
+  }
 };
 </script>
 
