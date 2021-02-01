@@ -12,7 +12,7 @@
       <option value="0">Sunday</option>
     </select>
 
-    <select @change="selectedSession()" v-model="sessionId">
+    <select v-model="sessionId">
       <option value="" disabled selected>Select session</option>
       <option v-if="filteredSessions.length === 0" value="" disabled>No sessions available</option>
       <option
@@ -24,7 +24,7 @@
         {{ session.timeFormatted }}
       </option>
     </select>
-    <button>SUBMIT</button>
+    <base-button link :to="submitLink">SUBMIT</base-button>
     </form>
   </div>
 </template>
@@ -43,8 +43,15 @@ export default {
       filteredSessions: []
     };
   },
+  computed: {
+    submitLink() {
+      if (!this.$store.getters.isAuthenticated) return "/auth?redirect=checkout"
+      else return "/checkout"
+    }
+  },
   updated() {
     console.log("this.filteredSessions", this.filteredSessions);
+    console.log("this.sessionId", this.sessionId);
   },
   methods: {
     selectedDay() {
@@ -66,9 +73,6 @@ export default {
         let sessionTime = session.time.slice(11, 16);
         session.timeFormatted = sessionTime;
       });
-    },
-    selectedSession() {
-      console.log("this.sessionId", this.sessionId);
     },
     saveSession() {
       const sessionId = {

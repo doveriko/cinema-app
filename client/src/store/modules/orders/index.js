@@ -6,7 +6,8 @@ export default {
     state() {
       return {
           userId: null,
-          sessionId: null
+          sessionId: null,
+          pendingOrder: false
       };
     },
     mutations,
