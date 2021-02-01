@@ -1,5 +1,8 @@
 <template>
   <base-card>
+    <div v-if="pendingOrder" class="complete-order-message">
+      <p>Please, log in or sign up to complete your order</p>
+    </div>
     <form @submit.prevent="submitForm">
       <div class="auth-panel" ref="auth">
         <div class="login-tab" :class="{active: selectedTab === 1}" @click="changeViewMode('login', 1)">
@@ -63,6 +66,9 @@ export default {
       } else {
         return this.signup
       }
+    },
+    pendingOrder() {
+      return this.$store.state.orders.pendingOrder
     }
   },
   methods: {
@@ -181,5 +187,17 @@ textarea:focus {
 .auth-panel div:hover {
   background: #4355a5;
   color: white;
+}
+
+.complete-order-message {
+    border: 1px solid green;
+    border-radius: 5px;
+    padding: 0 2em;
+    background: lightgreen;
+    color: darkgreen;
+    font-size: 10pt;
+    font-family: Tahoma;
+    text-align: center;
+    margin: 0 2em;
 }
 </style>

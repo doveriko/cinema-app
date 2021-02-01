@@ -24,7 +24,7 @@
         {{ session.timeFormatted }}
       </option>
     </select>
-    <base-button link :to="submitLink">SUBMIT</base-button>
+    <base-button>SUBMIT</base-button>
     </form>
   </div>
 </template>
@@ -79,6 +79,11 @@ export default {
         sessionId : this.sessionId
       }
       this.$emit('save-session', sessionId)
+
+      let redirectUrl
+        if (!this.$store.getters.isAuthenticated) redirectUrl = "/auth?redirect=checkout";
+        else redirectUrl = "/checkout";
+      this.$router.replace(redirectUrl);
     }
   },
 };
