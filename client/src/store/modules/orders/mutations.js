@@ -9,5 +9,12 @@ export default {
         state.userId = payload.userId,
         state.sessionId = payload.sessionId,
         state.orderStatus = "completed"
+    },
+    cancelOrder(state, payload) {
+        state.userId = payload.userId,
+        state.sessionId = payload.sessionId,
+        state.sessionTime = payload.sessionTime,
+        state.movieTitle = payload.movieTitle,
+        state.orderStatus = payload.orderStatus
     }
 }

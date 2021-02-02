@@ -28,5 +28,16 @@ export default {
         .catch((err) => console.log(err));
 
         context.commit('registerOrder', newOrder);
+    },
+    cancelOrder(context, data) {
+        let resetOrder = {
+            userId : data.userId,
+            sessionId : data.sessionId,
+            sessionTime : data.sessionTime,
+            movieTitle : data.movieTitle,
+            orderStatus : data.orderStatus
+          }
+        
+        context.commit('cancelOrder', resetOrder)
     }
 }

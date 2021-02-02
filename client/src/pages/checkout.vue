@@ -9,11 +9,18 @@
     <div v-if="this.orderStatus == 'pending'">
       <p>Complete order?</p>
       <button @click="completeOrder">COMPLETE</button>
+      <button @click="cancelOrder">CANCEL</button>
     </div>
 
-    <div v-if="this.orderStatus == 'completed'">
-      <h1>ARSA!!</h1>
+    <div v-if="this.orderStatus == 'completed'" class="order-completed">
+      <h3>Booking completed!</h3>
+      <p>You will receive an e-mail shortly with the reference number to show at the box office</p>
     </div>
+
+    <div v-if="this.orderStatus == 'inactive'">
+      <p>Your booking has been cancelled. You will be redirected to the home page</p>
+    </div>
+
   </div>
 </template>
 
@@ -28,7 +35,7 @@ export default {
     };
   },
   beforeCreate() {
-    if(this.$store.state.orders.orderStatus == "inactive") {
+    if(this.$store.state.orders.orderStatus != "pending") {
       this.$router.replace("/my-account");
     }
   },
@@ -55,12 +62,23 @@ export default {
       let userId = this.$store.state.auth.userId;
       let sessionId = this.$store.state.orders.sessionId;
 
-      const order = {
-        userId: userId,
-        sessionId: sessionId,
+      let order = {
+        userId : userId,
+        sessionId : sessionId,
       };
       this.$store.dispatch("registerOrder", order);
     },
+    cancelOrder() {
+      let resetOrder = {
+        userId : null,
+        sessionId : null,
+        sessionTime : "",
+        movieTitle : "",
+        orderStatus : "inactive"
+      }
+      this.$store.dispatch("cancelOrder", resetOrder);
+      setTimeout( () => this.$router.push({ path: '/movies'}), 5000);
+    }
   },
 };
 </script>
