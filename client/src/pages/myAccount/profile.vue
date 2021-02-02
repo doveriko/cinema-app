@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3>Profile</h3>
-    <button @click="destroySession">LOG OUT</button>
+
   </div>
   
 </template>

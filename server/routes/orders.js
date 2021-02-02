@@ -30,9 +30,9 @@ router.get('/:userId/orders/:orderId', (req, res) => {
 });
 
 // POST one order /users/:id/orders/
-router.post('/:id/orders', (req, res) => {
+router.post('/:userId/orders', (req, res) => {
     Order.create({
-        userId: req.params.id, // Provisional
+        userId: req.body.userId, // Provisional
         sessionId: req.body.sessionId // Provisional
     }).then(order => {
         res.json(order);

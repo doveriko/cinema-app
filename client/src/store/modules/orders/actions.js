@@ -1,15 +1,32 @@
+import axios from 'axios';
+
 export default {
     saveSession(context, data) {
-        const session = {
+        let session = {
             sessionId: data.sessionId,
+            sessionTime: data.sessionTime,
             movieTitle: data.movieTitle
         }
-    context.commit('saveSession', session)
+        context.commit('saveSession', session)
     },
-    saveUser(context, data) {
-        const userId = {
-            userId: data.userId
+    registerOrder(context, data) {
+        let newOrder = {
+            userId: data.userId,
+            sessionId: data.sessionId
         }
-    context.commit('saveUser', userId)
+
+        let { userId, sessionId } = newOrder;
+
+        axios
+        .post("http://localhost:3000" + `/users/${userId}/orders`,
+          { userId, sessionId },
+          { withCredentials: false }
+        )
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((err) => console.log(err));
+
+        context.commit('registerOrder', newOrder);
     }
 }

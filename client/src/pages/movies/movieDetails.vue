@@ -1,8 +1,8 @@
 <template>
   <div>
     <p>MOVIE DETAILS</p>
-    <p></p>
-    <!-- <filters-bar v-for="session in sessions" :key="session.id" :time="session.time"></filters-bar> -->
+    <p>{{title}}</p>
+    <p>{{description}}</p>
     <filters-bar :sessions="sessions" :title="title" @save-session="saveSession" ></filters-bar>
   </div>
 </template>
@@ -25,6 +25,9 @@ export default {
     },
     title() {
       return this.selectedMovie.title
+    },
+    description() {
+      return this.selectedMovie.description
     }
   },
   created() {
@@ -38,15 +41,11 @@ export default {
         })
         .then((response) => {
           this.selectedMovie = response.data;
-          console.log("TU PELI", this.selectedMovie);
         })
         .catch((err) => console.log(err));
-      
-
     },
     saveSession(data) {
       this.$store.dispatch('saveSession', data);
-      // this.$store.dispatch('orders/saveOrder', data);
     }
   },
 };

@@ -1,10 +1,13 @@
 export default {
     saveSession(state, payload) {
         state.sessionId = payload.sessionId,
-        state.movieTitle = payload.movieTitle
-        state.pendingOrder = true
+        state.sessionTime = payload.sessionTime,
+        state.movieTitle = payload.movieTitle,
+        state.orderStatus = "pending"
     },
-    saveUser(state, payload) {
-        state.userId = payload.userId
+    registerOrder(state, payload) {
+        state.userId = payload.userId,
+        state.sessionId = payload.sessionId,
+        state.orderStatus = "completed"
     }
 }

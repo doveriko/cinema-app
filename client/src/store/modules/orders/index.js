@@ -7,8 +7,9 @@ export default {
       return {
           userId: null,
           sessionId: null,
+          sessionTime: "",
           movieTitle: "",
-          pendingOrder: false
+          orderStatus: "inactive"
       };
     },
     mutations,

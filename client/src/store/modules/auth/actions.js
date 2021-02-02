@@ -23,7 +23,7 @@ export default {
         newUser.err = response.data.err;
         console.log("respuesta", response);
       })
-      .catch((err) => console.log("SE VIENE PACA", err));
+      .catch((err) => console.log(err));
 
     context.commit('setUser', newUser);
   },

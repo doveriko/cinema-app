@@ -44,8 +44,9 @@ export default {
     return {
       day: "",
       sessionId: "",
+      sessionTime: "",
       filteredSessions: [],
-      selectorChecker: [],
+      sameDayChecker: [],
       selectionError: {
         noSession: null,
         differentDay: false
@@ -54,8 +55,13 @@ export default {
     };
   },
   updated() {
-    if (this.selectorChecker.length === 0) this.selectionError.differentDay = true;
-    else this.selectionError.differentDay = false;
+    if (this.sameDayChecker.length === 0) {
+      this.selectionError.differentDay = true;
+    }
+    else {
+      this.selectionError.differentDay = false;
+      this.sessionTime = this.sameDayChecker.time;
+    } 
 
     if (this.sessionId === "") this.selectionError.noSession = true;
     else this.selectionError.noSession = false;
@@ -63,12 +69,12 @@ export default {
   methods: {
     selectedDay() {
       this.filteredSessions = [];
-      this.selectorChecker = [];
+      this.sameDayChecker = [];
       this.errorMessage = "";
       this.filterSessions();
     },
     selectedSession() {
-      this.selectorChecker = this.filteredSessions.find(session => session.id === this.sessionId);
+      this.sameDayChecker = this.filteredSessions.find(session => session.id === this.sessionId);
       this.errorMessage = "";
     },
     filterSessions() {
@@ -90,7 +96,8 @@ export default {
     saveSession() {
       const sessionId = {
         sessionId : this.sessionId,
-        movieTitle: this.title
+        sessionTime: this.sessionTime,
+        movieTitle: this.title,
       }
       this.$emit('save-session', sessionId)
 

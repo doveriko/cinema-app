@@ -1,6 +1,6 @@
 <template>
   <base-card>
-    <div v-if="pendingOrder" class="complete-order-message">
+    <div v-if="orderStatus == 'pending'" class="complete-order-message">
       <p>Please, log in or sign up to complete your order</p>
     </div>
     <form @submit.prevent="submitForm">
@@ -67,8 +67,8 @@ export default {
         return this.signup
       }
     },
-    pendingOrder() {
-      return this.$store.state.orders.pendingOrder
+    orderStatus() {
+      return this.$store.state.orders.orderStatus
     }
   },
   methods: {
@@ -122,7 +122,7 @@ export default {
         const redirectUrl = "/" + (this.$route.query.redirect || "movies");
         this.$router.replace(redirectUrl);
       } catch (err) {
-        console.log(err);
+          console.log(err);
       }
     },
   },
