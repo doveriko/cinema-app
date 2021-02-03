@@ -59,11 +59,9 @@ export default {
       this.hour = sessionTime.slice(11, 16);
     },
     completeOrder() {
-      let userId = this.$store.state.auth.userId;
       let sessionId = this.$store.state.orders.sessionId;
 
       let order = {
-        userId : userId,
         sessionId : sessionId,
       };
       this.$store.dispatch("registerOrder", order);

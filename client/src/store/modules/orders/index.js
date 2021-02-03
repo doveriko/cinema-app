@@ -9,7 +9,8 @@ export default {
           sessionId: null,
           sessionTime: "",
           movieTitle: "",
-          orderStatus: "inactive"
+          orderStatus: "inactive",
+          allOrders: []
       };
     },
     mutations,

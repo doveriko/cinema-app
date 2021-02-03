@@ -16,5 +16,8 @@ export default {
         state.sessionTime = payload.sessionTime,
         state.movieTitle = payload.movieTitle,
         state.orderStatus = payload.orderStatus
+    },
+    loadOrders(state, payload) {
+        state.allOrders = payload
     }
 }

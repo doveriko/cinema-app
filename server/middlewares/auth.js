@@ -4,7 +4,8 @@ const User = require('../models/User');
 
 module.exports = (req, res, next) => {
 
-    // console.log(req.headers);
+    console.log("a ver", req.headers);
+
 
     // Comprobar que existe el token
     if(!req.headers.authorization) {

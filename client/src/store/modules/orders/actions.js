@@ -11,7 +11,7 @@ export default {
     },
     registerOrder(context, data) {
         let newOrder = {
-            userId: data.userId,
+            userId: context.getters.userId,
             sessionId: data.sessionId
         }
 
@@ -39,5 +39,18 @@ export default {
           }
         
         context.commit('cancelOrder', resetOrder)
+    },
+    async loadOrders(context) {
+        let userId = context.getters.userId;
+        let allOrders = [];
+
+        await axios
+        .get("http://localhost:3000" + `/users/${userId}/orders`)
+        .then((response) => {
+          allOrders = response.data
+        })
+        .catch((err) => console.log(err));
+
+        context.commit('loadOrders', allOrders);
     }
 }
