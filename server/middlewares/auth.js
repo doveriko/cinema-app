@@ -4,9 +4,6 @@ const User = require('../models/User');
 
 module.exports = (req, res, next) => {
 
-    console.log("a ver", req.headers);
-
-
     // Comprobar que existe el token
     if(!req.headers.authorization) {
         res.status(401).json({ msg: "Acceso no autorizado" });

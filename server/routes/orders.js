@@ -3,17 +3,34 @@ var router = express.Router();
 const Order = require('../models/Order');
 const Session = require('../models/Session');
 const User = require('../models/User');
+const Movie = require('../models/Movie');
 
 //Middleware to protect private routes
 const auth = require('../middlewares/auth');
 
 // GET all orders from one user /users/:id/orders
-router.get('/:id/orders', auth, (req, res) => {
-    User.findByPk(req.params.id).then(user => {
-        user.getOrders().then(orders => {
-            res.json(orders);
-        })
-    });
+router.get('/:id/orders', (req, res) => {
+    User.findByPk(req.params.id, {
+        include: [
+            {
+                model: Order,
+                attributes: ['userId'],
+                include: [
+                    {
+                        model: Session,
+                        attributes: ['time'],
+                        include: [
+                          {
+                            model: Movie,
+                            attributes: ['title'],
+                          }
+                        ]
+                    }
+                ]
+            },
+        ],
+        attributes: []
+    }).then(users => res.json(users));
 });
 
 // GET one specific order from a user /users/:userId/orders/:orderId
