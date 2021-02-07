@@ -51,6 +51,12 @@ export default {
         })
         .catch((err) => console.log(err));
 
+        console.log("all orders", allOrders);
+
         context.commit('loadOrders', allOrders);
+    },
+    updateOrders(context, data) {
+      let updatedOrders = data;
+      context.commit('updateOrders', updatedOrders)
     }
 }

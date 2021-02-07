@@ -2,8 +2,17 @@
   <div>
     <div>BOOKINGS</div>
     <div class="bookings">
-      <div class="booking-details" v-for="order in orderDataObj" :key="order.index">
-        <p>{{order.date}} {{order.hour}} {{order.title}} {{order.index}}</p>
+      <div class="no-orders" v-if="orderDataObj.length == 0">
+        No orders available
+      </div>
+      <div
+        class="booking-details"
+        v-for="order in orderDataObj"
+        :key="order.index"
+      >
+        <p>
+          {{ order.date }} {{ order.hour }} {{ order.title }} {{ order.index }}
+        </p>
         <button @click="deleteOrder(order)">DELETE</button>
       </div>
     </div>
@@ -11,7 +20,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 
 export default {
   data() {
@@ -21,7 +30,7 @@ export default {
       orderId: [],
       dates: [],
       hours: [],
-      orderDataObj: []
+      orderDataObj: [],
     };
   },
   created() {
@@ -37,17 +46,12 @@ export default {
     // console.log("orderId", this.orderId);
     // console.log("Dates", this.dates);
     // console.log("Hours", this.hours);
-    console.log("Orders formatted", this.orderDataObj)
-    console.log("refresco", this.refresh)
-  },
-  updated() {
-    return this.refresh;
+    // console.log("Orders formatted", this.orderDataObj);
   },
   methods: {
     loadOrders() {
       this.$store.dispatch("loadOrders");
       let allOrders = this.$store.getters.allOrders;
-      // let allOrders = this.$store.state.orders.allOrders;
       var self = this;
       allOrders.map((order) => {
         self.sessionTime.push(order.session.time);
@@ -70,32 +74,34 @@ export default {
     orders() {
       this.orderDataObj = this.dates.map((date, i) => {
         return {
-          'date': date,
-          'hour': this.hours[i],
-          'title': this.movieTitle[i],
-          'orderId': this.orderId[i]
-        }
-      })
+          date: date,
+          hour: this.hours[i],
+          title: this.movieTitle[i],
+          orderId: this.orderId[i],
+        };
+      });
     },
     deleteOrder(order) {
-      console.log("como estan ustedeees?");
-
-        axios
-        .delete("http://localhost:3000" + `/users/orders/${order.orderId}`,
-          { withCredentials: false }
-        )
+      axios
+        .delete("http://localhost:3000" + `/users/orders/${order.orderId}`, {
+          withCredentials: false,
+        })
         .then((response) => {
           console.log(response);
         })
         .catch((err) => console.log(err));
+      console.log("order removed from database");
 
-        console.log("order removed from backend");
-
-      const idx = this.orderDataObj.indexOf(order)
+      const idx = this.orderDataObj.indexOf(order);
       this.orderDataObj.splice(idx, 1);
+      console.log("order removed from DOM");
 
-      console.log("order removed from frontend");
-    }
+      let deletedOrderId = order.orderId;
+      let allOrders = this.$store.getters.allOrders;
+      let updatedOrders = allOrders.filter(order => order.id != deletedOrderId);
+      this.$store.dispatch('updateOrders', updatedOrders)
+      console.log("order removed from store");
+    },
   },
   // computed: {
   //   orders() {
@@ -118,8 +124,8 @@ export default {
   flex-direction: column;
 }
 .booking-details {
-    border: 1px solid;
-    border-radius: 10px;
-    margin: 10px 0;
+  border: 1px solid;
+  border-radius: 10px;
+  margin: 10px 0;
 }
 </style>

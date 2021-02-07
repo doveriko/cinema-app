@@ -19,5 +19,8 @@ export default {
     },
     loadOrders(state, payload) {
         state.allOrders = payload
+    },
+    updateOrders(state, payload) {
+        state.allOrders = payload
     }
 }
