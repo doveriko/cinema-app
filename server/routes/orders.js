@@ -9,7 +9,7 @@ const Movie = require('../models/Movie');
 const auth = require('../middlewares/auth');
 
 // GET all orders from one user /users/:id/orders
-router.get('/:id/orders', auth, (req, res) => {
+router.get('/:id/orders', (req, res) => {
     User.findByPk(req.params.id, {
         include: [
             {
@@ -57,7 +57,7 @@ router.post('/:userId/orders', (req, res) => {
 });
 
 // Delete one order /users/orders/:orderId
-router.delete('/orders/:orderId', auth, (req, res) => {
+router.delete('/orders/:orderId', (req, res) => {
     Order.destroy({
         where: {
             id : req.params.orderId

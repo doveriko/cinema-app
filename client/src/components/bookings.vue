@@ -12,8 +12,14 @@
         <p>
           {{ order.date }} {{ order.hour }} {{ order.title }}
         </p>
-        <button @click="deleteOrder(order)">DELETE</button>
+        <button @click.prevent="activateDeletion(order.orderId)">DELETE</button>
+        <div v-if="deletionIsActive && order.orderId == selectedOrder">
+          Are you sure?
+          <button @click.prevent="deleteOrder(order)">YES</button>
+          <button @click.prevent="deletionIsActive = false">NO</button>
+        </div>
       </div>
+      <h3>{{this.selectedOrderId}}</h3>
   </div>
 </template>
 
@@ -29,18 +35,24 @@ export default {
       dates: [],
       hours: [],
       orderDataObj: [],
+      deletionIsActive: false,
+      selectedOrderId: null
     };
+  },
+  computed: {
+    selectedOrder () {
+      return this.selectedOrderId
+    }
   },
   created() {
     this.loadOrders();
   },
-  beforeMount() {
-    this.formatData();
-    this.loadOrders();
-  },
+  // beforeMount() {
+  //   this.formatData();
+  // },
   methods: {
-    loadOrders() {
-      this.$store.dispatch("loadOrders");
+    async loadOrders() {
+      await this.$store.dispatch("loadOrders");
       let allOrders = this.$store.getters.allOrders;
       var self = this;
       allOrders.map((order) => {
@@ -48,8 +60,10 @@ export default {
         self.movieTitle.push(order.session.movie.title);
         self.orderId.push(order.id);
       });
+      console.log("1 load orders", allOrders);
+      this.formatData()
     },
-    formatData() {
+    async formatData() {
       var self = this;
       this.sessionTime.map((timeStr) => {
         let day = timeStr.slice(8, 10);
@@ -59,9 +73,12 @@ export default {
         self.dates.push(dateFormatted);
         self.hours.push(timeStr.slice(11, 16));
       });
+      console.log("2 this.dates", this.dates);
+      console.log("3 this.hours", this.hours);
       this.orders();
     },
-    orders() {
+    async orders() {
+      console.log("5 this.orderDataObj", this.orderDataObj);
       this.orderDataObj = this.dates.map((date, i) => {
         return {
           date: date,
@@ -70,8 +87,10 @@ export default {
           orderId: this.orderId[i],
         };
       });
+      console.log("6 ", this.orderId);
     },
-    deleteOrder(order) {
+    async deleteOrder(order) {
+      console.log("orderId in Axios", order.orderId);
       axios
         .delete("http://localhost:3000" + `/users/orders/${order.orderId}`, {
           withCredentials: false,
@@ -93,6 +112,12 @@ export default {
       );
       this.$store.dispatch("updateOrders", updatedOrders);
       console.log("order removed from store");
+      this.selectedOrderId = null;
+      this.deletionIsActive = false;
+    },
+    activateDeletion(orderId) {
+      this.selectedOrderId = orderId;
+      this.deletionIsActive = true;
     },
   },
 };
