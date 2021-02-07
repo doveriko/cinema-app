@@ -9,12 +9,12 @@ const Movie = require('../models/Movie');
 const auth = require('../middlewares/auth');
 
 // GET all orders from one user /users/:id/orders
-router.get('/:id/orders', (req, res) => {
+router.get('/:id/orders', auth, (req, res) => {
     User.findByPk(req.params.id, {
         include: [
             {
                 model: Order,
-                attributes: ['userId'],
+                attributes: ['id'],
                 include: [
                     {
                         model: Session,
@@ -54,6 +54,15 @@ router.post('/:userId/orders', (req, res) => {
     }).then(order => {
         res.json(order);
         })
+});
+
+// Delete one order /users/orders/:orderId
+router.delete('/orders/:orderId', auth, (req, res) => {
+    Order.destroy({
+        where: {
+            id : req.params.orderId
+        }
+    })
 });
 
 module.exports = router;

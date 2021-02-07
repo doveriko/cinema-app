@@ -48,7 +48,6 @@ export default {
         .get("http://localhost:3000" + `/users/${userId}/orders`)
         .then((response) => {
           allOrders = response.data.orders;
-          console.log("todos sus pedidos, aquí:", allOrders);
         })
         .catch((err) => console.log(err));
 
