@@ -1,21 +1,19 @@
 <template>
-  <div>
-    <div>BOOKINGS</div>
-    <div class="bookings">
+  <div id="bookings">
+    <h3>BOOKINGS</h3>
       <div class="no-orders" v-if="orderDataObj.length == 0">
         No orders available
       </div>
       <div
         class="booking-details"
         v-for="order in orderDataObj"
-        :key="order.index"
+        :key="order.key"
       >
         <p>
-          {{ order.date }} {{ order.hour }} {{ order.title }} {{ order.index }}
+          {{ order.date }} {{ order.hour }} {{ order.title }}
         </p>
         <button @click="deleteOrder(order)">DELETE</button>
       </div>
-    </div>
   </div>
 </template>
 
@@ -39,14 +37,6 @@ export default {
   beforeMount() {
     this.formatData();
     this.loadOrders();
-  },
-  mounted() {
-    // console.log("Movie titles", this.movieTitle);
-    // console.log("Session Time", this.sessionTime);
-    // console.log("orderId", this.orderId);
-    // console.log("Dates", this.dates);
-    // console.log("Hours", this.hours);
-    // console.log("Orders formatted", this.orderDataObj);
   },
   methods: {
     loadOrders() {
@@ -98,30 +88,21 @@ export default {
 
       let deletedOrderId = order.orderId;
       let allOrders = this.$store.getters.allOrders;
-      let updatedOrders = allOrders.filter(order => order.id != deletedOrderId);
-      this.$store.dispatch('updateOrders', updatedOrders)
+      let updatedOrders = allOrders.filter(
+        (order) => order.id != deletedOrderId
+      );
+      this.$store.dispatch("updateOrders", updatedOrders);
       console.log("order removed from store");
     },
   },
-  // computed: {
-  //   orders() {
-  //     return this.dates.map((date, i) => {
-  //       return {
-  //         date: date,
-  //         hour: this.hours[i],
-  //         title: this.movieTitle[i],
-  //         orderId: this.orderId[i]
-  //       }
-  //     })
-  //   }
-  // },
 };
 </script>
 
 <style>
-.bookings {
+#bookings {
   display: flex;
   flex-direction: column;
+  padding: 1em;
 }
 .booking-details {
   border: 1px solid;

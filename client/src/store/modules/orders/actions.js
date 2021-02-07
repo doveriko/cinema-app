@@ -22,12 +22,12 @@ export default {
           { userId, sessionId },
           { withCredentials: false }
         )
-        .then((response) => {
-          console.log(response);
+        .then(() => {
+          context.commit('registerOrder', newOrder);
         })
         .catch((err) => console.log(err));
 
-        context.commit('registerOrder', newOrder);
+        
     },
     cancelOrder(context, data) {
         let resetOrder = {

@@ -15,6 +15,9 @@
     <div v-if="this.orderStatus == 'completed'" class="order-completed">
       <h3>Booking completed!</h3>
       <p>You will receive an e-mail shortly with the reference number to show at the box office</p>
+
+      <base-button link :to="myAccount">Go to My Account</base-button>
+      <!-- <router-link to="/my-account" tag="button">Go to My Account</router-link> -->
     </div>
 
     <div v-if="this.orderStatus == 'inactive'">
@@ -46,6 +49,9 @@ export default {
     orderStatus() {
       return this.$store.state.orders.orderStatus;
     },
+    myAccount() {
+      return 'my-account';
+    }
   },
   created() {
     this.sessionTime();
@@ -65,6 +71,7 @@ export default {
         sessionId : sessionId,
       };
       this.$store.dispatch("registerOrder", order);
+      this.$store.dispatch("loadOrders");
     },
     cancelOrder() {
       let resetOrder = {

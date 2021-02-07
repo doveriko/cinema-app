@@ -1,20 +1,15 @@
 <template>
   <div class="my-account">
-      <h1>MY ACCOUNT</h1>
       <div class="panel">
-          <div>
             <profile></profile>
-          </div>
-          <div>
-            <bookings></bookings>
-          </div>        
+            <bookings></bookings>     
       </div>
   </div>
 </template>
 
 <script>
-import profile from './profile';
-import bookings from './bookings';
+import profile from '../components/profile';
+import bookings from '../components/bookings';
 
 export default {
     components: {
