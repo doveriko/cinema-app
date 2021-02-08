@@ -13,18 +13,19 @@
           {{ order.date }} {{ order.hour }} {{ order.title }}
         </p>
         <button @click.prevent="activateDeletion(order.orderId)">DELETE</button>
+
         <div v-if="deletionIsActive && order.orderId == selectedOrder">
           Are you sure?
           <button @click.prevent="deleteOrder(order)">YES</button>
           <button @click.prevent="deletionIsActive = false">NO</button>
         </div>
+        
       </div>
-      <h3>{{this.selectedOrderId}}</h3>
   </div>
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
 
 export default {
   data() {
@@ -90,28 +91,13 @@ export default {
       console.log("6 ", this.orderId);
     },
     async deleteOrder(order) {
-      console.log("orderId in Axios", order.orderId);
-      axios
-        .delete("http://localhost:3000" + `/users/orders/${order.orderId}`, {
-          withCredentials: false,
-        })
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((err) => console.log(err));
-      console.log("order removed from database");
+      this.$store.dispatch("deleteOrder", order.orderId)
+      console.log("order removed from database and store");
 
       const idx = this.orderDataObj.indexOf(order);
       this.orderDataObj.splice(idx, 1);
       console.log("order removed from DOM");
 
-      let deletedOrderId = order.orderId;
-      let allOrders = this.$store.getters.allOrders;
-      let updatedOrders = allOrders.filter(
-        (order) => order.id != deletedOrderId
-      );
-      this.$store.dispatch("updateOrders", updatedOrders);
-      console.log("order removed from store");
       this.selectedOrderId = null;
       this.deletionIsActive = false;
     },

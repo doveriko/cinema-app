@@ -26,8 +26,6 @@ export default {
           context.commit('registerOrder', newOrder);
         })
         .catch((err) => console.log(err));
-
-        
     },
     cancelOrder(context, data) {
         let resetOrder = {
@@ -55,8 +53,20 @@ export default {
 
         context.commit('loadOrders', allOrders);
     },
-    updateOrders(context, data) {
-      let updatedOrders = data;
-      context.commit('updateOrders', updatedOrders)
+    deleteOrder(context, data) {
+      let orderId = data;
+      axios
+      .delete("http://localhost:3000" + `/users/orders/${orderId}`, {
+        withCredentials: false,
+      })
+      .then(() => {
+        let deletedOrderId = orderId;
+        let allOrders = this.$store.getters.allOrders;
+        let updatedOrders = allOrders.filter(
+          (order) => order.id != deletedOrderId
+        );
+        context.commit('updateOrders', updatedOrders)
+      })
+      .catch((err) => console.log(err));
     }
 }

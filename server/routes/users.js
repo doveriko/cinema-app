@@ -59,8 +59,6 @@ router.delete('/:id', (req, res) => {
     where: {
       id: req.params.id
     }
-  }).then(result => {
-    res.json(result);
   })
 });
 

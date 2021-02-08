@@ -29,7 +29,8 @@
         <input type="password" id="repeatPassword" v-model.trim="repeatPassword" />
       </div>
       <p v-if="!formIsValid && selectedTab === 2">{{signupError}}</p>
-      <p>{{loginErrors}}</p>
+      <p v-if="selectedTab === 1">{{loginErrors}}</p>
+      {{emptyLoginError}}
       <button>{{buttonText}}</button>
     </form>
   </base-card>
@@ -46,9 +47,20 @@ export default {
       formIsValid: true,
       loginError: "",
       signupError: "",
+      emptyLoginError: "",
       viewMode: "login",
       selectedTab: 1,
     };
+  },
+  mounted() {
+    this.loginError == "";
+    this.signupError == "";
+    this.$store.commit("clearErrorMessage", null)
+  },
+  updated() {
+    if (this.email != '' && this.password != '') {
+      this.emptyLoginError = "";
+    }
   },
   computed: {
     login() {
@@ -58,7 +70,7 @@ export default {
       return "Sign up";
     },
     loginErrors() {
-      return this.$store.state.auth.err;
+      return this.$store.state.auth.err
     },
     buttonText(){
       if(this.viewMode === 'login') {
@@ -75,16 +87,29 @@ export default {
     changeViewMode(view, tab = 0) {
       this.viewMode = view;
       if (tab > 0) this.selectedTab = tab;
-      this.signupError === "";
-    },
 
+      this.name = "";
+      this.email = "";
+      this.password = "";
+      this.repeatPassword = "";
+      this.signupError = "";
+      this.emptyLoginError = "";
+      this.$store.commit("clearErrorMessage", null)
+    },
     async submitForm() {
       try {
         if (this.viewMode === 'login') {
-          await this.$store.dispatch("login", {
-            email: this.email,
-            password: this.password,
-          });
+          if (this.email === '' || this.password === '') {
+          this.formIsValid = false;
+          this.emptyLoginError = "All the fields need to be filled";
+          this.$store.commit("clearErrorMessage", null)
+          } else {
+            await this.$store.dispatch("login", {
+              email: this.email,
+              password: this.password,
+            });
+          }
+
         } else {
             this.formIsValid = true;
             if (this.name === '' || this.email === '' || this.password === '' || this.repeatPassword === '') {
@@ -111,7 +136,10 @@ export default {
                 this.formIsValid = false;
                 this.signupError = "The passwords entered don't match. Please, try again";
               return;
-            } 
+            } else {
+              const redirectUrl = "/" + (this.$route.query.redirect || "movies");
+              this.$router.replace(redirectUrl);
+            }
 
             await this.$store.dispatch("signup", {
               name: this.name,
@@ -119,8 +147,7 @@ export default {
               password: this.password,
             });
         }
-        const redirectUrl = "/" + (this.$route.query.redirect || "movies");
-        this.$router.replace(redirectUrl);
+
       } catch (err) {
           console.log(err);
       }

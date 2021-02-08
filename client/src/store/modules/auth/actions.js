@@ -23,6 +23,10 @@ export default {
         newUser.err = response.data.err;
         console.log("respuesta", response);
       })
+      .then(() => {
+        const redirectUrl = "/" + (this.$route.query.redirect || "movies");
+        this.$router.replace(redirectUrl);
+      })
       .catch((err) => console.log(err));
 
     context.commit('setUser', newUser);
@@ -38,8 +42,7 @@ export default {
 
     await axios
       .post("http://localhost:3000" + "/users/login",
-        { email, password },
-        { withCredentials: false }
+        { email, password }
       )
       .then((response) => {
         if (response.data.err) {
@@ -58,5 +61,24 @@ export default {
       });
 
     context.commit('setUser', registeredUser);
-  }
+  },
+  deleteUser(context, data) {
+    let userId = data;
+    axios
+    .delete("http://localhost:3000" + `/users/${userId}`, {
+      withCredentials: false,
+    })
+    .then(() => {
+
+    })
+    .catch((err) => console.log(err));
+    let resetAuthState = {
+      userId : null,
+      name : "",
+      email : "",
+      token : "",
+      err : ""
+    }
+    context.commit('deleteUser', resetAuthState)
+  },
 }

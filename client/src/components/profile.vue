@@ -7,9 +7,11 @@
     </div>
     <div v-if="this.deletionIsActive">
       <p>Are you sure you want to delete your account?</p>
+      <button @click.prevent="deleteAccount">YES</button>
+      <button @click.prevent="deletionIsActive = false">NO</button>
     </div>
     <div class="user-actions">
-      <a href="">Change password</a> | <a href="" @click.prevent="deleteAccount">Delete account</a>
+      <a href="">Change password</a> | <a href="" @click.prevent="activateDeletion">Delete account</a>
     </div>
   </div>
 </template>
@@ -30,8 +32,15 @@ export default {
     },
   },
   methods: {
-    deleteAccount() {
+    activateDeletion() {
       this.deletionIsActive = true;
+    },
+    deleteAccount() {
+      let userId = this.$store.getters.userId;
+      console.log("this is the rhythm of the night", userId);
+      this.$store.dispatch("deleteUser", userId);
+      this.deletionIsActive = false;
+      this.$router.replace("/auth");
     }
   },
 };
