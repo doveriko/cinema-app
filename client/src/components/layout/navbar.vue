@@ -26,7 +26,7 @@ export default {
   methods: {
     destroySession() {
       window.sessionStorage.clear();
-      const redirectUrl = "/" + (this.$route.query.redirect || "movies");
+      const redirectUrl = "/" + (this.$route.query.redirect || "auth");
       this.$router.replace(redirectUrl);
       window.location.reload();
     },

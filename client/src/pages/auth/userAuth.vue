@@ -108,6 +108,8 @@ export default {
               email: this.email,
               password: this.password,
             });
+            const redirectUrl = "/" + (this.$route.query.redirect || "movies");
+            this.$router.replace(redirectUrl);
           }
 
         } else {
@@ -136,10 +138,7 @@ export default {
                 this.formIsValid = false;
                 this.signupError = "The passwords entered don't match. Please, try again";
               return;
-            } else {
-              const redirectUrl = "/" + (this.$route.query.redirect || "movies");
-              this.$router.replace(redirectUrl);
-            }
+            } 
 
             await this.$store.dispatch("signup", {
               name: this.name,
@@ -147,7 +146,6 @@ export default {
               password: this.password,
             });
         }
-
       } catch (err) {
           console.log(err);
       }
