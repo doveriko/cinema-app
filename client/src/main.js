@@ -5,8 +5,11 @@ import routes from './routes';
 import { store } from './store/index';
 
 import axios from 'axios';
+import VueAxios from 'vue-axios';
+
 axios.defaults.headers.common = {'Authorization': `bearer ${store.getters.token}`};
-axios.defaults.withCredentials = false;
+axios.defaults.withCredentials = true;
+Vue.use(VueAxios, axios);
 
 // Register components
 import BaseButton from './components/ui/BaseButton.vue';
