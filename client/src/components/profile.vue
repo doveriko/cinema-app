@@ -37,7 +37,6 @@ export default {
     },
     deleteAccount() {
       let userId = this.$store.getters.userId;
-      console.log("this is the rhythm of the night", userId);
       this.$store.dispatch("deleteUser", userId);
       this.deletionIsActive = false;
       this.$router.replace("/auth");

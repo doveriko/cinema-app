@@ -36,9 +36,7 @@ export default {
   methods: {
     loadMovie() {
       axios
-        .get("http://localhost:3000" + "/movies/" + this.id, {
-          withCredentials: false,
-        })
+        .get(process.env.VUE_APP_API_URL + "/movies/" + this.id)
         .then((response) => {
           this.selectedMovie = response.data;
         })

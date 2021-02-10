@@ -2,8 +2,7 @@ import axios from 'axios';
 
 export default {
   async signup(context, payload) {
-    
-
+  
     let newUser = {
       name: payload.name,
       email: payload.email,
@@ -13,15 +12,12 @@ export default {
     let { name, email, password } = newUser;
     
     await axios
-      .post("http://localhost:3000" + "/users/signup",
-        { name, email, password },
-        { withCredentials: false }
+      .post(process.env.VUE_APP_API_URL + "/users/signup",
+        { name, email, password }
       )
       .then((response) => {
-        // newUser.userId = response.data.user.id;
         newUser.token = response.data.token;
         newUser.err = response.data.err;
-        console.log("respuesta", response);
       })
       .then(() => {
         const redirectUrl = "/" + (this.$route.query.redirect || "movies");
@@ -41,7 +37,7 @@ export default {
     let { email, password } = registeredUser;
 
     await axios
-      .post("http://localhost:3000" + "/users/login",
+      .post(process.env.VUE_APP_API_URL + "/users/login",
         { email, password }
       )
       .then((response) => {
@@ -65,11 +61,9 @@ export default {
   deleteUser(context, data) {
     let userId = data;
     axios
-    .delete("http://localhost:3000" + `/users/${userId}`, {
-      withCredentials: false,
-    })
-    .then(() => {
-
+    .delete(process.env.VUE_APP_API_URL + `/users/${userId}`)
+    .then((response) => {
+      console.log(response);
     })
     .catch((err) => console.log(err));
     let resetAuthState = {

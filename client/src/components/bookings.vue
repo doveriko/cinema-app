@@ -61,7 +61,6 @@ export default {
         self.movieTitle.push(order.session.movie.title);
         self.orderId.push(order.id);
       });
-      console.log("1 load orders", allOrders);
       this.formatData()
     },
     async formatData() {
@@ -74,12 +73,9 @@ export default {
         self.dates.push(dateFormatted);
         self.hours.push(timeStr.slice(11, 16));
       });
-      console.log("2 this.dates", this.dates);
-      console.log("3 this.hours", this.hours);
       this.orders();
     },
     async orders() {
-      console.log("5 this.orderDataObj", this.orderDataObj);
       this.orderDataObj = this.dates.map((date, i) => {
         return {
           date: date,
@@ -88,7 +84,6 @@ export default {
           orderId: this.orderId[i],
         };
       });
-      console.log("6 ", this.orderId);
     },
     async deleteOrder(order) {
       this.$store.dispatch("deleteOrder", order.orderId)

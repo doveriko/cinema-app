@@ -18,9 +18,8 @@ export default {
         let { userId, sessionId } = newOrder;
 
         axios
-        .post("http://localhost:3000" + `/users/${userId}/orders`,
-          { userId, sessionId },
-          { withCredentials: false }
+        .post(process.env.VUE_APP_API_URL + `/users/${userId}/orders`,
+          { userId, sessionId }
         )
         .then(() => {
           context.commit('registerOrder', newOrder);
@@ -43,22 +42,18 @@ export default {
         let allOrders = [];
 
         await axios
-        .get("http://localhost:3000" + `/users/${userId}/orders`)
+        .get(process.env.VUE_APP_API_URL + `/users/${userId}/orders`)
         .then((response) => {
           allOrders = response.data.orders;
         })
         .catch((err) => console.log(err));
-
-        console.log("all orders", allOrders);
-
+        
         context.commit('loadOrders', allOrders);
     },
     deleteOrder(context, data) {
       let orderId = data;
       axios
-      .delete("http://localhost:3000" + `/users/orders/${orderId}`, {
-        withCredentials: false,
-      })
+      .delete(process.env.VUE_APP_API_URL + `/users/orders/${orderId}`)
       .then(() => {
         let deletedOrderId = orderId;
         let allOrders = this.$store.getters.allOrders;
