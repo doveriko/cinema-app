@@ -29,8 +29,9 @@
         <input type="password" id="repeatPassword" v-model.trim="repeatPassword" />
       </div>
       <p v-if="!formIsValid && selectedTab === 2">{{signupError}}</p>
-      <p v-if="selectedTab === 1">{{loginErrors}}</p>
-      {{emptyLoginError}}
+      <!-- <p v-if="selectedTab === 1">{{loginErrors}}</p> -->
+      <p>{{loginErrors}}</p>
+      <p>{{emptyLoginError}}</p>
       <button>{{buttonText}}</button>
     </form>
   </base-card>
@@ -107,9 +108,8 @@ export default {
             await this.$store.dispatch("login", {
               email: this.email,
               password: this.password,
+              router : this.$router
             });
-            const redirectUrl = "/" + (this.$route.query.redirect || "movies");
-            this.$router.replace(redirectUrl);
           }
 
         } else {
@@ -144,6 +144,7 @@ export default {
               name: this.name,
               email: this.email,
               password: this.password,
+              router : this.$router
             });
         }
       } catch (err) {

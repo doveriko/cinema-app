@@ -10,18 +10,21 @@ export default {
     };
 
     let { name, email, password } = newUser;
+    let router = payload.router;
     
     await axios
       .post(process.env.VUE_APP_API_URL + "/users/signup",
-        { name, email, password }
+        { name, email, password },
       )
       .then((response) => {
-        newUser.token = response.data.token;
-        newUser.err = response.data.err;
-      })
-      .then(() => {
-        const redirectUrl = "/" + (this.$route.query.redirect || "movies");
-        this.$router.replace(redirectUrl);
+        if (response.data.err) {
+          newUser.err = response.data.err;
+        } else {
+          newUser.token = response.data.token;
+          newUser.msg = response.data.err;
+
+          router.push('/movies')
+        }
       })
       .catch((err) => console.log(err));
 
@@ -34,6 +37,8 @@ export default {
       password: payload.password,
     };
 
+    let router = payload.router;
+
     let { email, password } = registeredUser;
 
     await axios
@@ -42,7 +47,6 @@ export default {
       )
       .then((response) => {
         if (response.data.err) {
-          console.log("response.data.err", response.data.err)
           registeredUser.err = response.data.err;
         }
         else {
@@ -50,6 +54,8 @@ export default {
           registeredUser.userId = response.data.user.id;
           registeredUser.token = response.data.token;
           registeredUser.name = response.data.user.name;
+
+          router.push('/movies')
         }
       })
       .catch((err) => {

@@ -18,12 +18,10 @@ module.exports = {
                 res.status(200).json({ err: "No users registered with that e-mail" });
             } else {
                 if (bcrypt.compareSync(password, user.dataValues.password)) {
-
                     // Create token
                     let token = jwt.sign({ user: user.dataValues }, authConfig.secret, {
                         expiresIn: authConfig.expires
                     });
-
                     res.json({
                         user: user.dataValues,
                         token: token
@@ -38,29 +36,36 @@ module.exports = {
         })
     },
 
-    // Register
     signUp(req, res) {
+        let { email } = req.body;
 
-        let password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.rounds));
-        // let validationError = err.errors[0].message;
-
-            User.create({
-                name: req.body.name,
-                email: req.body.email,
-                password: password
-            }).then(user => {
-            // Create the token
-            let token = jwt.sign({ user: user }, authConfig.secret, {
-                expiresIn: authConfig.expires
-            });
-
-            res.json({
-                user: user,
-                token: token
-            });
-
-        }).catch(err => {
-            res.status(500).json(err);
+        User.findOne({
+            where: {
+                email: email
+            }
+        }).then(user => {
+            if (user) {
+                res.status(200).json({ err : "That e-mail is already registered"})
+            } else {
+                let password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.rounds));
+        
+                    User.create({
+                        name: req.body.name,
+                        email: req.body.email,
+                        password: password
+                    }).then(user => {
+                    // Create the token
+                    let token = jwt.sign({ user: user }, authConfig.secret, {
+                        expiresIn: authConfig.expires
+                    });
+                    res.json({
+                        user: user,
+                        token: token
+                    });
+                }).catch(err => {
+                    res.status(500).json(err);
+                })
+            }
         })
     }
 }

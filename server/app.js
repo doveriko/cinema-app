@@ -47,7 +47,7 @@ app.use(session({
 }));
 
 // app.use(function(req, res, next) {
-//   res.setHeader("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+//   res.setHeader("Access-Control-Allow-Origin", process.env.PUBLIC_DOMAIN); // update to match the domain you will make the request from
 //   res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, OPTIONS, DELETE');
 //   res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 //   res.setHeader('Access-Control-Allow-Credentials', true);
