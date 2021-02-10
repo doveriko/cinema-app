@@ -14,7 +14,7 @@ export default {
     
     await axios
       .post(process.env.VUE_APP_API_URL + "/users/signup",
-        { name, email, password },
+        { name, email, password }
       )
       .then((response) => {
         if (response.data.err) {
@@ -38,7 +38,6 @@ export default {
     };
 
     let router = payload.router;
-
     let { email, password } = registeredUser;
 
     await axios

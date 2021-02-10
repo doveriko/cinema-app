@@ -10,22 +10,12 @@
 <script>
 import navbar from './components/layout/navbar.vue';
 
-
 export default {
-    data () {
-        return {
-
-        }
-    },
     components: {
       'app-navbar' : navbar
-    },
-    methods: {
-
     }
 }
 </script>
 
 <style>
-
 </style>
