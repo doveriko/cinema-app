@@ -15,7 +15,7 @@
 </template>
 
 <script>
-// import axios from 'axios';
+import axios from 'axios';
 import movieItem from '../../components/movieItem.vue';
 
 export default {
@@ -25,23 +25,19 @@ export default {
       movieList: []
     }
   },
-  mounted() {
-    this.registerMovies();
-    // this.loadMovies();
+  beforeMount() {
+    this.loadMovies();
   },
   methods: {
-    registerMovies() {
-      this.$store.dispatch("registerMovies");
-    },
-    // loadMovies() {
-    //   axios
-    //     .get(process.env.VUE_APP_API_URL + '/movies')
-    //     .then(response => {
-    //       this.movieList = response.data;
-    //       console.log(response.data);
-    //     })
-    //     .catch(err => console.log(err));
-    // }
+    loadMovies() {
+      axios
+        .get(process.env.VUE_APP_API_URL + '/movies')
+        .then(response => {
+          this.movieList = response.data;
+          console.log(response.data);
+        })
+        .catch(err => console.log(err));
+    }
   }
 };
 </script>

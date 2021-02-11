@@ -10,7 +10,7 @@ router.get('/', (req, res, next) => {
             model: Session,
             attributes: ['id', 'time', 'movieId']
         },
-        attributes: ['id', 'title', 'description', 'imageUrl'] // Optional?
+        attributes: ['id', 'title', 'description', 'imageUrl']
     }).then(movies => {
         res.json(movies);
     })
@@ -26,9 +26,10 @@ router.get('/:id', (req, res) => {
     })
 })
 
-// POST one movie /movies
+// POST one movie /movies (route made to create seed from store)
 router.post('/', (req, res) => {
     Movie.create({
+        id: req.body.id,
         title: req.body.title,
         description: req.body.description,
         imageUrl: req.body.imageUrl
