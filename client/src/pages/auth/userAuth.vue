@@ -113,8 +113,6 @@ export default {
               email: this.email,
               password: this.password
             });
-            if (this.$store.getters.isAuthenticated)
-            this.$router.replace(this.$route.query.redirect);
           }
         // Signup
         } else {
@@ -149,12 +147,15 @@ export default {
               email: this.email,
               password: this.password
             });
-            if (this.$store.getters.isAuthenticated)
-            this.$router.replace(this.$route.query.redirect);
         }
       } catch (err) {
           console.log(err);
       }
+      // Redirection after authentication
+      let orderStatus = this.$store.state.orders.orderStatus;
+      orderStatus == "pending" ?
+      this.$router.replace(this.$route.query.redirect) :     //'/checkout'
+      this.$router.replace('/my-account')
     },
   },
 };
