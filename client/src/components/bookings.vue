@@ -1,6 +1,6 @@
 <template>
   <div id="bookings">
-    <h3>BOOKINGS</h3>
+    <h1 class="section-header">BOOKINGS</h1>
       <div class="no-orders" v-if="orderDataObj.length == 0">
         No orders available
       </div>
@@ -114,5 +114,13 @@ export default {
   border: 1px solid;
   border-radius: 10px;
   margin: 10px 0;
+}
+h1.section-header {
+    justify-content: center;
+    display: flex;
+    font-size: 20pt;
+    margin: 10px 0;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: #959eca;
 }
 </style>

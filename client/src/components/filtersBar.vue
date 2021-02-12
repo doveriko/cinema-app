@@ -24,7 +24,7 @@
         {{ session.timeFormatted }}
       </option>
     </select>
-    <base-button>SUBMIT</base-button>
+    <button>SUBMIT</button>
     <p>{{errorMessage}}</p>
     </form>
   </div>
@@ -101,11 +101,12 @@ export default {
       }
       this.$emit('save-session', sessionId)
 
+      let redirectUrl = ""
       if (!this.selectionError.noSession && !this.selectionError.differentDay && this.selectionError.noSession != null) {
-          let redirectUrl
             if (!this.$store.getters.isAuthenticated) redirectUrl = "/auth?redirect=checkout";
             else redirectUrl = "/checkout";
           this.$router.replace(redirectUrl);
+          console.log("redirectUrl", redirectUrl);
       } else {
         this.errorMessage = "Please, select a valid session"
       }
@@ -113,6 +114,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>

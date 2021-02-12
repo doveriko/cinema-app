@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
       model: Order,
       attributes: ['id', 'sessionId']
     },
-    attributes: ['name', 'email']
+    attributes: ['id', 'name', 'email']
   }).then(users => res.json(users));
 });
 

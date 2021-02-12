@@ -1,11 +1,9 @@
 <template>
-  <div>
     <base-card>
-      <h3>{{ title }}</h3>
-      <img :src="imageUrl" />
+      <h3 class="movie-title">{{ title }}</h3>
+      <img class="movie-img" :src="imageUrl" />
       <base-button link :to="movieDetails">+ info</base-button>
     </base-card>
-  </div>
 </template>
 
 <script>
@@ -20,4 +18,16 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+img.movie-img {
+    display: flex;
+    margin: 0 auto;
+    height: 300px;
+}
+h3.movie-title {
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 16pt;
+    color: #3a0061;
+}
+</style>

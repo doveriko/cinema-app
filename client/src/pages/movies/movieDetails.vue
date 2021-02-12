@@ -1,9 +1,15 @@
 <template>
   <div>
-    <p>MOVIE DETAILS</p>
-    <p>{{title}}</p>
-    <p>{{description}}</p>
-    <filters-bar :sessions="sessions" :title="title" @save-session="saveSession" ></filters-bar>
+    <h1 class="section-header">{{title}}</h1>
+      <div class="movie-details">
+        <div class="movie-cover">
+          <img class="movie-img" :src="imageUrl" />
+        </div>
+        <div class="movie-sessions">
+          <p class="movie-description">{{description}}</p>
+          <filters-bar :sessions="sessions" :title="title" @save-session="saveSession" ></filters-bar>
+        </div>
+      </div>
   </div>
 </template>
 
@@ -28,6 +34,9 @@ export default {
     },
     description() {
       return this.selectedMovie.description
+    },
+    imageUrl() {
+      return this.selectedMovie.imageUrl
     }
   },
   created() {
@@ -50,4 +59,18 @@ export default {
 </script>
 
 <style>
+.movie-details {
+    display: flex;
+    justify-content: center
+}
+.movie-cover {
+    flex-basis: 20%;
+}
+.movie-sessions {
+    flex-basis: 50%;
+}
+p.movie-description {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: justify;
+}
 </style>

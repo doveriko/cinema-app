@@ -1,7 +1,7 @@
 <template>
   <div id="profile">
     <div class="user-info">
-      <h3>PROFILE</h3>
+      <h1 class="section-header">PROFILE</h1>
       <p>{{ name }}</p>
       <p>{{ email }}</p>
     </div>

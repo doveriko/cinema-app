@@ -10,8 +10,7 @@ export default {
     };
 
     let { name, email, password } = newUser;
-    let router = payload.router;
-    
+
     await axios
       .post(process.env.VUE_APP_API_URL + "/users/signup",
         { name, email, password }
@@ -21,9 +20,8 @@ export default {
           newUser.err = response.data.err;
         } else {
           newUser.token = response.data.token;
+          newUser.userId = response.data.user.id;
           newUser.msg = response.data.err;
-
-          router.push('/movies')
         }
       })
       .catch((err) => console.log(err));
@@ -37,7 +35,6 @@ export default {
       password: payload.password,
     };
 
-    let router = payload.router;
     let { email, password } = registeredUser;
 
     await axios
@@ -53,8 +50,6 @@ export default {
           registeredUser.userId = response.data.user.id;
           registeredUser.token = response.data.token;
           registeredUser.name = response.data.user.name;
-
-          router.push('/movies')
         }
       })
       .catch((err) => {
@@ -63,6 +58,7 @@ export default {
 
     context.commit('setUser', registeredUser);
   },
+
   deleteUser(context, data) {
     let userId = data;
     axios
@@ -79,5 +75,5 @@ export default {
       err : ""
     }
     context.commit('deleteUser', resetAuthState)
-  },
+  }
 }

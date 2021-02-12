@@ -57,6 +57,9 @@ export default {
     this.loginError == "";
     this.signupError == "";
     this.$store.commit("clearErrorMessage", null)
+    console.log("this.$route.query.redirect", this.$route.query.redirect);
+    console.log("this.$route.query.fullPath", this.$route.query.fullPath);
+    console.log("this.$route", this.$route);
   },
   updated() {
     if (this.email != '' && this.password != '') {
@@ -99,6 +102,7 @@ export default {
     },
     async submitForm() {
       try {
+        // Login
         if (this.viewMode === 'login') {
           if (this.email === '' || this.password === '') {
           this.formIsValid = false;
@@ -107,11 +111,12 @@ export default {
           } else {
             await this.$store.dispatch("login", {
               email: this.email,
-              password: this.password,
-              router : this.$router
+              password: this.password
             });
+            if (this.$store.getters.isAuthenticated)
+            this.$router.replace(this.$route.query.redirect);
           }
-
+        // Signup
         } else {
             this.formIsValid = true;
             if (this.name === '' || this.email === '' || this.password === '' || this.repeatPassword === '') {
@@ -139,13 +144,13 @@ export default {
                 this.signupError = "The passwords entered don't match. Please, try again";
               return;
             } 
-
             await this.$store.dispatch("signup", {
               name: this.name,
               email: this.email,
-              password: this.password,
-              router : this.$router
+              password: this.password
             });
+            if (this.$store.getters.isAuthenticated)
+            this.$router.replace(this.$route.query.redirect);
         }
       } catch (err) {
           console.log(err);
@@ -155,10 +160,14 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 form {
   margin: 1rem;
   padding: 1rem;
+}
+
+form label {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .form-control {
@@ -198,7 +207,7 @@ textarea:focus {
   text-align: center;
   padding: 1rem 0;
   margin-bottom: 0.5rem;
-  font-family: Tahoma;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-size: 11pt;
 }
 
@@ -222,8 +231,33 @@ textarea:focus {
     background: lightgreen;
     color: darkgreen;
     font-size: 10pt;
-    font-family: Tahoma;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     text-align: center;
     margin: 0 2em;
 }
+
+.auth-buttons {
+  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  font: inherit;
+  background-color: #3a0061;
+  border: 1px solid #3a0061;
+  color: white;
+  cursor: pointer;
+  border-radius: 30px;
+  margin-right: 0.5rem;
+  display: inline-block;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#auth .button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.error {
+  color: red;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
 </style>

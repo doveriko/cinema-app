@@ -1,32 +1,29 @@
 <template>
-  <button v-if="!link" :class="mode">
-    <slot></slot>
-  </button>
-  <router-link v-else :to="to" :class="mode">
-    <slot></slot>
-  </router-link>
+  <div class="button-wrapper">
+    <button v-if="!link" class="base-button">
+      <slot></slot>
+    </button>
+    <router-link v-else :to="to" class="base-button">
+      <slot></slot>
+    </router-link>
+  </div>
 </template>
 
 <script>
 export default {
   props: {
-    mode: {
-      type: String,
-      required: false,
-      default: null
-    },
     link: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     to: {
       type: String,
       required: false,
-      default: '/'
-    }
-  }
-}
+      default: "/",
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -42,6 +39,7 @@ a {
   border-radius: 30px;
   margin-right: 0.5rem;
   display: inline-block;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 a:hover,
@@ -69,5 +67,11 @@ button:active {
 .outline:hover,
 .outline:active {
   background-color: #edd2ff;
+}
+
+.button-wrapper {
+    display: flex;
+    justify-content: center;
+    padding-top: 2rem;
 }
 </style>

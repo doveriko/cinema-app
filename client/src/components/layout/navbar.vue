@@ -2,12 +2,12 @@
   <nav>
     <ul>
       <div class="nav-home">
-        <li><router-link to="/" exact>Movies</router-link></li>
+        <span class="logo-title"><router-link to="/" exact>CINE DE BARRIO</router-link></span>
       </div>
       <div class="nav-my-account">
-        <li><router-link to="/my-account" exact>My Account</router-link></li>
-        <p v-if="isLoggedIn" class="username">{{ username }}</p>
-        <a v-if="isLoggedIn" @click="destroySession">LOG OUT</a>
+        <li class="auth-button"><router-link to="/my-account" exact>My Account</router-link></li>
+        <span v-if="isLoggedIn" class="username">| {{ username }} | </span>
+        <span v-if="isLoggedIn" class="logout" @click="destroySession"> Log out</span>
       </div>
     </ul>
   </nav>
@@ -54,9 +54,8 @@ a {
   border-radius: 10px;
 }
 nav {
-  background: #444;
+  background: white;
   padding: 14px 0;
-  margin-bottom: 40px;
 }
 .router-link-active {
   background: #eee;
@@ -66,8 +65,28 @@ nav {
   display: flex;
 }
 
-p.username {
+.username {
   margin: 0;
-  color: lightsalmon;
+  color: #3a0061;
+  font-size: 15pt;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
+
+.logout {
+  color: #fc8600;;
+  font-size: 15pt;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.logo-title a, .auth-button a {
+    color: #fc8600;
+    font-size: 15pt;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bolder;
+}
+
+.logo-title a {
+  font-size: 20pt;
+}
+
 </style>

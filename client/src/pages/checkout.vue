@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>CHECKOUT</h1>
+    <h1 class="section-header">CHECKOUT</h1>
 
     <h3>Booking details:</h3>
     <div>{{ movieTitle }}</div>

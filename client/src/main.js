@@ -26,6 +26,8 @@ const router = new VueRouter({
   mode: 'history'
 });
 
+export default router;
+
 router.beforeEach(function(to, _, next) {
   if (to.meta.requiresAuth && !store.getters.isAuthenticated) {
     next('/auth');
