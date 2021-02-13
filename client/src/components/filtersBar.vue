@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div id="filters">
+    <span class="select-tickets">Select your tickets for this week:</span>
     <form @submit.prevent="saveSession">
     <select @change="selectedDay()" v-model="day">
       <option value="" disabled selected>Select day</option>
@@ -24,7 +25,7 @@
         {{ session.timeFormatted }}
       </option>
     </select>
-    <button>SUBMIT</button>
+    <base-button>SUBMIT</base-button>
     <p>{{errorMessage}}</p>
     </form>
   </div>
@@ -113,3 +114,29 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+#filters form {
+  margin: 0;
+    padding-left: 0;
+  }
+.select-tickets {
+    color: #3a0061;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bold;
+    font-size: 13pt;
+}
+div#filters {
+    margin-top: 1.5rem;
+}
+select {
+    height: 32px;
+    border: 1px solid #3a0061;
+    border-radius: 3px;
+    margin: 10px;
+    margin-left: 0;
+    padding: 5px;
+    width: 150px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+</style>

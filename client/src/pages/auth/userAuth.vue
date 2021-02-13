@@ -1,11 +1,11 @@
 <template>
-<div id="user-auth">
-  <base-card>
+<div id="auth">
+  <base-card :class="{ 'mobile' : isMobileMode }">
     <div v-if="orderStatus == 'pending'" class="complete-order-message">
       <p>Please, log in or sign up to complete your order</p>
     </div>
 
-    <form @submit.prevent="submitForm" :class="{ 'mobile' : isMobileMode }">
+    <form @submit.prevent="submitForm">
       <div class="auth-panel" ref="auth">
         <div class="login-tab" :class="{active: selectedTab === 1}" @click="changeViewMode('login', 1)">
           {{ login }}
@@ -37,7 +37,9 @@
         <p v-if="selectedTab === 2">{{signupError}}</p>
       </div>
 
-      <button>{{buttonText}}</button>
+      <div class="button-wrapper">
+        <button class="auth-button">{{buttonText}}</button>
+      </div>
     </form>
   </base-card>
 </div>
@@ -185,6 +187,7 @@ form label {
 label {
   font-weight: bold;
   margin-bottom: 0.5rem;
+  margin-top: 1rem;
   display: block;
 }
 
@@ -192,9 +195,13 @@ input,
 textarea {
   display: block;
   width: 100%;
-  font: inherit;
-  border: 1px solid #ccc;
+  border: none;
   padding: 0.15rem;
+  height: 32px;
+  border-bottom: 1px solid #ccc;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  color:#f16b00;
+  font-size: 11pt;
 }
 
 input:focus,
@@ -210,7 +217,7 @@ textarea:focus {
 
 .login-tab,
 .signup-tab {
-  border-bottom: 1px solid #5151b1;
+  border-bottom: 1px solid #3a0061;
   flex-basis: 50%;
   text-align: center;
   padding: 1rem 0;
@@ -220,15 +227,16 @@ textarea:focus {
 }
 
 .login-tab {
-  border-right: 1px solid #5151b1;
+  border-right: 1px solid #3a0061;
 }
 
-.auth-panel div.active {
-    background: #959eca;
+.auth-panel .active {
+    background: #3a0061;
+    color: white;
 }
 
 .auth-panel div:hover {
-  background: #4355a5;
+  background: #3a00619c;
   color: white;
 }
 
@@ -244,7 +252,7 @@ textarea:focus {
     margin: 0 2em;
 }
 
-.auth-buttons {
+.auth-button {
   text-decoration: none;
   padding: 0.75rem 1.5rem;
   font: inherit;
@@ -258,13 +266,39 @@ textarea:focus {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
+.auth-button:hover {
+  background-color: #f16b00
+}
+
 #auth .button-wrapper {
     display: flex;
     justify-content: flex-end;
+    padding: 2em 0;
 }
 
-.error {
+.auth-errors {
   color: red;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 10pt;
+}
+
+#auth .card  {
+  width: 40%;
+}
+
+#auth .card.mobile {
+  width: 100%;
+  padding: 0;
+  box-shadow: none;
+}
+
+@media (min-width: 450px) and (max-width: 768px) {
+  #auth .card.mobile {
+    width: 60%
+  }
+}
+
+#auth .card.mobile form {
+  padding: 10px 0;
 }
 </style>

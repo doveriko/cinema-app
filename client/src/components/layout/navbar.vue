@@ -1,21 +1,27 @@
 <template>
-  <nav>
-    <ul>
+  <nav id="navbar">
       <div class="nav-home">
-        <span class="logo-title"><router-link to="/" exact>CINE DE BARRIO</router-link></span>
+        <router-link to="/" exact><img :src="isMobileMode ? '/logo-mobile.PNG' : '/logo.PNG'" class="logo-title"></router-link>
       </div>
-      <div class="nav-my-account">
-        <li class="auth-button"><router-link to="/my-account" exact>My Account</router-link></li>
-        <span v-if="isLoggedIn" class="username">| {{ username }} | </span>
-        <span v-if="isLoggedIn" class="logout" @click="destroySession"> Log out</span>
+      <div class="nav-auth">
+          <router-link to="/my-account" exact>
+            <font-awesome-icon icon="user-circle" class="login-icon"/>
+            <span v-if="!isLoggedIn" class="login-text">Log in</span>
+            <span v-if="isLoggedIn" class="username">{{ username }} | </span>
+          </router-link>
+            <font-awesome-icon v-if="isLoggedIn" icon="sign-out-alt" class="login-icon" @click="destroySession"/>
       </div>
-    </ul>
   </nav>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   computed: {
+    ...mapGetters([
+      'isMobileMode'
+    ]),
     isLoggedIn() {
       return this.$store.getters.isAuthenticated;
     },
@@ -35,7 +41,7 @@ export default {
 </script>
 
 <style scoped>
-ul {
+#navbar {
   list-style-type: none;
   text-align: center;
   margin: 0;
@@ -61,7 +67,7 @@ nav {
   background: #eee;
   color: #444;
 }
-.nav-my-account {
+.nav-auth {
   display: flex;
 }
 
@@ -73,12 +79,12 @@ nav {
 }
 
 .logout {
-  color: #fc8600;;
+  color: #f16b00;
   font-size: 15pt;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-.logo-title a, .auth-button a {
+/* .logo-title a, .auth-link a {
     color: #fc8600;
     font-size: 15pt;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -87,6 +93,34 @@ nav {
 
 .logo-title a {
   font-size: 20pt;
+} */
+
+.login-icon path {
+    fill: #3a0061;
+}
+
+.login-icon {
+    font-size: 16pt
+}
+
+.login-text {
+    color: #f16b00;
+    font-size: 13pt;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.not-auth-links {
+    padding: 1em;
+}
+
+.not-auth-links a:hover .login-text {
+  color: #3a0061
+}
+
+.not-auth-links a:hover .login-icon path {
+    fill: orange;
 }
 
 </style>
