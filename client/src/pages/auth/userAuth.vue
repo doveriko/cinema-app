@@ -1,10 +1,11 @@
 <template>
+<div id="user-auth">
   <base-card>
     <div v-if="orderStatus == 'pending'" class="complete-order-message">
       <p>Please, log in or sign up to complete your order</p>
     </div>
 
-    <form @submit.prevent="submitForm">
+    <form @submit.prevent="submitForm" :class="{ 'mobile' : isMobileMode }">
       <div class="auth-panel" ref="auth">
         <div class="login-tab" :class="{active: selectedTab === 1}" @click="changeViewMode('login', 1)">
           {{ login }}
@@ -31,17 +32,20 @@
       </div>
 
       <div class="auth-errors" v-if="!formIsValid">
-        <p>{{emptyInputsError}}</p>
+        <p>{{emptyFieldsError}}</p>
+        <p>{{authControllerError}}</p>
         <p v-if="selectedTab === 2">{{signupError}}</p>
-        <p>{{backendErrors}}</p>
       </div>
 
       <button>{{buttonText}}</button>
     </form>
   </base-card>
+</div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
@@ -52,7 +56,7 @@ export default {
       formIsValid: true,
       loginError: "",
       signupError: "",
-      emptyInputsError: "",
+      emptyFieldsError: "",
       viewMode: "login",
       selectedTab: 1,
     };
@@ -64,17 +68,20 @@ export default {
   },
   updated() {
     if (this.email != '' && this.password != '') {
-      this.emptyInputsError = "";
+      this.emptyFieldsError = "";
     }
   },
   computed: {
+    ...mapGetters([
+      'isMobileMode'
+    ]),
     login() {
       return "Log in";
     },
     signup() {
       return "Sign up";
     },
-    backendErrors() {
+    authControllerError() {
       return this.$store.state.auth.err
     },
     buttonText(){
@@ -86,7 +93,7 @@ export default {
     },
     orderStatus() {
       return this.$store.state.orders.orderStatus
-    }
+    },
   },
   methods: {
     changeViewMode(view, tab = 0) {
@@ -97,7 +104,7 @@ export default {
       this.password = "";
       this.repeatPassword = "";
       this.signupError = "";
-      this.emptyInputsError = "";
+      this.emptyFieldsError = "";
       this.$store.commit("clearErrorMessage", null)
     },
     async submitForm() {
@@ -106,7 +113,7 @@ export default {
         if (this.viewMode === 'login') {
           if (this.email === '' || this.password === '') {
             this.formIsValid = false;
-            this.emptyInputsError = "All the fields need to be filled";
+            this.emptyFieldsError = "All the fields need to be filled";
             this.$store.commit("clearErrorMessage", null)
           } else {
             await this.$store.dispatch("login", {
@@ -119,7 +126,7 @@ export default {
             this.formIsValid = true;
             if (this.name === '' || this.email === '' || this.password === '' || this.repeatPassword === '') {
               this.formIsValid = false;
-              this.emptyInputsError = "All the fields need to be filled";
+              this.emptyFieldsError = "All the fields need to be filled";
               return;
               } else if (this.name.length < 3 ) {
                 this.formIsValid = false;
@@ -260,5 +267,4 @@ textarea:focus {
   color: red;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
-
 </style>

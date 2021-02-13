@@ -15,5 +15,20 @@ export const store = new Vuex.Store({
     movies: moviesModule,
     auth: authModule,
     orders: ordersModule
+  },
+  state() {
+    return {
+      isMobile : null
+    }
+  },
+  mutations: {
+    isMobile(state, payload) {
+      state.isMobile = payload
+    }
+  },
+  getters: {
+    isMobileMode(state) {
+      return state.isMobile
+    }
   }
 })
