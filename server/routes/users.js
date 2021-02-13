@@ -2,8 +2,6 @@ var express = require('express');
 var router = express.Router();
 const User = require('../models/User');
 const Order = require('../models/Order');
-const Session = require('../models/Session');
-const Movie = require('../models/Movie');
 
 // Authentication controller
 const AuthController = require('../controllers/AuthController')

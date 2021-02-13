@@ -34,7 +34,6 @@ export default {
         .get(process.env.VUE_APP_API_URL + "/movies")
         .then((response) => {
           this.movieList = response.data;
-          console.log(response.data);
         })
         .catch((err) => console.log(err));
     },

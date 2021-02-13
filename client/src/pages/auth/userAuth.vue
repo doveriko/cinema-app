@@ -3,6 +3,7 @@
     <div v-if="orderStatus == 'pending'" class="complete-order-message">
       <p>Please, log in or sign up to complete your order</p>
     </div>
+
     <form @submit.prevent="submitForm">
       <div class="auth-panel" ref="auth">
         <div class="login-tab" :class="{active: selectedTab === 1}" @click="changeViewMode('login', 1)">
@@ -28,10 +29,13 @@
         <label for="password">Repeat password</label>
         <input type="password" id="repeatPassword" v-model.trim="repeatPassword" />
       </div>
-      <p v-if="!formIsValid && selectedTab === 2">{{signupError}}</p>
-      <!-- <p v-if="selectedTab === 1">{{loginErrors}}</p> -->
-      <p>{{loginErrors}}</p>
-      <p>{{emptyLoginError}}</p>
+
+      <div class="auth-errors" v-if="!formIsValid">
+        <p>{{emptyInputsError}}</p>
+        <p v-if="selectedTab === 2">{{signupError}}</p>
+        <p>{{backendErrors}}</p>
+      </div>
+
       <button>{{buttonText}}</button>
     </form>
   </base-card>
@@ -48,7 +52,7 @@ export default {
       formIsValid: true,
       loginError: "",
       signupError: "",
-      emptyLoginError: "",
+      emptyInputsError: "",
       viewMode: "login",
       selectedTab: 1,
     };
@@ -57,13 +61,10 @@ export default {
     this.loginError == "";
     this.signupError == "";
     this.$store.commit("clearErrorMessage", null)
-    console.log("this.$route.query.redirect", this.$route.query.redirect);
-    console.log("this.$route.query.fullPath", this.$route.query.fullPath);
-    console.log("this.$route", this.$route);
   },
   updated() {
     if (this.email != '' && this.password != '') {
-      this.emptyLoginError = "";
+      this.emptyInputsError = "";
     }
   },
   computed: {
@@ -73,7 +74,7 @@ export default {
     signup() {
       return "Sign up";
     },
-    loginErrors() {
+    backendErrors() {
       return this.$store.state.auth.err
     },
     buttonText(){
@@ -91,13 +92,12 @@ export default {
     changeViewMode(view, tab = 0) {
       this.viewMode = view;
       if (tab > 0) this.selectedTab = tab;
-
       this.name = "";
       this.email = "";
       this.password = "";
       this.repeatPassword = "";
       this.signupError = "";
-      this.emptyLoginError = "";
+      this.emptyInputsError = "";
       this.$store.commit("clearErrorMessage", null)
     },
     async submitForm() {
@@ -105,9 +105,9 @@ export default {
         // Login
         if (this.viewMode === 'login') {
           if (this.email === '' || this.password === '') {
-          this.formIsValid = false;
-          this.emptyLoginError = "All the fields need to be filled";
-          this.$store.commit("clearErrorMessage", null)
+            this.formIsValid = false;
+            this.emptyInputsError = "All the fields need to be filled";
+            this.$store.commit("clearErrorMessage", null)
           } else {
             await this.$store.dispatch("login", {
               email: this.email,
@@ -119,7 +119,7 @@ export default {
             this.formIsValid = true;
             if (this.name === '' || this.email === '' || this.password === '' || this.repeatPassword === '') {
               this.formIsValid = false;
-              this.signupError = "All the fields need to be filled";
+              this.emptyInputsError = "All the fields need to be filled";
               return;
               } else if (this.name.length < 3 ) {
                 this.formIsValid = false;

@@ -106,7 +106,6 @@ export default {
             if (!this.$store.getters.isAuthenticated) redirectUrl = "/auth?redirect=checkout";
             else redirectUrl = "/checkout";
           this.$router.replace(redirectUrl);
-          console.log("redirectUrl", redirectUrl);
       } else {
         this.errorMessage = "Please, select a valid session"
       }

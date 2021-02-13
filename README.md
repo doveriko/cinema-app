@@ -18,7 +18,7 @@ git remote add origin https://github.com/user/repo.git
 
 **Wireframes**
 
-![wireframe.png](https://github.com/doveriko/cinema-app/blob/master/wireframe.png?raw=true)
+![wireframe.png](https://github.com/doveriko/cinema-app/blob/master/server/public/wireframe.png?raw=true)
 
 Wireframes designed with [Mockflow](https://www.mockflow.com/).
 
