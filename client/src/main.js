@@ -13,9 +13,9 @@ Vue.use(VueAxios, axios);
 
 // Font Awesome installation
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faSignOutAlt, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt, faUserCircle, faTrashAlt, faCheck, faTimes, faTicketAlt, faFilm, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-library.add(faSignOutAlt, faUserCircle);
+library.add(faSignOutAlt, faUserCircle, faTrashAlt, faCheck, faTimes, faTicketAlt, faFilm, faCalendarAlt);
 
 // Register components
 import BaseButton from './components/ui/BaseButton.vue';

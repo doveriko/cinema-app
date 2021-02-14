@@ -5,7 +5,8 @@ export default {
         let session = {
             sessionId: data.sessionId,
             sessionTime: data.sessionTime,
-            movieTitle: data.movieTitle
+            movieTitle: data.movieTitle,
+            imageUrl: data.imageUrl
         }
         context.commit('saveSession', session)
     },

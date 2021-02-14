@@ -7,7 +7,7 @@
         </div>
         <div class="movie-sessions">
           <p class="movie-description">{{description}}</p>
-          <filters-bar :sessions="sessions" :title="title" @save-session="saveSession" ></filters-bar>
+          <filters-bar :sessions="sessions" :title="title" :imageUrl="imageUrl" @save-session="saveSession" ></filters-bar>
         </div>
       </div>
   </div>

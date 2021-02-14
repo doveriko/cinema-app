@@ -3,6 +3,7 @@ export default {
         state.sessionId = payload.sessionId,
         state.sessionTime = payload.sessionTime,
         state.movieTitle = payload.movieTitle,
+        state.imageUrl = payload.imageUrl,
         state.orderStatus = "pending"
     },
     registerOrder(state, payload) {

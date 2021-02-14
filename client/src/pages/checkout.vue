@@ -1,28 +1,38 @@
 <template>
-  <div>
+  <div id="checkout">
     <h1 class="section-header">CHECKOUT</h1>
 
-    <h3>Booking details:</h3>
-    <div>{{ movieTitle }}</div>
-    <div>{{ day }}/{{ month }}/{{ year }} at {{ hour }}</div>
+    <div class="checkout-panel">
+      <div class="booking-image">
+        <img class="movie-img" :src="imageUrl" />
+      </div>
+      <div class="booking-details">
+        <h3>Booking details:</h3>
+        <div class="booking-data" v-if="this.orderStatus != 'inactive'">
+          <div><font-awesome-icon icon="ticket-alt"/> 1 ticket</div>
+          <div><font-awesome-icon icon="film"/> {{ movieTitle }}</div>
+          <div><font-awesome-icon icon="calendar-alt"/> {{ day }}/{{ month }}/{{ year }} at {{ hour }}</div>
+        </div>
+        <div v-if="this.orderStatus == 'pending'" class="complete-order">
+          <p>Complete order?</p>
+          <span @click="cancelOrder"><font-awesome-icon icon="times"/></span>
+          <span @click="completeOrder"><font-awesome-icon icon="check"/></span>
+        </div>
 
-    <div v-if="this.orderStatus == 'pending'">
-      <p>Complete order?</p>
-      <button @click="completeOrder">COMPLETE</button>
-      <button @click="cancelOrder">CANCEL</button>
-    </div>
-
-    <div v-if="this.orderStatus == 'completed'" class="order-completed">
-      <h3>Booking completed!</h3>
+      <div v-if="this.orderStatus == 'completed'">
+      <h3 class="booking-completed">Booking completed!</h3>
       <p>You will receive an e-mail shortly with the reference number to show at the box office</p>
 
-      <base-button link :to="myAccount">Go to My Account</base-button>
-      <!-- <router-link to="/my-account" tag="button">Go to My Account</router-link> -->
+      <base-button link :to="'my-account'">Go to My Account</base-button>
     </div>
 
-    <div v-if="this.orderStatus == 'inactive'">
-      <p>Your booking has been cancelled. You will be redirected to the home page</p>
+    <div v-if="this.orderStatus == 'inactive'" >
+      <p class="booking-cancelled">Your booking has been cancelled. You will be redirected to the home page</p>
     </div>
+      </div>
+    </div>
+
+
 
   </div>
 </template>
@@ -49,8 +59,8 @@ export default {
     orderStatus() {
       return this.$store.state.orders.orderStatus;
     },
-    myAccount() {
-      return 'my-account';
+    imageUrl() {
+      return this.$store.state.orders.imageUrl;
     }
   },
   created() {
@@ -89,4 +99,62 @@ export default {
 </script>
 
 <style>
+#checkout {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+.checkout-panel {
+    display: flex;
+    width: 60%;
+}
+
+#checkout .booking-image {
+    flex-basis: 30%;
+}
+
+#checkout .booking-details {
+    flex-basis: 70%;
+    margin-left: 2em;
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.booking-data {
+    text-align: initial;
+    width: 80%;
+    margin: 0 auto;
+}
+.booking-data svg {
+    margin-right: 5px;
+}
+.booking-data svg path {
+    fill: #dc6200
+}
+.booking-completed {
+  color: #dc6200;
+
+}
+.booking-completed + p {
+  max-width: 70%;
+  margin: 0 auto;
+  font-size: 14px;
+}
+.complete-order {
+    color: #dc6200;
+}
+.complete-order svg {
+    margin: 0 1em;
+    font-size: 24px;
+    cursor: pointer;
+}
+.complete-order .fa-times path {
+    fill: #ff3b3bbf;
+}
+.complete-order .fa-check path {
+    fill: #30b730;
+}
+.booking-cancelled p {
+  display: block;
+  margin: 0 auto;
+}
 </style>

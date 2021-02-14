@@ -2,22 +2,24 @@
   <div id="bookings">
     <h1 class="section-header">BOOKINGS</h1>
       <div class="no-orders" v-if="orderDataObj.length == 0">
-        No orders available
+        <div>No orders available</div>
+        <base-button link :to="'movies'">Go to Movies</base-button>
       </div>
       <div
         class="booking-details"
         v-for="order in orderDataObj"
         :key="order.key"
       >
-        <p>
-          {{ order.date }} {{ order.hour }} {{ order.title }}
-        </p>
-        <button @click.prevent="activateDeletion(order.orderId)">DELETE</button>
+        <div class="order-title">{{ order.title }}</div>
+        <div class="order-date">Day: {{ order.date }}</div>
+        <div class="order-hour">Hour: {{ order.hour }}</div>
 
-        <div v-if="deletionIsActive && order.orderId == selectedOrder">
-          Are you sure?
-          <button @click.prevent="deleteOrder(order)">YES</button>
-          <button @click.prevent="deletionIsActive = false">NO</button>
+        <span v-if="!deletionIsActive" @click.prevent="activateDeletion(order.orderId)"><font-awesome-icon icon="trash-alt"/></span>
+
+        <div class="delete-order" v-if="deletionIsActive && order.orderId == selectedOrder">
+          <div>Are you sure you want to delete this order?</div>
+          <span @click.prevent="deletionIsActive = false"><font-awesome-icon icon="times"/></span>
+          <span @click.prevent="deleteOrder(order)"><font-awesome-icon icon="check"/></span>
         </div>
         
       </div>
@@ -111,8 +113,8 @@ export default {
   padding: 1em;
 }
 .booking-details {
-  border: 1px solid;
   border-radius: 10px;
+  background: #fff3b6;
   margin: 10px 0;
 }
 h1.section-header {
@@ -122,5 +124,34 @@ h1.section-header {
     margin: 10px 0;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     color: #f16b00;
+}
+.order-title {
+    font-weight: bold;
+}
+.booking-details {padding: 10px 0;}
+.booking-details div {
+    padding: 3px;
+}
+.fa-trash-alt  {
+    cursor: pointer;
+}
+.fa-trash-alt path {
+    fill: #ff8686;
+}
+.order-hour {
+    margin-bottom: 5px;
+}
+.delete-order {
+  margin-top: 5px;
+}
+.fa-times path {
+    fill: #ff3b3b;
+}
+.fa-check path {
+    fill: #30b7308f;
+}
+.delete-order svg {
+    margin: 10px 20px 0;
+    cursor: pointer;
 }
 </style>

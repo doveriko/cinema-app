@@ -21,19 +21,21 @@ export default {
 
 <style>
 .my-account .panel {
-    border: 3px solid grey;
-    border-radius: 5px;
     display: flex;
-    flex-direction: row;
-    width: 100%
 }
 
 .panel div {
     text-align: center;
     width: 100%
 }
-
 .my-account * {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
+.my-account .section-header {
+    margin-bottom: 25px;
+}
+.my-account .panel {
+    min-height: 300px;
+    width: 90%;
+    margin: 0 auto;}
 </style>

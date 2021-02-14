@@ -2,16 +2,16 @@
   <div id="profile">
     <div class="user-info">
       <h1 class="section-header">PROFILE</h1>
-      <p>{{ name }}</p>
-      <p>{{ email }}</p>
+      <p class="user-name">{{ name }}</p>
+      <p class="user-email">{{ email }}</p>
     </div>
-    <div v-if="this.deletionIsActive">
+    <div v-if="this.deletionIsActive" class="delete-order">
       <p>Are you sure you want to delete your account?</p>
-      <button @click.prevent="deleteAccount">YES</button>
-      <button @click.prevent="deletionIsActive = false">NO</button>
+      <span @click.prevent="deletionIsActive = false"><font-awesome-icon icon="times"/></span>
+      <span @click.prevent="deleteAccount"><font-awesome-icon icon="check"/></span>
     </div>
     <div class="user-actions">
-      <a href="">Change password</a> | <a href="" @click.prevent="activateDeletion">Delete account</a>
+      <a href="" @click.prevent="activateDeletion" v-if="!this.deletionIsActive">Delete account</a>
     </div>
   </div>
 </template>
@@ -54,5 +54,8 @@ div#profile {
 }
 .user-actions {
     padding-bottom: 10px;
+}
+.user-name {
+  font-weight: bold;
 }
 </style>

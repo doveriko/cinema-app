@@ -39,6 +39,9 @@ export default {
     },
     title: {
       type: String
+    },
+    imageUrl: {
+      type: String
     }
   },
   data() {
@@ -99,6 +102,7 @@ export default {
         sessionId : this.sessionId,
         sessionTime: this.sessionTime,
         movieTitle: this.title,
+        imageUrl: this.imageUrl
       }
       this.$emit('save-session', sessionId)
 
@@ -138,5 +142,10 @@ select {
     padding: 5px;
     width: 150px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.fa-sign-out-alt {
+    margin-top: 5px;
+    margin-left: 1rem;
 }
 </style>

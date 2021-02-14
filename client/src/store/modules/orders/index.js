@@ -10,6 +10,7 @@ export default {
           sessionTime: "",
           movieTitle: "",
           orderStatus: "inactive",
+          imageUrl: "",
           allOrders: []
       };
     },
