@@ -4,10 +4,22 @@ import VueRouter from 'vue-router';
 import routes from './routes';
 import { store } from './store/index';
 
-// Axios default config
+// Axios config
 import axios from 'axios';
 import VueAxios from 'vue-axios';
-axios.defaults.headers.common = {'Authorization': `bearer ${store.getters.token}`};
+// Insert token in requests to protected API endpoints (routes with auth middleware)
+axios.interceptors.request.use(
+  function(config) {
+    const token = store.getters.token;
+    if (token) {
+      config.headers["Authorization"] = 'Bearer ' + token;
+    }
+    return config;
+  },
+  function(error) {
+    return Promise.reject(error);
+  }
+);
 axios.defaults.withCredentials = true;
 Vue.use(VueAxios, axios);
 
