@@ -65,6 +65,10 @@ export default {
 }
 .movie-cover {
     flex-basis: 20%;
+    padding-right: 2em;
+}
+.mobile .movie-cover {
+    padding-right: 0;
 }
 .movie-sessions {
     flex-basis: 50%;
@@ -72,5 +76,15 @@ export default {
 p.movie-description {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     text-align: justify;
+}
+.mobile .movie-details {
+    flex-direction: column;
+    padding: 0 1em;
+}
+.mobile #filters select {
+    width: 100%;
+}
+.mobile #filters form {
+    padding: 10px 0;
 }
 </style>

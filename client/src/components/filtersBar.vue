@@ -25,8 +25,8 @@
         {{ session.timeFormatted }}
       </option>
     </select>
+    <p class="auth-errors">{{errorMessage}}</p>
     <base-button>SUBMIT</base-button>
-    <p>{{errorMessage}}</p>
     </form>
   </div>
 </template>

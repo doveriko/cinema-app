@@ -55,7 +55,7 @@ a {
 }
 .nav-auth {
   display: flex;
-  padding-top: 5px;
+  padding-top: 10px;
 }
 .username {
   margin-left: 5px;

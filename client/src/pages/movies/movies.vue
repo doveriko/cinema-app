@@ -46,7 +46,14 @@ export default {
     display: flex;
     flex-flow: wrap;
 }
-
 .card {
     flex-basis: 30%;
-}</style>
+}
+.mobile .movie-img {
+    width: 280px;
+    height: auto
+}
+.mobile .all-movies .card {
+    margin: 20px;
+}
+</style>

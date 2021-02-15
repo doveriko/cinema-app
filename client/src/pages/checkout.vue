@@ -157,4 +157,16 @@ export default {
   display: block;
   margin: 0 auto;
 }
+.mobile .checkout-panel {
+    width: 100%;
+}
+.mobile .booking-image {
+    display: none;
+}
+.mobile #checkout .booking-details {
+    margin: 0;
+    flex-basis: 100%;
+    padding-bottom: 2em;
+    margin-top: 1em;
+}
 </style>

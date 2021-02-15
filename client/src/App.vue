@@ -1,7 +1,7 @@
 <template>
   <div>
     <app-navbar></app-navbar>
-    <main>
+    <main :class="{ mobile: isMobileMode }">
       <router-view></router-view>
     </main>
   </div>
@@ -9,6 +9,7 @@
 
 <script>
 import navbar from "./components/layout/navbar.vue";
+import { mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -28,7 +29,10 @@ export default {
   computed: {
     isMobile() {
       return this.windowWidth <= 768
-    }
+    },
+    ...mapGetters([
+      'isMobileMode'
+    ]),
   }
   // created() {
   //   this.registerMovies();

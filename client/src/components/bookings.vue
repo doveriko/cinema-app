@@ -117,6 +117,9 @@ export default {
   background: #fff3b6;
   margin: 10px 0;
 }
+.mobile .booking-details {
+    padding: 1em 0;
+}
 h1.section-header {
     justify-content: center;
     display: flex;
