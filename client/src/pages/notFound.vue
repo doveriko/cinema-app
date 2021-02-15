@@ -1,5 +1,5 @@
 <template>
-  <h1>NOT FOUND</h1>
+  <h1 class="not-found">Page not found</h1>
 </template>
 
 <script>
@@ -9,5 +9,9 @@ export default {
 </script>
 
 <style>
-
+.not-found {
+    text-align: center;
+    padding-top: 1em;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
 </style>

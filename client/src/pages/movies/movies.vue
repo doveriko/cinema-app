@@ -45,6 +45,7 @@ export default {
 .all-movies {
     display: flex;
     flex-flow: wrap;
+    justify-content: center;
 }
 .card {
     flex-basis: 30%;
