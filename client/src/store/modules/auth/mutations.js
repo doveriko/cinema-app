@@ -4,7 +4,10 @@ export default {
         state.name = payload.name;
         state.email = payload.email;
         state.token = payload.token;
-        state.err = payload.err;
+        // state.err = payload.err;
+    },
+    authError(state, payload) {
+        state.err = payload;
     },
     deleteUser(state, payload) {
         state.userId = payload.userId;

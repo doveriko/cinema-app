@@ -17,16 +17,15 @@ export default {
       )
       .then((response) => {
         if (response.data.err) {
-          newUser.err = response.data.err;
+          context.commit('authError', response.data.err);
         } else {
           newUser.token = response.data.token;
           newUser.userId = response.data.user.id;
-          newUser.msg = response.data.err;
+          // newUser.msg = response.data.err;
+          context.commit('setUser', newUser);
         }
       })
       .catch((err) => console.log(err));
-
-    context.commit('setUser', newUser);
   },
 
   async login(context, payload) {
@@ -43,20 +42,19 @@ export default {
       )
       .then((response) => {
         if (response.data.err) {
-          registeredUser.err = response.data.err;
+          context.commit('authError', response.data.err);
         }
         else {
-          registeredUser.msg = response.data.err;
+          // registeredUser.msg = response.data.err;
           registeredUser.userId = response.data.user.id;
           registeredUser.token = response.data.token;
           registeredUser.name = response.data.user.name;
+          context.commit('setUser', registeredUser);
         }
       })
       .catch((err) => {
         console.log(err);
       });
-
-    context.commit('setUser', registeredUser);
   },
 
   deleteUser(context, data) {
@@ -67,6 +65,7 @@ export default {
       console.log(response);
     })
     .catch((err) => console.log(err));
+    
     let resetAuthState = {
       userId : null,
       name : "",

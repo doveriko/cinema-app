@@ -24,14 +24,14 @@
       </div>
       <div class="form-control">
         <label for="password">Password</label>
-        <input type="password" id="password" v-model.trim="password" />
+        <input type="password" id="password" v-model.trim="password"/>
       </div>
       <div v-if="selectedTab === 2" class="form-control">
         <label for="password">Repeat password</label>
-        <input type="password" id="repeatPassword" v-model.trim="repeatPassword" />
+        <input type="password" id="repeatPassword" v-model.trim="repeatPassword"/>
       </div>
 
-      <div class="auth-errors" v-if="!formIsValid">
+      <div class="auth-errors">
         <p>{{emptyFieldsError}}</p>
         <p>{{authControllerError}}</p>
         <p v-if="selectedTab === 2">{{signupError}}</p>
@@ -58,7 +58,7 @@ export default {
       formIsValid: true,
       loginError: "",
       signupError: "",
-      emptyFieldsError: "",
+      emptyFieldsError: null,
       viewMode: "login",
       selectedTab: 1,
     };
@@ -110,6 +110,7 @@ export default {
       this.$store.commit("clearErrorMessage", null)
     },
     async submitForm() {
+      this.$store.commit("clearErrorMessage", null)
       try {
         // Login
         if (this.viewMode === 'login') {
@@ -160,12 +161,17 @@ export default {
       } catch (err) {
           console.log(err);
       }
-      // Redirection after authentication
-      let orderStatus = this.$store.state.orders.orderStatus;
-      orderStatus == "pending" ?
-      this.$router.replace(this.$route.query.redirect) :     //'/checkout'
-      this.$router.replace('/my-account')
+      this.redirectAfterAuth();
     },
+    async redirectAfterAuth() {
+      let orderStatus = this.$store.state.orders.orderStatus;
+      console.log(this.authControllerError);
+      if (typeof this.authControllerError != 'string' && this.emptyFieldsError != "All the fields need to be filled") {
+        orderStatus == "pending" ?
+        this.$router.replace(this.$route.query.redirect) :     //'/checkout'
+        this.$router.replace('/my-account')
+      }
+    }
   },
 };
 </script>
