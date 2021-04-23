@@ -4,5 +4,8 @@
         "start": "cd server node ./bin/www",
         "heroku-prebuild": "cd client && npm install && npm run build",
         "heroku-postbuild": "cd client"
-    }
+    },
+    "engines": {
+        "node": "15.x"
+      }
 }
