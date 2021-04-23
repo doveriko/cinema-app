@@ -2,8 +2,7 @@
     "name": "cinema-app",
     "scripts": {
         "start": "cd server node ./bin/www",
-        "heroku-prebuild": "cd client && npm install && npm run build",
-        "heroku-postbuild": "cd client"
+        "heroku-postbuild": "cd client && npm install && npm run build"
     },
     "engines": {
         "node": "15.x",
