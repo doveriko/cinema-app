@@ -33,7 +33,7 @@ export default {
     ...mapGetters([
       'isMobileMode'
     ]),
-  }
+  },
   // created() {
   //   this.registerMovies();
   //   this.registerSessions();

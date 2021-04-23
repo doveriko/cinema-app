@@ -1,6 +1,6 @@
 <template>
   <div id="filters">
-    <span class="select-tickets">Select your tickets for this week:</span>
+    <span class="select-tickets">Select your ticket for this week:</span>
     <form @submit.prevent="saveSession">
     <select @change="selectedDay()" v-model="day">
       <option value="" disabled selected>Select day</option>
@@ -26,7 +26,7 @@
       </option>
     </select>
     <p class="auth-errors">{{errorMessage}}</p>
-    <base-button>SUBMIT</base-button>
+    <base-button>BOOK TICKET</base-button>
     </form>
   </div>
 </template>
