@@ -61,7 +61,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //  Populate req.cookies
 app.use(cookieParser());
 
+var distDir = __dirname + "/dist/";
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(distDir));
 
 // Routes
 app.get('/', function (req, res) {
