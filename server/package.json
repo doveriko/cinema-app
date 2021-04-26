@@ -20,7 +20,7 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "~1.9.1",
     "mssql": "^6.2.3",
-    "pug": "2.0.0-beta11",
+    "pug": "^3.0.2",
     "sequelize": "^6.3.5",
     "tedious": "^5.0.3"
   },
