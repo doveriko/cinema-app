@@ -1,11 +1,11 @@
 {
     "name": "cinema-app",
     "scripts": {
-        "start": "concurrently \"cd server node ./bin/www"\" \"cd client && npm start\"",
+        "start": "cd server node ./bin/www && npm install",
         "heroku-postbuild": "cd client && npm install && npm run build"
     },
     "engines": {
-        "node": "15.1.0",
-        "npm": "6.14.9"
-    }
+        "node": "15.x",
+        "npm": "6.x"
+      }
 }
