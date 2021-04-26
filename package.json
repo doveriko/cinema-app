@@ -1,7 +1,7 @@
 {
     "name": "cinema-app",
     "scripts": {
-        "start": "cd server node ./bin/www",
+        "start": "concurrently \"cd server node ./bin/www"\" \"cd client && npm start\"",
         "heroku-postbuild": "cd client && npm install && npm run build"
     },
     "engines": {
