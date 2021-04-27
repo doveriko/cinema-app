@@ -22,6 +22,7 @@
     "mssql": "^6.2.3",
     "pug": "^3.0.2",
     "sequelize": "^6.3.5",
+    "serve-static": "^1.14.1",
     "tedious": "^5.0.3"
   },
   "devDependencies": {

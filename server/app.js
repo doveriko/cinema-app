@@ -1,6 +1,7 @@
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
+const serveStatic = require('serve-static');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
@@ -61,9 +62,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //  Populate req.cookies
 app.use(cookieParser());
 
-var distDir = __dirname + "/dist/";
+// var distDir = __dirname + "/dist/";
 // app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(distDir));
+// app.use(express.static(distDir));
+
+//here we are configuring dist to serve app files
+app.use('/', serveStatic(path.join(__dirname, '/dist')))
+
+// this * route is to serve project on different page routes except root `/`
+app.get(/.*/, function (req, res) {
+	res.sendFile(path.join(__dirname, '/dist/index.html'))
+})
 
 // Routes
 app.get('/', function (req, res) {
