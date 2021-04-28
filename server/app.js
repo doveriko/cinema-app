@@ -3,11 +3,29 @@ const express = require('express');
 const path = require('path');
 const serveStatic = require('serve-static');
 const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
 const logger = require('morgan');
 const session = require('express-session');
 const cors = require('cors');
 require('dotenv').config();
+
+
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded());
+app.use(logger('dev'));
+
+app.use(serveStatic(__dirname + "/dist"));
+// var distDir = __dirname + "/dist/";
+// app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(distDir));
+
+// //here we are configuring dist to serve app files
+// app.use('/', serveStatic(path.join(__dirname, '/dist')))
+
+// // this * route is to serve project on different page routes except root `/`
+// app.get(/.*/, function (req, res) {
+// 	res.sendFile(path.join(__dirname, '/dist/index.html'))
+// })
 
 // API routes
 const usersRouter = require('./routes/users');
@@ -23,8 +41,6 @@ sequelize.sync({ force: false }).then(() => {
 }).catch(error => {
   console.log("An error has ocurred", error);
 });
-
-const app = express();
 
 app.use(cors({
   origin: [
@@ -55,26 +71,8 @@ app.use(session({
 //   next();
 // });
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded());
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: false }));
-
 //  Populate req.cookies
 app.use(cookieParser());
-
-var distDir = __dirname + "/dist/";
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(distDir));
-
-//here we are configuring dist to serve app files
-app.use('/', serveStatic(path.join(__dirname, '/dist')))
-
-// this * route is to serve project on different page routes except root `/`
-app.get(/.*/, function (req, res) {
-	res.sendFile(path.join(__dirname, '/dist/index.html'))
-})
 
 // Routes
 app.get('/', function (req, res) {
@@ -103,4 +101,15 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+// const host = '0.0.0.0';
+// const port = process.env.PORT || 3000;
+
+// app.listen(port, host, () => {
+//    console.log(`Server running at http://${host}:${port}/`);
+//  });
+
+app.set('port', process.env.PORT || 3000)
+
+app.listen(app.get('port'), () => {
+  console.log(`Express server listening on port ${app.get('port')}`);
+})

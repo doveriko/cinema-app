@@ -1,6 +1,6 @@
 {
     "scripts": {
-        "start": "cd server node ./bin/www && npm install",
+        "start": "cd server node app.js && npm install",
         "heroku-postbuild": "cd client && npm install && npm run build"
     },
     "engines": {
