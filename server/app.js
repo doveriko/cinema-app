@@ -56,16 +56,17 @@ app.use(session({
 // });
 
 app.use(logger('dev'));
-app.use(express.json())
+app.use(express.json());
+app.use(express.urlencoded());
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: false }));
 
 //  Populate req.cookies
 app.use(cookieParser());
 
-// var distDir = __dirname + "/dist/";
-// app.use(express.static(path.join(__dirname, 'public')));
-// app.use(express.static(distDir));
+var distDir = __dirname + "/dist/";
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(distDir));
 
 //here we are configuring dist to serve app files
 app.use('/', serveStatic(path.join(__dirname, '/dist')))
