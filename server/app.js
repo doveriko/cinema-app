@@ -108,8 +108,9 @@ app.use(function(err, req, res, next) {
 //    console.log(`Server running at http://${host}:${port}/`);
 //  });
 
-app.set('port', process.env.PORT || 3000)
+const port = process.env.PORT || 3000;
+const host = process.env.YOUR_HOST || '0.0.0.0';
 
-app.listen(app.get('port'), () => {
-  console.log(`Express server listening on port ${app.get('port')}`);
+app.listen(port, host, function() {
+  console.log(`Express server listening on port ${port}`);
 })
