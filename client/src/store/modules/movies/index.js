@@ -47,512 +47,614 @@ export default {
                 {
                     id: 1,
                     time: "2020-01-13T17:30:00.000Z", // lunes
-                    movieId: 1
+                    movieId: 1,
+                    roomId: 1
                 },
                 {
                     id: 2,
                     time: "2020-01-13T20:30:00.000Z", // lunes
-                    movieId: 1
+                    movieId: 1,
+                    roomId: 1
                 },
                 {
                     id: 3,
                     time: "2020-01-13T17:30:00.000Z", // lunes
-                    movieId: 2
+                    movieId: 2,
+                    roomId: 1
                 },
                 {
                     id: 4,
                     time: "2020-01-13T20:30:00.000Z", // lunes
-                    movieId: 2
+                    movieId: 2,
+                    roomId: 1
                 },
                 {
                     id: 5,
                     time: "2020-01-13T17:30:00.000Z", // lunes
-                    movieId: 3
+                    movieId: 3,
+                    roomId: 1
                 },
                 {
                     id: 6,
                     time: "2020-01-13T20:30:00.000Z", // lunes
-                    movieId: 3
+                    movieId: 3,
+                    roomId: 1
                 },
                 {
                     id: 7,
                     time: "2020-01-13T17:30:00.000Z", // lunes
-                    movieId: 4
+                    movieId: 4,
+                    roomId: 1
                 },
                 {
                     id: 8,
                     time: "2020-01-13T20:30:00.000Z", // lunes
-                    movieId: 4
+                    movieId: 4,
+                    roomId: 1
                 },
                 {
                     id: 9,
                     time: "2020-01-13T17:30:00.000Z", // lunes
-                    movieId: 5
+                    movieId: 5,
+                    roomId: 1
                 },
                 {
                     id: 10,
                     time: "2020-01-13T20:30:00.000Z", // lunes
-                    movieId: 5
+                    movieId: 5,
+                    roomId: 1
                 },
                 {
                     id: 11,
                     time: "2020-01-13T17:30:00.000Z", // lunes
-                    movieId: 6
+                    movieId: 6,
+                    roomId: 1
                 },
                 {
                     id: 12,
                     time: "2020-01-13T20:30:00.000Z", // lunes
-                    movieId: 6
+                    movieId: 6,
+                    roomId: 1
                 },
                 {
                     id: 13,
                     time: "2020-01-14T17:30:00.000Z", // martes
-                    movieId: 1
+                    movieId: 1,
+                    roomId: 1
                 },
                 {
                     id: 14,
                     time: "2020-01-14T20:30:00.000Z", // martes
-                    movieId: 1
+                    movieId: 1,
+                    roomId: 1
                 },
                 {
                     id: 15,
                     time: "2020-01-14T17:30:00.000Z", // martes
-                    movieId: 2
+                    movieId: 2,
+                    roomId: 1
                 },
                 {
                     id: 16,
                     time: "2020-01-14T20:30:00.000Z", // martes
-                    movieId: 2
+                    movieId: 2,
+                    roomId: 1
                 },
                 {
                     id: 17,
                     time: "2020-01-14T17:30:00.000Z", // martes
-                    movieId: 3
+                    movieId: 3,
+                    roomId: 1
                 },
                 {
                     id: 18,
                     time: "2020-01-14T20:30:00.000Z", // martes
-                    movieId: 3
+                    movieId: 3,
+                    roomId: 1
                 },
                 {
                     id: 19,
                     time: "2020-01-14T17:30:00.000Z", // martes
-                    movieId: 4
+                    movieId: 4,
+                    roomId: 1
                 },
                 {
                     id: 20,
                     time: "2020-01-14T20:30:00.000Z", // martes
-                    movieId: 4
+                    movieId: 4,
+                    roomId: 1
                 },
                 {
                     id: 21,
                     time: "2020-01-14T17:30:00.000Z", // martes
-                    movieId: 5
+                    movieId: 5,
+                    roomId: 1
                 },
                 {
                     id: 22,
                     time: "2020-01-14T20:30:00.000Z", // martes
-                    movieId: 5
+                    movieId: 5,
+                    roomId: 1
                 },
                 {
                     id: 23,
                     time: "2020-01-14T17:30:00.000Z", // martes
-                    movieId: 6
+                    movieId: 6,
+                    roomId: 1
                 },
                 {
                     id: 24,
                     time: "2020-01-14T20:30:00.000Z", // martes
-                    movieId: 6
+                    movieId: 6,
+                    roomId: 1
                 },
                 {
                     id: 25,
                     time: "2020-01-15T17:30:00.000Z", // miércoles
-                    movieId: 1
+                    movieId: 1,
+                    roomId: 1
                 },
                 {
                     id: 26,
                     time: "2020-01-15T20:30:00.000Z", // miércoles
-                    movieId: 1
+                    movieId: 1,
+                    roomId: 1
                 },
                 {
                     id: 27,
                     time: "2020-01-15T17:30:00.000Z", // miércoles
-                    movieId: 2
+                    movieId: 2,
+                    roomId: 1
                 },
                 {
                     id: 28,
                     time: "2020-01-15T20:30:00.000Z", // miércoles
-                    movieId: 2
+                    movieId: 2,
+                    roomId: 1
                 },
                 {
                     id: 29,
                     time: "2020-01-15T17:30:00.000Z", // miércoles
-                    movieId: 3
+                    movieId: 3,
+                    roomId: 1
                 },
                 {
                     id: 30,
                     time: "2020-01-15T20:30:00.000Z", // miércoles
-                    movieId: 3
+                    movieId: 3,
+                    roomId: 1
                 },
                 {
                     id: 31,
                     time: "2020-01-15T17:30:00.000Z", // miércoles
-                    movieId: 4
+                    movieId: 4,
+                    roomId: 1
                 },
                 {
                     id: 32,
                     time: "2020-01-15T20:30:00.000Z", // miércoles
-                    movieId: 4
+                    movieId: 4,
+                    roomId: 1
                 },
                 {
                     id: 33,
                     time: "2020-01-15T17:30:00.000Z", // miércoles
-                    movieId: 5
+                    movieId: 5,
+                    roomId: 1
                 },
                 {
                     id: 34,
                     time: "2020-01-15T20:30:00.000Z", // miércoles
-                    movieId: 5
+                    movieId: 5,
+                    roomId: 1
                 },
                 {
                     id: 35,
                     time: "2020-01-15T17:30:00.000Z", // miércoles
-                    movieId: 6
+                    movieId: 6,
+                    roomId: 1
                 },
                 {
                     id: 36,
                     time: "2020-01-15T20:30:00.000Z", // miércoles
-                    movieId: 6
+                    movieId: 6,
+                    roomId: 1
                 },
                 {
                     id: 37,
                     time: "2020-01-16T17:30:00.000Z", // jueves
-                    movieId: 1
+                    movieId: 1,
+                    roomId: 1
                 },
                 {
                     id: 38,
                     time: "2020-01-16T20:30:00.000Z", // jueves
-                    movieId: 1
+                    movieId: 1,
+                    roomId: 1
                 },
                 {
                     id: 39,
                     time: "2020-01-16T17:30:00.000Z", // jueves
-                    movieId: 2
+                    movieId: 2,
+                    roomId: 1
                 },
                 {
                     id: 40,
                     time: "2020-01-16T20:30:00.000Z", // jueves
-                    movieId: 2
+                    movieId: 2,
+                    roomId: 1
                 },
                 {
                     id: 41,
                     time: "2020-01-16T17:30:00.000Z", // jueves
-                    movieId: 3
+                    movieId: 3,
+                    roomId: 1
                 },
                 {
                     id: 42,
                     time: "2020-01-16T20:30:00.000Z", // jueves
-                    movieId: 3
+                    movieId: 3,
+                    roomId: 1
                 },
                 {
                     id: 43,
                     time: "2020-01-16T17:30:00.000Z", // jueves
-                    movieId: 4
+                    movieId: 4,
+                    roomId: 1
                 },
                 {
                     id: 44,
                     time: "2020-01-16T20:30:00.000Z", // jueves
-                    movieId: 4
+                    movieId: 4,
+                    roomId: 1
                 },
                 {
                     id: 45,
                     time: "2020-01-16T17:30:00.000Z", // jueves
-                    movieId: 5
+                    movieId: 5,
+                    roomId: 1
                 },
                 {
                     id: 46,
                     time: "2020-01-16T20:30:00.000Z", // jueves
-                    movieId: 5
+                    movieId: 5,
+                    roomId: 1
                 },
                 {
                     id: 47,
                     time: "2020-01-16T17:30:00.000Z", // jueves
-                    movieId: 6
+                    movieId: 6,
+                    roomId: 1
                 },
                 {
                     id: 48,
                     time: "2020-01-16T20:30:00.000Z", // jueves
-                    movieId: 6
+                    movieId: 6,
+                    roomId: 1
                 },
                 {
                     id: 49,
                     time: "2020-01-17T12:30:00.000Z", // viernes
-                    movieId: 1
+                    movieId: 1,
+                    roomId: 1
                 },
                 {
                     id: 50,
                     time: "2020-01-17T18:30:00.000Z", // viernes
-                    movieId: 1
+                    movieId: 1,
+                    roomId: 1
                 },
                 {
                     id: 51,
                     time: "2020-01-17T22:00:00.000Z", // viernes
-                    movieId: 1
+                    movieId: 1,
+                    roomId: 1
                 },
                 {
                     id: 52,
                     time: "2020-01-17T12:30:00.000Z", // viernes
-                    movieId: 2
+                    movieId: 2,
+                    roomId: 1
                 },
                 {
                     id: 53,
                     time: "2020-01-17T18:30:00.000Z", // viernes
-                    movieId: 2
+                    movieId: 2,
+                    roomId: 1
                 },
                 {
                     id: 54,
                     time: "2020-01-17T21:30:00.000Z", // viernes
-                    movieId: 2
+                    movieId: 2,
+                    roomId: 1
                 },
                 {
                     id: 55,
                     time: "2020-01-17T12:30:00.000Z", // viernes
-                    movieId: 3
+                    movieId: 3,
+                    roomId: 1
                 },
                 {
                     id: 56,
                     time: "2020-01-17T18:30:00.000Z", // viernes
-                    movieId: 3
+                    movieId: 3,
+                    roomId: 1
                 },
                 {
                     id: 57,
                     time: "2020-01-17T22:00:00.000Z", // viernes
-                    movieId: 3
+                    movieId: 3,
+                    roomId: 1
                 },
                 {
                     id: 58,
                     time: "2020-01-17T12:30:00.000Z", // viernes
-                    movieId: 4
+                    movieId: 4,
+                    roomId: 1
                 },
                 {
                     id: 59,
                     time: "2020-01-17T18:30:00.000Z", // viernes
-                    movieId: 4
+                    movieId: 4,
+                    roomId: 1
                 },
                 {
                     id: 60,
                     time: "2020-01-17T22:30:00.000Z", // viernes
-                    movieId: 4
+                    movieId: 4,
+                    roomId: 1
                 },
                 {
                     id: 61,
                     time: "2020-01-17T12:30:00.000Z", // viernes
-                    movieId: 5
+                    movieId: 5,
+                    roomId: 1
                 },
                 {
                     id: 62,
                     time: "2020-01-17T18:30:00.000Z", // viernes
-                    movieId: 5
+                    movieId: 5,
+                    roomId: 1
                 },
                 {
                     id: 63,
                     time: "2020-01-17T22:00:00.000Z", // viernes
-                    movieId: 5
+                    movieId: 5,
+                    roomId: 1
                 },
                 {
                     id: 64,
                     time: "2020-01-17T12:30:00.000Z", // viernes
-                    movieId: 6
+                    movieId: 6,
+                    roomId: 1
                 },
                 {
                     id: 65,
                     time: "2020-01-17T18:30:00.000Z", // viernes
-                    movieId: 6
+                    movieId: 6,
+                    roomId: 1
                 },
                 {
                     id: 66,
                     time: "2020-01-17T21:30:00.000Z", // viernes
-                    movieId: 6
+                    movieId: 6,
+                    roomId: 1
                 },
                 {
                     id: 67,
                     time: "2020-01-18T12:30:00.000Z", // sábado
-                    movieId: 1
+                    movieId: 1,
+                    roomId: 1
                 },
                 {
                     id: 68,
                     time: "2020-01-18T18:30:00.000Z", // sábado
-                    movieId: 1
+                    movieId: 1,
+                    roomId: 1
                 },
                 {
                     id: 69,
                     time: "2020-01-18T22:00:00.000Z", // sábado
-                    movieId: 1
+                    movieId: 1,
+                    roomId: 1
                 },
                 {
                     id: 70,
                     time: "2020-01-18T12:30:00.000Z", // sábado
-                    movieId: 2
+                    movieId: 2,
+                    roomId: 1
                 },
                 {
                     id: 71,
                     time: "2020-01-18T18:30:00.000Z", // sábado
-                    movieId: 2
+                    movieId: 2,
+                    roomId: 1
                 },
                 {
                     id: 72,
                     time: "2020-01-18T21:30:00.000Z", // sábado
-                    movieId: 2
+                    movieId: 2,
+                    roomId: 1
                 },
                 {
                     id: 73,
                     time: "2020-01-18T12:30:00.000Z", // sábado
-                    movieId: 3
+                    movieId: 3,
+                    roomId: 1
                 },
                 {
                     id: 74,
                     time: "2020-01-18T18:30:00.000Z", // sábado
-                    movieId: 3
+                    movieId: 3,
+                    roomId: 1
                 },
                 {
                     id: 75,
                     time: "2020-01-18T22:00:00.000Z", // sábado
-                    movieId: 3
+                    movieId: 3,
+                    roomId: 1
                 },
                 {
                     id: 76,
                     time: "2020-01-18T12:30:00.000Z", // sábado
-                    movieId: 4
+                    movieId: 4,
+                    roomId: 1
                 },
                 {
                     id: 77,
                     time: "2020-01-18T18:30:00.000Z", // sábado
-                    movieId: 4
+                    movieId: 4,
+                    roomId: 1
                 },
                 {
                     id: 78,
                     time: "2020-01-18T22:30:00.000Z", // sábado
-                    movieId: 4
+                    movieId: 4,
+                    roomId: 1
                 },
                 {
                     id: 79,
                     time: "2020-01-18T12:30:00.000Z", // sábado
-                    movieId: 5
+                    movieId: 5,
+                    roomId: 1
                 },
                 {
                     id: 80,
                     time: "2020-01-18T18:30:00.000Z", // sábado
-                    movieId: 5
+                    movieId: 5,
+                    roomId: 1
                 },
                 {
                     id: 81,
                     time: "2020-01-18T22:00:00.000Z", // sábado
-                    movieId: 5
+                    movieId: 5,
+                    roomId: 1
                 },
                 {
                     id: 82,
                     time: "2020-01-18T12:30:00.000Z", // sábado
-                    movieId: 6
+                    movieId: 6,
+                    roomId: 1
                 },
                 {
                     id: 83,
                     time: "2020-01-18T18:30:00.000Z", // sábado
-                    movieId: 6
+                    movieId: 6,
+                    roomId: 1
                 },
                 {
                     id: 84,
                     time: "2020-01-18T21:30:00.000Z", // sábado
-                    movieId: 6
+                    movieId: 6,
+                    roomId: 1
                 },
                 {
                     id: 85,
                     time: "2020-01-19T12:30:00.000Z", // domingo
-                    movieId: 1
+                    movieId: 1,
+                    roomId: 1
                 },
                 {
                     id: 86,
                     time: "2020-01-19T18:30:00.000Z", // domingo
-                    movieId: 1
+                    movieId: 1,
+                    roomId: 1
                 },
                 {
                     id: 87,
                     time: "2020-01-19T22:00:00.000Z", // domingo
-                    movieId: 1
+                    movieId: 1,
+                    roomId: 1
                 },
                 {
                     id: 88,
                     time: "2020-01-19T12:30:00.000Z", // domingo
-                    movieId: 2
+                    movieId: 2,
+                    roomId: 1
                 },
                 {
                     id: 89,
                     time: "2020-01-19T18:30:00.000Z", // domingo
-                    movieId: 2
+                    movieId: 2,
+                    roomId: 1
                 },
                 {
                     id: 90,
                     time: "2020-01-19T21:30:00.000Z", // domingo
-                    movieId: 2
+                    movieId: 2,
+                    roomId: 1
                 },
                 {
                     id: 91,
                     time: "2020-01-19T12:30:00.000Z", // domingo
-                    movieId: 3
+                    movieId: 3,
+                    roomId: 1
                 },
                 {
                     id: 92,
                     time: "2020-01-19T18:30:00.000Z", // domingo
-                    movieId: 3
+                    movieId: 3,
+                    roomId: 1
                 },
                 {
                     id: 93,
                     time: "2020-01-19T22:00:00.000Z", // domingo
-                    movieId: 3
+                    movieId: 3,
+                    roomId: 1
                 },
                 {
                     id: 94,
                     time: "2020-01-19T12:30:00.000Z", // domingo
-                    movieId: 4
+                    movieId: 4,
+                    roomId: 1
                 },
                 {
                     id: 95,
                     time: "2020-01-19T18:30:00.000Z", // domingo
-                    movieId: 4
+                    movieId: 4,
+                    roomId: 1
                 },
                 {
                     id: 96,
                     time: "2020-01-19T22:30:00.000Z", // domingo
-                    movieId: 4
+                    movieId: 4,
+                    roomId: 1
                 },
                 {
                     id: 97,
                     time: "2020-01-19T12:30:00.000Z", // domingo
-                    movieId: 5
+                    movieId: 5,
+                    roomId: 1
                 },
                 {
                     id: 98,
                     time: "2020-01-19T18:30:00.000Z", // domingo
-                    movieId: 5
+                    movieId: 5,
+                    roomId: 1
                 },
                 {
                     id: 99,
                     time: "2020-01-19T22:00:00.000Z", // domingo
-                    movieId: 5
+                    movieId: 5,
+                    roomId: 1
                 },
                 {
                     id: 100,
                     time: "2020-01-19T12:30:00.000Z", // domingo
-                    movieId: 6
+                    movieId: 6,
+                    roomId: 1
                 },
                 {
                     id: 101,
                     time: "2020-01-19T18:30:00.000Z", // domingo
-                    movieId: 6
+                    movieId: 6,
+                    roomId: 1
                 },
                 {
                     id: 102,
                     time: "2020-01-19T21:30:00.000Z", // domingo
-                    movieId: 6
+                    movieId: 6,
+                    roomId: 1
                 },
             ]
         };

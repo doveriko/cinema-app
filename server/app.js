@@ -32,6 +32,7 @@ const usersRouter = require('./routes/users');
 const moviesRouter = require('./routes/movies');
 const ordersRouter = require('./routes/orders');
 const sessionsRouter = require('./routes/sessions');
+const roomsRouter = require('./routes/rooms');
 
 // Connect to database
 const sequelize = require ('./database/db');
@@ -84,6 +85,8 @@ app.use('/users', usersRouter);
 app.use('/users', ordersRouter);
 app.use('/movies', moviesRouter);
 app.use('/sessions', sessionsRouter);
+app.use('/rooms', roomsRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

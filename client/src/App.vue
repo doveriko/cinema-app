@@ -9,7 +9,7 @@
 
 <script>
 import navbar from "./components/layout/navbar.vue";
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   components: {
@@ -33,19 +33,19 @@ export default {
     ...mapGetters([
       'isMobileMode'
     ]),
+  },
+  methods: {
+    ...mapActions([
+      'registerRooms',
+      'registerMovies',
+      'registerSessions'
+      ]),
+  },
+  created() {
+    // this.registerMovies();
+    // this.registerRooms();
+    // this.registerSessions();
   }
-  // created() {
-  //   this.registerMovies();
-  //   this.registerSessions();
-  // },
-  // methods: {
-  //   registerMovies() {
-  //     this.$store.dispatch("registerMovies");
-  //   },
-  //   registerSessions() {
-  //     this.$store.dispatch("registerSessions");
-  //   }
-  // }
 };
 </script>
 

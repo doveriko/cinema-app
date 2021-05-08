@@ -8,7 +8,8 @@ router.post('/', (req, res) => {
     Session.create({
         id: req.body.id,
         time: req.body.time,
-        movieId: req.body.movieId // Use "body" instead of "params" to associate tables manually in seed
+        movieId: req.body.movieId, // Use "body" instead of "params" to associate tables manually in seed
+        roomId: req.body.roomId // Use "body" instead of "params" to associate tables manually in seed
     }).then(session => {
         res.json(session)
     })

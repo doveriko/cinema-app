@@ -27,10 +27,11 @@ export default {
     for (let i = 0; i < allSessions.length; i++) {
       var time = allSessions[i].time
       var movieId = allSessions[i].movieId
+      var roomId = allSessions[i].roomId
 
       axios
         .post(process.env.VUE_APP_API_URL + "/sessions",
-          { time, movieId }
+          { time, movieId, roomId }
         )
         .then((response) => {
           console.log("sessions created", response.data);
