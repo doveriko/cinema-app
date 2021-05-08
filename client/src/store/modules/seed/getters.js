@@ -4,5 +4,8 @@ export default {
     },
     allSessions(state) {
         return state.sessions;
+    },
+    allRooms(state) {
+        return state.rooms;
     }
 }

@@ -1,6 +1,23 @@
 import axios from 'axios';
 
 export default {
+  registerRooms(context) {
+    let allRooms = context.getters.allRooms;
+
+    for (let i = 0; i < allRooms.length; i++) {
+      var id = allRooms[i].id
+      var name = allRooms[i].name
+
+      axios
+        .post(process.env.VUE_APP_API_URL + "/rooms",
+          { id, name }
+        )
+        .then((response) => {
+          console.log("rooms created", response.data);
+        })
+        .catch((err) => console.log(err));
+    }
+  },
   registerMovies(context) {
     let allMovies = context.getters.allMovies;
 
