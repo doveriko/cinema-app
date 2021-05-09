@@ -6,7 +6,8 @@ const Room = require('../models/Room');
 router.post('/', (req, res) => {
     Room.create({
         id: req.body.id,
-        name: req.body.name
+        name: req.body.name,
+        ticketUnitPrice: req.body.ticketUnitPrice
     }).then(room => {
         res.json(room)
     })

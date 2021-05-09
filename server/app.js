@@ -37,7 +37,7 @@ const roomsRouter = require('./routes/rooms');
 // Connect to database
 const sequelize = require ('./database/db');
 require('./models/associations');
-sequelize.sync({ force: false }).then(() => {
+sequelize.sync({ force: true }).then(() => {
   console.log("Connected to database");
 }).catch(error => {
   console.log("An error has ocurred", error);

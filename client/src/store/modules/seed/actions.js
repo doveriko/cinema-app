@@ -7,10 +7,11 @@ export default {
     for (let i = 0; i < allRooms.length; i++) {
       var id = allRooms[i].id
       var name = allRooms[i].name
+      var ticketUnitPrice = allRooms[i].ticketUnitPrice
 
       axios
         .post(process.env.VUE_APP_API_URL + "/rooms",
-          { id, name }
+          { id, name, ticketUnitPrice }
         )
         .then((response) => {
           console.log("rooms created", response.data);
