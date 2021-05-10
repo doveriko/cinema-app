@@ -7,5 +7,8 @@ export default {
     },
     allRooms(state) {
         return state.rooms;
+    },
+    allSeats(state) {
+        return state.seats;
     }
 }

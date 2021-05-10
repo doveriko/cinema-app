@@ -1,19 +1,20 @@
 export let seed = {
-    rooms: [{
-        name: 'Jerezano',
-        id: 1,
-        ticketUnitPrice: 5.50
-      },
-      {
-        name: 'Lealas',
-        id: 2,
-        ticketUnitPrice: 6.00
-      },
-      {
-        name: 'Delicias',
-        id: 3,
-        ticketUnitPrice: 7.00
-      }
+    rooms: [
+        {
+            name: 'Jerezano',
+            id: 1,
+            ticketUnitPrice: 5.50
+        },
+        {
+            name: 'Lealas',
+            id: 2,
+            ticketUnitPrice: 6.00
+        },
+        {
+            name: 'Delicias',
+            id: 3,
+            ticketUnitPrice: 7.00
+        }
     ],
     movies: [
         {
@@ -1300,5 +1301,142 @@ export let seed = {
             movieId: 4,
             roomId: 3
         },
+    ],
+    seats: [
+        {
+            area: 'Front',
+            number: 1,
+            roomId: 1
+        },
+        {
+            area: 'Front',
+            number: 2,
+            roomId: 1
+        },
+        {
+            area: 'Front',
+            number: 3,
+            roomId: 1
+        },
+        {
+            area: 'Middle',
+            number: 1,
+            roomId: 1
+        },
+        {
+            area: 'Middle',
+            number: 2,
+            roomId: 1
+        },
+        {
+            area: 'Middle',
+            number: 3,
+            roomId: 1
+        },
+        {
+            area: 'Back',
+            number: 1,
+            roomId: 1
+        },
+        {
+            area: 'Back',
+            number: 2,
+            roomId: 1
+        },
+        {
+            area: 'Back',
+            number: 3,
+            roomId: 1
+        },
+        {
+            area: 'Front',
+            number: 1,
+            roomId: 2
+        },
+        {
+            area: 'Front',
+            number: 2,
+            roomId: 2
+        },
+        {
+            area: 'Front',
+            number: 3,
+            roomId: 2
+        },
+        {
+            area: 'Middle',
+            number: 1,
+            roomId: 2
+        },
+        {
+            area: 'Middle',
+            number: 2,
+            roomId: 2
+        },
+        {
+            area: 'Middle',
+            number: 3,
+            roomId: 2
+        },
+        {
+            area: 'Back',
+            number: 1,
+            roomId: 2
+        },
+        {
+            area: 'Back',
+            number: 2,
+            roomId: 2
+        },
+        {
+            area: 'Back',
+            number: 3,
+            roomId: 2
+        },
+        {
+            area: 'Front',
+            number: 1,
+            roomId: 3
+        },
+        {
+            area: 'Front',
+            number: 2,
+            roomId: 3
+        },
+        {
+            area: 'Front',
+            number: 3,
+            roomId: 3
+        },
+        {
+            area: 'Middle',
+            number: 1,
+            roomId: 3
+        },
+        {
+            area: 'Middle',
+            number: 2,
+            roomId: 3
+        },
+        {
+            area: 'Middle',
+            number: 3,
+            roomId: 3
+        },
+        {
+            area: 'Back',
+            number: 1,
+            roomId: 3
+        },
+        {
+            area: 'Back',
+            number: 2,
+            roomId: 3
+        },
+        {
+            area: 'Back',
+            number: 3,
+            roomId: 3
+        }
     ]
 }

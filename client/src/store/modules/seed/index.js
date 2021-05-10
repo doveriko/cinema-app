@@ -7,7 +7,8 @@ export default {
         return {
             rooms : seed.rooms,
             movies: seed.movies,
-            sessions: seed.sessions
+            sessions: seed.sessions,
+            seats: seed.seats
         };
     },
     actions,

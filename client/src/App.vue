@@ -38,13 +38,15 @@ export default {
     ...mapActions([
       'registerRooms',
       'registerMovies',
-      'registerSessions'
+      'registerSessions',
+      'registerSeats'
       ]),
   },
   created() {
     // this.registerMovies();
     // this.registerRooms();
     // this.registerSessions();
+    // this.registerSeats();
   }
 };
 </script>

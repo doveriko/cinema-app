@@ -1,6 +1,24 @@
 import axios from 'axios';
 
 export default {
+  registerSeats(context) {
+    let allSeats = context.getters.allSeats;
+
+    for (let i = 0; i < allSeats.length; i++) {
+      var area = allSeats[i].area
+      var number = allSeats[i].number
+      var roomId = allSeats[i].roomId
+
+      axios
+        .post(process.env.VUE_APP_API_URL + "/seats",
+          { area, number, roomId }
+        )
+        .then((response) => {
+          console.log("seats created", response.data);
+        })
+        .catch((err) => console.log(err));
+    }
+  },
   registerRooms(context) {
     let allRooms = context.getters.allRooms;
 
@@ -38,7 +56,6 @@ export default {
         .catch((err) => console.log(err));
     }
   },
-
   registerSessions(context) {
     let allSessions = context.getters.allSessions;
 
