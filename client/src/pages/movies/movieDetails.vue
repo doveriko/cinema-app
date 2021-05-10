@@ -7,24 +7,25 @@
         </div>
         <div class="movie-sessions">
           <p class="movie-description">{{description}}</p>
-          <filters-bar :sessions="sessions" :title="title" :imageUrl="imageUrl" @save-session="saveSession" ></filters-bar>
+          <filter-session :sessions="sessions" :title="title" :imageUrl="imageUrl" @save-session="saveSession" ></filter-session>
         </div>
       </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
-import filtersBar from '../../components/filtersBar.vue';
+import filterSession from '../../components/filterSession.vue';
+import axios from 'axios';
 
 export default {
+  props: ['selectedMovieId'],
   data() {
     return {
-      id: this.$route.params.id,
+      id: this.$route.params.id || this.selectedMovieId,
       selectedMovie: {},
     };
   },
-  components: { filtersBar },
+  components: { filterSession },
   computed: {
     sessions() {
       return this.selectedMovie.sessions
@@ -40,7 +41,11 @@ export default {
     }
   },
   created() {
-    this.loadMovie();
+    if (this.id === this.selectedMovieId) {
+      this.selectedMovie = this.$store.getters.oneMovie(this.id)
+    } else {
+      this.loadMovie();
+    }
   },
   methods: {
     loadMovie() {
@@ -48,6 +53,7 @@ export default {
         .get(process.env.VUE_APP_API_URL + "/movies/" + this.id)
         .then((response) => {
           this.selectedMovie = response.data;
+          console.log("arsa", this.selectedMovie);
         })
         .catch((err) => console.log(err));
     },

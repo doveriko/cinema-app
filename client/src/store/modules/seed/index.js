@@ -8,7 +8,8 @@ export default {
             rooms : seed.rooms,
             movies: seed.movies,
             sessions: seed.sessions,
-            seats: seed.seats
+            seats: seed.seats,
+            selectedMovie: {}
         };
     },
     actions,

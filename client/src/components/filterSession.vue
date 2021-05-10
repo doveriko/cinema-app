@@ -1,5 +1,5 @@
 <template>
-  <div id="filters">
+  <div class="filter-session">
     <span class="select-tickets">Select your ticket for this week:</span>
     <form @submit.prevent="saveSession">
     <select @change="selectedDay()" v-model="day">
@@ -120,7 +120,7 @@ export default {
 </script>
 
 <style scoped>
-#filters form {
+.filter-session form {
   margin: 0;
     padding-left: 0;
   }
@@ -130,7 +130,7 @@ export default {
     font-weight: bold;
     font-size: 13pt;
 }
-div#filters {
+.filter-session {
     margin-top: 1.5rem;
 }
 select {

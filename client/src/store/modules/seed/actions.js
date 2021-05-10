@@ -73,5 +73,9 @@ export default {
         })
         .catch((err) => console.log(err));
     }
+  },
+  getOneMovie(context) {
+    let oneMovie = context.getters.oneMovie;
+    return oneMovie
   }
 }

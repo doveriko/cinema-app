@@ -2,6 +2,9 @@ export default {
     allMovies(state) {
         return state.movies;
     },
+    oneMovie: (state) => (id) => {
+        return state.movies.find(movie => movie.id === id);
+    },
     allSessions(state) {
         return state.sessions;
     },
