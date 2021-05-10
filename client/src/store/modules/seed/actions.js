@@ -74,8 +74,10 @@ export default {
         .catch((err) => console.log(err));
     }
   },
-  getOneMovie(context) {
-    let oneMovie = context.getters.oneMovie;
-    return oneMovie
-  }
+  getOneMovie(context, data) {
+    let movieId = data
+    let allMovies = context.getters.allMovies
+    let selectedMovie = allMovies.filter(movie => movie.id == movieId)
+    context.commit('selectMovie', selectedMovie[0])
+  },
 }

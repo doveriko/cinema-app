@@ -15,7 +15,6 @@
 
 <script>
 import filterSession from '../../components/filterSession.vue';
-import axios from 'axios';
 
 export default {
   props: ['selectedMovieId'],
@@ -44,19 +43,11 @@ export default {
     if (this.id === this.selectedMovieId) {
       this.selectedMovie = this.$store.getters.oneMovie(this.id)
     } else {
-      this.loadMovie();
+      this.$store.dispatch('getOneMovie', this.$route.params.id);
+      this.selectedMovie = this.$store.state.seed.selectedMovie;
     }
   },
   methods: {
-    loadMovie() {
-      axios
-        .get(process.env.VUE_APP_API_URL + "/movies/" + this.id)
-        .then((response) => {
-          this.selectedMovie = response.data;
-          console.log("arsa", this.selectedMovie);
-        })
-        .catch((err) => console.log(err));
-    },
     saveSession(data) {
       this.$store.dispatch('saveSession', data);
     }
