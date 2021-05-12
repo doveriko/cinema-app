@@ -3,7 +3,9 @@ import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
 import authModule from './modules/auth/index.js';
 import ordersModule from './modules/orders/index.js';
-import seedModule from './modules/seed/index.js';
+import moviesModule from './modules/movies/index.js';
+import roomsModule from './modules/rooms/index.js';
+// import seedModule from './modules/seed/index.js';
 
 Vue.use(Vuex);
 
@@ -14,7 +16,9 @@ export const store = new Vuex.Store({
   modules: {
     auth: authModule,
     orders: ordersModule,
-    seed: seedModule,
+    movies: moviesModule,
+    rooms: roomsModule,
+    // seed: seedModule,
   },
   state() {
     return {

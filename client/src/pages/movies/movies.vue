@@ -44,7 +44,7 @@ import movieItem from "../../components/movieItem.vue";
 import MovieDetails from './movieDetails.vue';
 import filterTitle from "../../components/filterTitle";
 import FilterRoom from '../../components/filterRoom.vue';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   components: { movieItem, filterTitle, FilterRoom, MovieDetails },
@@ -64,6 +64,7 @@ export default {
     ]),
   },
   methods: {
+    ...mapActions(['loadMovies']),
     filteredTitle(data) {
       this.selectedMovieId = data.id
       this.selectedMovieTitle = data.title
@@ -93,6 +94,9 @@ export default {
       this.selectedRoomName = null,
       this.selectedRoomId = null
     }
+  },
+  created() {
+    this.loadMovies();
   }
 };
 </script>
