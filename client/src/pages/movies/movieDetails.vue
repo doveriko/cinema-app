@@ -40,12 +40,7 @@ export default {
     }
   },
   created() {
-    if (this.id === this.selectedMovieId) {
       this.selectedMovie = this.$store.getters.oneMovie(this.id)
-    } else {
-      this.$store.dispatch('getOneMovie', this.$route.params.id);
-      this.selectedMovie = this.$store.state.seed.selectedMovie;
-    }
   },
   methods: {
     saveSession(data) {

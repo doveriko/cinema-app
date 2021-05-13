@@ -27,7 +27,6 @@ export default {
         filterApplied : true
       }
       this.$emit("filtered-title", data);
-      console.log("filtered movie data in filters", data);
       this.movie = ''
     }
   },

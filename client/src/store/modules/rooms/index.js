@@ -16,7 +16,7 @@ export default {
                 })
                 .catch((err) => console.log(err));
                 context.commit('loadRooms', allRooms)
-        },
+        }
     },
     mutations: {
         loadRooms(state, payload) {
@@ -26,6 +26,9 @@ export default {
     getters: {
         allRooms(state) {
             return state.rooms;
+        },
+        oneRoom: (state) => (id) => {
+            return state.rooms.find(room => room.id == id);
         }
     }
 };

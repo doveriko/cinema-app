@@ -1,7 +1,7 @@
 <template>
   <nav id="navbar">
       <div class="nav-home">
-        <router-link to="/" exact><img :src="isMobileMode ? '/logo-mobile.PNG' : '/logo.PNG'" class="logo-title"></router-link>
+        <a href="/"><img :src="isMobileMode ? '/logo-mobile.PNG' : '/logo.PNG'" class="logo-title"></a>
       </div>
       <div class="nav-auth">
           <router-link to="/my-account" exact>

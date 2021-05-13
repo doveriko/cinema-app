@@ -1,29 +1,31 @@
 <template>
   <div>
-    <h1 class="section-header">MOVIES</h1>
+    <h1 class="section-header" :class="{'filter-applied': filterApplied}">MOVIES</h1>
 
-    <div class="filters" v-show="!filterApplied">
+    <div class="filters" v-if="!filterApplied">
       <filter-title :allMovies="allMovies" @filtered-title="filteredTitle"></filter-title>
       <filter-room :allRooms="allRooms" @filtered-room="filteredRoom" ></filter-room>
     </div>
 
-    <div class="remove-filters" v-show="filterApplied && !selectedMovieTitle">
+    <div class="remove-filters" v-if="filterApplied">
       <div class="remove-button" @click="resetFilters">Remove filters</div>
     </div>
 
     <div v-if="filterApplied && selectedMovieTitle">
       <movie-details :selectedMovieId="selectedMovieId"></movie-details>
     </div>
-    <div v-if="filterApplied && selectedRoomName">
-      {{this.selectedRoomName}}
-      <!-- <movie-item
-        v-for="movie in filteredMovieList"
-        :key="movie.id"
-        :id="movie.id"
-        :title="movie.title"
-        :imageUrl="movie.imageUrl"
-      >
-      </movie-item> -->
+    <div v-if="filterApplied && selectedRoomName" >
+      <h1 class="section-header">Cine {{selectedRoomName}}</h1>
+      <div class="all-movies">
+        <movie-item
+          v-for="movie in filteredMovieList"
+          :key="movie.id"
+          :id="movie.id"
+          :title="movie.title"
+          :imageUrl="movie.imageUrl"
+        >
+        </movie-item>
+      </div>
     </div>
 
     <div class="all-movies" v-if="!filterApplied">
@@ -54,7 +56,8 @@ export default {
       selectedMovieTitle: null,
       selectedMovieId: null,
       selectedRoomName: null,
-      selectedRoomId: null
+      selectedRoomId: null,
+      filteredMovieList: []
     };
   },
   computed: {
@@ -64,39 +67,40 @@ export default {
     ]),
   },
   methods: {
-    ...mapActions(['loadMovies']),
+    ...mapActions(['loadMovies', 'loadRooms']),
     filteredTitle(data) {
       this.selectedMovieId = data.id
       this.selectedMovieTitle = data.title
       this.filterApplied = data.filterApplied
-
-      console.log("filtered movie data in movies component",
-      this.selectedMovieId,
-      this.selectedMovieTitle,
-      this.filterApplied
-      );
     },
     filteredRoom(data) {
       this.selectedRoomId = data.id
       this.selectedRoomName = data.name
       this.filterApplied = data.filterApplied
-
-      console.log("filtered room data in movies component",
-      this.selectedRoomId,
-      this.selectedRoomName,
-      this.filterApplied
-      );
+      this.filterMoviesInRoom()
     },
     resetFilters() {
       this.filterApplied = false,
       this.selectedMovieTitle = null,
       this.selectedMovieId = null,
       this.selectedRoomName = null,
-      this.selectedRoomId = null
+      this.selectedRoomId = null,
+      this.filteredMovieList = []
+    },
+    filterMoviesInRoom() {
+      // 1. Iterate over movies
+      let moviesInRoom = this.allMovies.map((movie) => {
+        // 2. Copy array & filter movies with sessions assigned to selected room
+        return {...movie, sessions: movie.sessions.filter((session) => session.roomId == this.selectedRoomId)}
+      })
+      // 3. Remove movies without sessions assigned to selected room
+      this.filteredMovieList = moviesInRoom.filter(movies => movies.sessions.length)
     }
   },
   created() {
     this.loadMovies();
+    this.loadRooms();
+    console.log(this.allRooms)
   }
 };
 </script>
@@ -155,5 +159,9 @@ export default {
 
 .remove-button:hover {
     background: #ffd1d5;
+}
+
+.section-header.filter-applied {
+    display: none;
 }
 </style>

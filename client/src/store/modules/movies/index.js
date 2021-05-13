@@ -18,12 +18,12 @@ export default {
                 .catch((err) => console.log(err));
                 context.commit('loadMovies', allMovies)
         },
-        getOneMovie(context, data) {
-            let movieId = data
-            let allMovies = context.getters.allMovies
-            let selectedMovie = allMovies.filter(movie => movie.id == movieId)
-            context.commit('selectMovie', selectedMovie[0])
-        },
+        // getOneMovie(context, data) {
+        //     let movieId = data
+        //     let allMovies = context.getters.allMovies
+        //     let selectedMovie = allMovies.filter(movie => movie.id == movieId)
+        //     context.commit('selectMovie', selectedMovie[0])
+        // },
     },
     mutations: {
         loadMovies(state, payload) {
@@ -38,7 +38,7 @@ export default {
             return state.movies;
         },
         oneMovie: (state) => (id) => {
-            return state.movies.find(movie => movie.id === id);
+            return state.movies.find(movie => movie.id == id);
         }
     }
 };
