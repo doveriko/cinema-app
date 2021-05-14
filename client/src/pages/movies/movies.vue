@@ -100,7 +100,6 @@ export default {
   created() {
     this.loadMovies();
     this.loadRooms();
-    console.log(this.allRooms)
   }
 };
 </script>

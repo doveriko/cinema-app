@@ -1,7 +1,7 @@
 <template>
   <div class="filter-room">
     <select @change="selectedRoom()" v-model="room">
-      <option value="" disabled selected>Filter by room</option>
+      <option value="" disabled selected>Filter by theatre</option>
       <option v-for="(room, i) in allRooms" :key="i" :value="room">{{room.name}}</option>
     </select>
   </div>

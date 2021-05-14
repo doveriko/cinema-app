@@ -55,7 +55,7 @@ export let seed = {
         }
     ],
     sessions: [
-        // Cine Jerezano
+        // Cine Jerezano (room.id = 1)
         {
             id: 1,
             time: "2020-01-13T17:30:00.000Z", // lunes
@@ -879,7 +879,7 @@ export let seed = {
             movieId: 4,
             roomId: 2
         },
-                // Cine Lealas
+        // Cine Lealas (room.id = 2)
         {
             time: "2020-01-13T17:30:00.000Z", // lunes
             movieId: 2,
@@ -1090,7 +1090,7 @@ export let seed = {
             movieId: 4,
             roomId: 2
         },
-        // Cine Delicias
+        // Cine Delicias (room.id = 3)
         {
             time: "2020-01-13T17:30:00.000Z", // lunes
             movieId: 6,
