@@ -1,14 +1,14 @@
 import axios from 'axios';
 
 export default {
-    saveSession(context, data) {
-        let session = {
+    saveOrder(context, data) {
+        let orderInfo = {
             sessionId: data.sessionId,
             sessionTime: data.sessionTime,
             movieTitle: data.movieTitle,
             imageUrl: data.imageUrl
         }
-        context.commit('saveSession', session)
+        context.commit('saveOrder', orderInfo)
     },
     registerOrder(context, data) {
         let newOrder = {

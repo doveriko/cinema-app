@@ -1,32 +1,32 @@
 <template>
   <div class="filter-session">
     <span class="select-tickets">Select your ticket for this week:</span>
-    <form @submit.prevent="saveSession">
-    <select @change="selectedDay()" v-model="day">
-      <option value="" disabled selected>Select day</option>
-      <option value="1">Monday</option>
-      <option value="2">Tuesday</option>
-      <option value="3">Wednesday</option>
-      <option value="4">Thursday</option>
-      <option value="5">Friday</option>
-      <option value="6">Saturday</option>
-      <option value="0">Sunday</option>
-    </select>
+    <form @submit.prevent="saveOrder">
+      <select @change="selectedDay()" v-model="day">
+        <option value="" disabled selected>Select day</option>
+        <option value="1">Monday</option>
+        <option value="2">Tuesday</option>
+        <option value="3">Wednesday</option>
+        <option value="4">Thursday</option>
+        <option value="5">Friday</option>
+        <option value="6">Saturday</option>
+        <option value="0">Sunday</option>
+      </select>
 
-    <select @change="selectedSession()" v-model="sessionId">
-      <option value="" disabled selected>Select session</option>
-      <option v-if="filteredSessions.length === 0" value="" disabled>No sessions available</option>
-      <option
-        v-for="session in filteredSessions"
-        :key="session.id"
-        :id="session.id"
-        :value="session.id"
-      >
-        {{ session.timeFormatted }}
-      </option>
-    </select>
-    <p class="auth-errors">{{errorMessage}}</p>
-    <base-button>BOOK TICKET</base-button>
+      <select @change="selectedSession()" v-model="sessionId">
+        <option value="" disabled selected>Select session</option>
+        <option v-if="filteredSessions.length === 0" value="" disabled>No sessions available</option>
+        <option
+          v-for="session in filteredSessions"
+          :key="session.id"
+          :id="session.id"
+          :value="session.id"
+        >
+          {{ session.timeFormatted }}
+        </option>
+      </select>
+      <p class="auth-errors">{{errorMessage}}</p>
+      <base-button>BOOK TICKET</base-button>
     </form>
   </div>
 </template>
@@ -36,12 +36,6 @@ export default {
   props: {
     sessions: {
       type: Array,
-    },
-    title: {
-      type: String
-    },
-    imageUrl: {
-      type: String
     }
   },
   data() {
@@ -77,10 +71,6 @@ export default {
       this.errorMessage = "";
       this.filterSessions();
     },
-    selectedSession() {
-      this.sameDayChecker = this.filteredSessions.find(session => session.id === this.sessionId);
-      this.errorMessage = "";
-    },
     filterSessions() {
       var self = this;
       this.sessions.map(function (session) {
@@ -97,14 +87,16 @@ export default {
         session.timeFormatted = sessionTime;
       });
     },
-    saveSession() {
-      const sessionId = {
+    selectedSession() {
+      this.sameDayChecker = this.filteredSessions.find(session => session.id === this.sessionId);
+      this.errorMessage = "";
+    },
+    saveOrder() {
+      const sessionInfo = {
         sessionId : this.sessionId,
-        sessionTime: this.sessionTime,
-        movieTitle: this.title,
-        imageUrl: this.imageUrl
+        sessionTime: this.sessionTime
       }
-      this.$emit('save-session', sessionId)
+      this.$emit('save-session', sessionInfo)
 
       let redirectUrl = ""
       if (!this.selectionError.noSession && !this.selectionError.differentDay && this.selectionError.noSession != null) {

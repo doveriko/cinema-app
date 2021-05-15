@@ -15,7 +15,7 @@
               </div>
             </div>
           </div>
-          <filter-session v-if="roomSelected" :sessions="roomSessions" :title="title" :imageUrl="selectedMovie.imageUrl" @save-session="saveSession" ></filter-session>
+          <filter-session v-if="roomSelected" :sessions="roomSessions" @save-session="saveOrder" ></filter-session>
         </div>
       </div>
   </div>
@@ -46,8 +46,14 @@ export default {
     console.log("this.selectedMovie.sessions", this.selectedMovie.sessions)
   },
   methods: {
-    saveSession(data) {
-      this.$store.dispatch('saveSession', data);
+    saveOrder(data) {
+      let orderInfo = {
+        title: this.selectedMovie.title,
+        imageUrl: this.selectedMovie.imageUrl,
+        sessionId : data.sessionId,
+        sessionTime: data.sessionTime
+      }
+      this.$store.dispatch('saveOrder', orderInfo);
     },
     findRooms() {
       // 1. Filter ids of all rooms attached to the selected movie sessions

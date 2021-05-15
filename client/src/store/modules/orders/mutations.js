@@ -1,5 +1,5 @@
 export default {
-    saveSession(state, payload) {
+    saveOrder(state, payload) {
         state.sessionId = payload.sessionId,
         state.sessionTime = payload.sessionTime,
         state.movieTitle = payload.movieTitle,
