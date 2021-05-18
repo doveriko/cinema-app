@@ -83,7 +83,7 @@ app.get('/', function (req, res) {
 
 // Router middleware
 app.use('/users', usersRouter);
-app.use('/users', ordersRouter);
+app.use('/orders', ordersRouter);
 app.use('/movies', moviesRouter);
 app.use('/sessions', sessionsRouter);
 app.use('/rooms', roomsRouter);

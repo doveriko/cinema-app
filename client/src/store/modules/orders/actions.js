@@ -19,7 +19,7 @@ export default {
         let { userId, sessionId } = newOrder;
 
         axios
-        .post(process.env.VUE_APP_API_URL + `/users/${userId}/orders`,
+        .post(process.env.VUE_APP_API_URL + `/orders/${userId}`,
           { userId, sessionId }
         )
         .then(() => {
@@ -43,7 +43,7 @@ export default {
         let allOrders = [];
 
         await axios
-        .get(process.env.VUE_APP_API_URL + `/users/${userId}/orders`)
+        .get(process.env.VUE_APP_API_URL + `/orders/${userId}`)
         .then((response) => {
           allOrders = response.data.orders;
         })
@@ -54,7 +54,7 @@ export default {
     deleteOrder(context, data) {
       let orderId = data;
       axios
-      .delete(process.env.VUE_APP_API_URL + `/users/orders/${orderId}`)
+      .delete(process.env.VUE_APP_API_URL + `/orders/${orderId}`)
       .then(() => {
         let deletedOrderId = orderId;
         let allOrders = this.$store.getters.allOrders;

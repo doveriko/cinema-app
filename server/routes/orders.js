@@ -9,41 +9,13 @@ const Movie = require('../models/Movie');
 //Middleware to protect private routes
 const auth = require('../middlewares/auth');
 
-// GET all orders from one user /users/:id/orders
-// router.get('/:id/orders', auth, (req, res) => {
-//     User.findByPk(req.params.id, {
-//         include: [
-//             {
-//                 model: Order,
-//                 attributes: ['id'],
-//                 include: [
-//                     {
-//                         model: Session,
-//                         attributes: ['time']
-//                     }
-//                     // {
-//                     //     model: Seat,
-//                     //     attributes: []
-//                     // }
-//                 ]
-//             },
-//         ],
-//         attributes: []
-//     }).then(users => res.json(users));
-// });
-
-router.get('/:id/orders', (req, res) => {
+// GET all orders from one user /orders/:id
+router.get('/:id', (req, res) => {
     User.findByPk(req.params.id, {
         include: [
             {
                 model: Order,
                 attributes: ['id'],
-                include: [
-                    {
-                        model: Seat,
-                        attributes: [],
-                      }
-                ],
                 include: [
                     {
                         model: Session,
@@ -54,21 +26,25 @@ router.get('/:id/orders', (req, res) => {
                             attributes: ['title'],
                           }
                         ]
+                    },
+                    {
+                        model: Seat
                     }
                 ]
-            },
+            }
         ],
         attributes: []
     }).then(users => res.json(users));
 });
 
-// router.get('/', (req, res) => {
-//     Order.findAll({
-//         include: {
-//             model: Seat
-//         }
-//         }).then(users => res.json(users));
-// });
+// GET all orders from all users /orders
+router.get('/', (req, res) => {
+    Order.findAll({
+        include: {
+            model: Seat
+        }
+        }).then(users => res.json(users));
+});
 
 // router.get('/:id', (req, res) => {
 //     Order.findByPk(req.params.id).then(user => {
@@ -78,8 +54,8 @@ router.get('/:id/orders', (req, res) => {
 //     });
 // });
 
-// POST one order /users/:id/orders/
-router.post('/:userId/orders', auth, (req, res) => {
+// POST one order /orders/:userId
+router.post('/:userId', auth, (req, res) => {
     Order.create({
             userId: req.body.userId, // Provisional
             sessionId: req.body.sessionId, // Provisional
@@ -94,8 +70,8 @@ router.post('/:userId/orders', auth, (req, res) => {
     })
 });
 
-// Delete one order /users/orders/:orderId
-router.delete('/orders/:orderId', auth, (req, res) => {
+// Delete one order /orders/:orderId
+router.delete('/:orderId', auth, (req, res) => {
     Order.destroy({
         where: {
             id : req.params.orderId
