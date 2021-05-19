@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="movie-details-wrapper">
     <h1 class="section-header">{{selectedMovie.title}}</h1>
       <div class="movie-details">
         <div class="movie-cover">
@@ -15,7 +15,8 @@
               </div>
             </div>
           </div>
-          <filter-session v-if="roomSelected" :sessions="roomSessions" @save-session="saveOrder" ></filter-session>
+          <filter-session v-if="roomSelected" :sessions="roomSessions" @save-session="saveSession"></filter-session>
+          <filter-seats :seats="roomSeats" @save-seats="saveSeats"></filter-seats>
         </div>
       </div>
   </div>
@@ -23,6 +24,7 @@
 
 <script>
 import filterSession from '../../components/filterSession.vue';
+import filterSeats from '../../components/filterSeats.vue';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -33,28 +35,21 @@ export default {
       selectedMovie: {},
       allRoomsAvailable: [],
       roomSelected: null,
-      roomSessions: []
+      roomSessions: [],
+      sessionId: null,
+      sessionTime: null,
+      roomSeats: []
     };
   },
-  components: { filterSession },
+  components: { filterSession, filterSeats },
   computed: {
-    ...mapGetters(['oneRoom', 'allMovies']),
+    ...mapGetters(['oneRoom']),
   },
   created() {
     this.selectedMovie = this.$store.getters.oneMovie(this.id)
     this.findRooms();
-    console.log("this.selectedMovie.sessions", this.selectedMovie.sessions)
   },
   methods: {
-    saveOrder(data) {
-      let orderInfo = {
-        title: this.selectedMovie.title,
-        imageUrl: this.selectedMovie.imageUrl,
-        sessionId : data.sessionId,
-        sessionTime: data.sessionTime
-      }
-      this.$store.dispatch('saveOrder', orderInfo);
-    },
     findRooms() {
       // 1. Filter ids of all rooms attached to the selected movie sessions
       let filterRooms = this.selectedMovie.sessions.map(session => session.roomId)
@@ -65,15 +60,33 @@ export default {
       roomsIds.forEach( function(room) {
         self.allRoomsAvailable.push(self.oneRoom(room))
       })
-      console.log("this.allRoomsAvailable", this.allRoomsAvailable)
     },
     filterRoomSession(roomId) {
       this.roomSessions = []
       this.roomSessions = this.selectedMovie.sessions.filter((session) => session.roomId == roomId)
-      console.log("this.roomSessions", this.roomSessions)
       this.roomSelected = roomId;
+    },
+    saveSession(data) {
+      this.sessionId = data.sessionId,
+      this.sessionTime = data.sessionTime
+      this.getRoomSeats()
+    },
+    getRoomSeats() {
+      let selectedRoom = this.oneRoom(this.roomSelected)
+      this.roomSeats = selectedRoom.seats
+    },
+    saveSeats() {
+    },
+    saveOrder() {
+      let orderInfo = {
+        title: this.selectedMovie.title,
+        imageUrl: this.selectedMovie.imageUrl,
+        sessionId : this.sessionId,
+        sessionTime: this.sessionTime
+      }
+      this.$store.dispatch('saveOrder', orderInfo);
     }
-  },
+  }
 };
 </script>
 
