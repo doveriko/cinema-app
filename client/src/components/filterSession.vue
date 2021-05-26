@@ -1,6 +1,6 @@
 <template>
   <div class="filter-session">
-    <span class="select-tickets">Select your ticket for this week:</span>
+    <span class="select-tickets">1. Select your ticket for this week:</span>
     <div class="selectors-wrapper">
       <select @change="selectedDay()" v-model="day">
         <option value="" disabled selected>Select day</option>
@@ -15,7 +15,7 @@
 
       <select @change="selectedSession()" v-model="sessionId">
         <option value="" disabled selected>Select session</option>
-        <option v-if="filteredSessions.length === 0" value="" disabled>No sessions available</option>
+        <option v-if="!filteredSessions.length" value="" disabled>No sessions available</option>
         <option
           v-for="session in filteredSessions"
           :key="session.id"
@@ -63,12 +63,14 @@ export default {
 
     if (!this.sessionId) this.selectionError.noSession = true;
     else this.selectionError.noSession = false;
+    console.log(this.sessions.length)
   },
   methods: {
     selectedDay() {
       this.filteredSessions = [];
       this.sameDayChecker = [];
       this.errorMessage = "";
+      console.log("filtered sessions from selectedDay()", this.filteredSessions)
       this.filterSessions();
     },
     filterSessions() {
@@ -89,6 +91,7 @@ export default {
     },
     selectedSession() {
       this.sameDayChecker = this.filteredSessions.find(session => session.id === this.sessionId);
+      console.log("this.sameDayChecker", this.sameDayChecker)
       this.errorMessage = "";
       this.sessionTime = this.sameDayChecker.time;
       this.saveSession()
@@ -118,7 +121,7 @@ export default {
   margin: 0;
     padding-left: 0;
   }
-.select-tickets {
+.select-tickets, .select-seats {
     color: #3a0061;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-weight: bold;
@@ -127,7 +130,7 @@ export default {
 .filter-session {
     margin-top: 1.5rem;
 }
-select {
+.filter-session select, .filter-seats select {
     height: 32px;
     border: 1px solid #3a0061;
     border-radius: 3px;

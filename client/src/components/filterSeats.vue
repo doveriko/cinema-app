@@ -1,6 +1,6 @@
 <template>
   <div class="filter-seats">
-    <span class="select-seats">Select your seats</span>
+    <span class="select-seats">2. Select your seats</span>
     <div class="selectors-wrapper">
       <select @change="selectedArea()" v-model="seatArea">
         <option value="" disabled selected>Select an area</option>

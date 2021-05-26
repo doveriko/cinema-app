@@ -1,4 +1,5 @@
 import actions from './actions';
+import getters from './getters';
 import { seed } from './seeder';
 
 export default {
@@ -10,5 +11,6 @@ export default {
             seats: seed.seats,
         };
     },
-    actions
+    actions,
+    getters
 };

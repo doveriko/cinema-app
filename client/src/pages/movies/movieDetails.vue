@@ -16,7 +16,7 @@
             </div>
           </div>
           <filter-session v-if="roomSelected" :sessions="roomSessions" @save-session="saveSession"></filter-session>
-          <filter-seats :seats="roomSeats" @save-seats="saveSeats"></filter-seats>
+          <filter-seats v-if="sessionSelected" :seats="roomSeats" @save-seats="saveSeats"></filter-seats>
         </div>
       </div>
   </div>
@@ -38,7 +38,8 @@ export default {
       roomSessions: [],
       sessionId: null,
       sessionTime: null,
-      roomSeats: []
+      roomSeats: [],
+      sessionSelected: false
     };
   },
   components: { filterSession, filterSeats },
@@ -65,6 +66,8 @@ export default {
       this.roomSessions = []
       this.roomSessions = this.selectedMovie.sessions.filter((session) => session.roomId == roomId)
       this.roomSelected = roomId;
+      console.log("this.roomSessions", this.roomSessions)
+      console.log("this.roomSelected", this.roomSelected)
     },
     saveSession(data) {
       this.sessionId = data.sessionId,
@@ -72,6 +75,7 @@ export default {
       this.getRoomSeats()
     },
     getRoomSeats() {
+      this.sessionSelected = true
       let selectedRoom = this.oneRoom(this.roomSelected)
       this.roomSeats = selectedRoom.seats
     },

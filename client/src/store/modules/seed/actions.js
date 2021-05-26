@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default {
   registerSeats(context) {
-    let allSeats = context.getters.allSeats;
+    let allSeats = context.getters.seedSeats;
 
     for (let i = 0; i < allSeats.length; i++) {
       var area = allSeats[i].area
@@ -20,7 +20,7 @@ export default {
     }
   },
   registerRooms(context) {
-    let allRooms = context.getters.allRooms;
+    let allRooms = context.getters.seedRooms;
 
     for (let i = 0; i < allRooms.length; i++) {
       var id = allRooms[i].id
@@ -38,7 +38,7 @@ export default {
     }
   },
   registerMovies(context) {
-    let allMovies = context.getters.allMovies;
+    let allMovies = context.getters.seedMovies;
 
     for (let i = 0; i < allMovies.length; i++) {
       var id = allMovies[i].id
@@ -57,7 +57,7 @@ export default {
     }
   },
   registerSessions(context) {
-    let allSessions = context.getters.allSessions;
+    let allSessions = context.getters.seedSessions;
 
     for (let i = 0; i < allSessions.length; i++) {
       var time = allSessions[i].time

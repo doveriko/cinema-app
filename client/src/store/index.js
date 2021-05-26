@@ -5,7 +5,7 @@ import authModule from './modules/auth/index.js';
 import ordersModule from './modules/orders/index.js';
 import moviesModule from './modules/movies/index.js';
 import roomsModule from './modules/rooms/index.js';
-// import seedModule from './modules/seed/index.js';
+import seedModule from './modules/seed/index.js';
 
 Vue.use(Vuex);
 
@@ -18,7 +18,7 @@ export const store = new Vuex.Store({
     orders: ordersModule,
     movies: moviesModule,
     rooms: roomsModule,
-    // seed: seedModule,
+    seed: seedModule,
   },
   state() {
     return {
