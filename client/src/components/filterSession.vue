@@ -1,6 +1,6 @@
 <template>
   <div class="filter-session">
-    <span class="select-tickets">1. Select your ticket for this week:</span>
+    <span class="select-tickets">1. Select your tickets for this week:</span>
     <div class="selectors-wrapper">
       <select @change="selectedDay()" v-model="day">
         <option value="" disabled selected>Select day</option>
@@ -52,6 +52,12 @@ export default {
       errorMessage: "",
     };
   },
+  watch: {
+    sessions: function() {
+      this.filteredSessions = []
+      this.day = ""
+    }
+  },
   updated() {
     if (!this.sameDayChecker.length) {
       this.selectionError.differentDay = true;
@@ -63,14 +69,12 @@ export default {
 
     if (!this.sessionId) this.selectionError.noSession = true;
     else this.selectionError.noSession = false;
-    console.log(this.sessions.length)
   },
   methods: {
     selectedDay() {
       this.filteredSessions = [];
       this.sameDayChecker = [];
       this.errorMessage = "";
-      console.log("filtered sessions from selectedDay()", this.filteredSessions)
       this.filterSessions();
     },
     filterSessions() {
@@ -91,7 +95,6 @@ export default {
     },
     selectedSession() {
       this.sameDayChecker = this.filteredSessions.find(session => session.id === this.sessionId);
-      console.log("this.sameDayChecker", this.sameDayChecker)
       this.errorMessage = "";
       this.sessionTime = this.sameDayChecker.time;
       this.saveSession()
