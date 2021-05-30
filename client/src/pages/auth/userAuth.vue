@@ -197,8 +197,8 @@ label {
   display: block;
 }
 
-input,
-textarea {
+#auth input,
+#auth textarea {
   display: block;
   width: 100%;
   border: none;
@@ -210,7 +210,7 @@ textarea {
   font-size: 11pt;
 }
 
-input:focus,
+#auth input:focus,
 textarea:focus {
   border-color: #3d008d;
   background-color: #faf6ff;

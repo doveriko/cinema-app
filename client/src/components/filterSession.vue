@@ -1,7 +1,7 @@
 <template>
   <div class="filter-session">
     <span class="select-tickets">1. Select your tickets for this week:</span>
-    <div class="selectors-wrapper">
+    <div class="session-selectors-wrapper">
       <select @change="selectedDay()" v-model="day">
         <option value="" disabled selected>Select day</option>
         <option value="1">Monday</option>
@@ -15,7 +15,7 @@
 
       <select @change="selectedSession()" v-model="sessionId">
         <option value="" disabled selected>Select session</option>
-        <option v-if="!filteredSessions.length" value="" disabled>No sessions available</option>
+        <option v-if="!filteredSessions.length" value="" disabled>Select a day</option>
         <option
           v-for="session in filteredSessions"
           :key="session.id"
@@ -41,7 +41,7 @@ export default {
   data() {
     return {
       day: "",
-      sessionId: null,
+      sessionId: "",
       sessionTime: null,
       filteredSessions: [],
       sameDayChecker: [],
@@ -56,6 +56,9 @@ export default {
     sessions: function() {
       this.filteredSessions = []
       this.day = ""
+    },
+    day: function() {
+      this.$emit('day-changed', false)
     }
   },
   updated() {
@@ -67,7 +70,7 @@ export default {
       this.sessionTime = this.sameDayChecker.time;
     } 
 
-    if (!this.sessionId) this.selectionError.noSession = true;
+    if (this.sessionId == "") this.selectionError.noSession = true;
     else this.selectionError.noSession = false;
   },
   methods: {
@@ -130,20 +133,6 @@ export default {
     font-weight: bold;
     font-size: 13pt;
 }
-.filter-session {
-    margin-top: 1.5rem;
-}
-.filter-session select, .filter-seats select {
-    height: 32px;
-    border: 1px solid #3a0061;
-    border-radius: 3px;
-    margin: 10px;
-    margin-left: 0;
-    padding: 5px;
-    width: 150px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-}
-
 .fa-sign-out-alt {
     margin-top: 5px;
     margin-left: 1rem;

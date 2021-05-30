@@ -7,7 +7,7 @@
         </div>
         <div class="movie-sessions">
           <p class="movie-description">{{selectedMovie.description}}</p>
-          <div>
+          <div class="rooms-list">
             <label class="available-label">Available in:</label>
             <div class="available-rooms">
               <div v-for="(room, i) in allRoomsAvailable" :key="i" class="room" :class="{'selected' : roomSelected == room.id }" @click="filterRoomSession(room.id)">
@@ -15,8 +15,10 @@
               </div>
             </div>
           </div>
-          <filter-session v-if="roomSelected" :sessions="roomSessions" @save-session="saveSession"></filter-session>
-          <filter-seats v-if="sessionSelected" :seats="roomSeats" @save-seats="saveSeats"></filter-seats>
+          <div class="filters-wrapper">
+            <filter-session v-if="roomSelected" :sessions="roomSessions" @save-session="saveSession" @day-changed="unselectSession"></filter-session>
+            <filter-seats v-if="sessionSelected" :seats="roomSeats" @save-seats="saveSeats"></filter-seats>
+          </div>
         </div>
       </div>
   </div>
@@ -39,13 +41,24 @@ export default {
       sessionId: null,
       sessionTime: null,
       roomSeats: [],
-      sessionSelected: false
+      sessionSelected: false,
+      seatId: null,
+      seatArea: null,
+      seatNumber: null
     };
   },
   components: { filterSession, filterSeats },
   computed: {
     ...mapGetters(['oneRoom']),
   },
+  watch: {
+    roomSeats: function() {
+      console.log("this.roomSeats", this.roomSeats)
+    }
+  },
+  // updated() {
+  //   console.log(this.sessionSelected)
+  // },
   created() {
     this.selectedMovie = this.$store.getters.oneMovie(this.id)
     this.findRooms();
@@ -63,11 +76,13 @@ export default {
       })
     },
     filterRoomSession(roomId) {
+      this.sessionSelected = false
       this.roomSessions = []
       this.roomSessions = this.selectedMovie.sessions.filter((session) => session.roomId == roomId)
       this.roomSelected = roomId;
       console.log("this.roomSessions", this.roomSessions)
       console.log("this.roomSelected", this.roomSelected)
+      
     },
     saveSession(data) {
       this.sessionId = data.sessionId,
@@ -79,14 +94,23 @@ export default {
       let selectedRoom = this.oneRoom(this.roomSelected)
       this.roomSeats = selectedRoom.seats
     },
-    saveSeats() {
+    unselectSession(data) {
+      this.sessionSelected = data //false
+    },
+    saveSeats(data) {
+      this.seatId = data.id,
+      this.seatArea = data.area,
+      this.seatNumber = data.number
     },
     saveOrder() {
       let orderInfo = {
         title: this.selectedMovie.title,
         imageUrl: this.selectedMovie.imageUrl,
         sessionId : this.sessionId,
-        sessionTime: this.sessionTime
+        sessionTime: this.sessionTime,
+        seatId: this.seatId,
+        seatArea: this.seatArea,
+        seatNumber: this.seatNumber
       }
       this.$store.dispatch('saveOrder', orderInfo);
     }
@@ -146,5 +170,40 @@ export default {
 }
 .room.selected {
     background: #f16b00;
+}
+.filters-wrapper, .session-selectors-wrapper, .seats-selectors-wrapper {
+    display: flex;
+}
+.filter-seats, .filter-session {
+    margin-top: 1.5rem;
+}
+.seat-number-selector, .seat-area-selector {
+    flex-basis: 50%;
+}
+.filter-session select, .filter-seats select {
+    height: 32px;
+    border: 1px solid #3a0061;
+    border-radius: 3px;
+    margin: 10px;
+    margin-left: 0;
+    padding: 5px;
+    min-width: 150px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.filter-session {
+    margin-right: 1em;
+}
+@media (max-width: 768px) {
+    .filters-wrapper, .session-selectors-wrapper, .seats-selectors-wrapper {
+      justify-content: center;
+  }
+}
+@media (max-width: 650px) {
+    .filters-wrapper, .session-selectors-wrapper, .seats-selectors-wrapper {
+        flex-direction: column;
+    }
+    .filter-session, .filter-session select, .filter-seats select {
+      margin-right: 0
+    }
 }
 </style>

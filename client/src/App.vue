@@ -52,4 +52,7 @@ export default {
 </script>
 
 <style>
+.mobile {
+    margin-bottom: 3rem;
+}
 </style>
