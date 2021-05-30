@@ -19,6 +19,7 @@
             <filter-session v-if="roomSelected" :sessions="roomSessions" @save-session="saveSession" @day-changed="unselectSession"></filter-session>
             <filter-seats v-if="sessionSelected" :seats="roomSeats" @save-seats="saveSeats"></filter-seats>
           </div>
+          <shopping-cart v-if="selectedSeats.length" :tickets="selectedSeats"></shopping-cart>
         </div>
       </div>
   </div>
@@ -27,6 +28,7 @@
 <script>
 import filterSession from '../../components/filterSession.vue';
 import filterSeats from '../../components/filterSeats.vue';
+import shoppingCart from '../../components/shoppingCart.vue';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -42,23 +44,13 @@ export default {
       sessionTime: null,
       roomSeats: [],
       sessionSelected: false,
-      seatId: null,
-      seatArea: null,
-      seatNumber: null
+      selectedSeats: []
     };
   },
-  components: { filterSession, filterSeats },
+  components: { filterSession, filterSeats, shoppingCart },
   computed: {
     ...mapGetters(['oneRoom']),
   },
-  watch: {
-    roomSeats: function() {
-      console.log("this.roomSeats", this.roomSeats)
-    }
-  },
-  // updated() {
-  //   console.log(this.sessionSelected)
-  // },
   created() {
     this.selectedMovie = this.$store.getters.oneMovie(this.id)
     this.findRooms();
@@ -80,9 +72,6 @@ export default {
       this.roomSessions = []
       this.roomSessions = this.selectedMovie.sessions.filter((session) => session.roomId == roomId)
       this.roomSelected = roomId;
-      console.log("this.roomSessions", this.roomSessions)
-      console.log("this.roomSelected", this.roomSelected)
-      
     },
     saveSession(data) {
       this.sessionId = data.sessionId,
@@ -98,9 +87,7 @@ export default {
       this.sessionSelected = data //false
     },
     saveSeats(data) {
-      this.seatId = data.id,
-      this.seatArea = data.area,
-      this.seatNumber = data.number
+      this.selectedSeats = data
     },
     saveOrder() {
       let orderInfo = {
@@ -108,9 +95,7 @@ export default {
         imageUrl: this.selectedMovie.imageUrl,
         sessionId : this.sessionId,
         sessionTime: this.sessionTime,
-        seatId: this.seatId,
-        seatArea: this.seatArea,
-        seatNumber: this.seatNumber
+        seats: this.selectedSeats
       }
       this.$store.dispatch('saveOrder', orderInfo);
     }
@@ -179,6 +164,7 @@ export default {
 }
 .seat-number-selector, .seat-area-selector {
     flex-basis: 50%;
+    margin-top: 5px;
 }
 .filter-session select, .filter-seats select {
     height: 32px;

@@ -14,16 +14,16 @@
       </select>
 
       <div v-if="this.areaSelected.length" class="seat-number-selector" >
-        <span class="select-number">Select seats numbers</span>
         <div v-for="seat in areaSelected" :key="seat.id" class="seat-number">
           <input
             type="checkbox"
             :id="seat.id"
             :name="seat.number"
-            :value="seat.id"
-            v-model="selectedSeat"
+            :value="seat"
+            @change="selectNumber()"
+            v-model="selectedSeats"
           />
-          <label :for="seat.id">{{ seat.number }}</label
+          <label :for="seat.id">Seat {{ seat.number }}</label
           ><br />
         </div>
       </div>
@@ -56,12 +56,17 @@ export default {
     return {
       day: "",
       seatArea: "",
-      selectedSeat: [],
+      selectedSeats: [],
       areaSelected: [],
     };
   },
   updated() {
-    console.log("selectedSeat", this.selectedSeat)
+    console.log("selectedSeats", this.selectedSeats)
+  },
+  watch: {
+    selectedSeats: function() {
+      this.$emit('day-changed', this.selectedSeats)
+    }
   },
   methods: {
     selectedArea() {
@@ -69,8 +74,8 @@ export default {
         (seat) => seat.area == this.seatArea
       );
     },
-    selectedNumber() {
-      this.$emit("save-seats", this.selectedSeat);
+    selectNumber() {
+      this.$emit("save-seats", this.selectedSeats);
     },
   },
 };
@@ -99,9 +104,6 @@ export default {
   padding: 8px;
   display: block;
   font-size: 13px;
-}
-.seat-number {
-    padding-left: 42%;
 }
 @media (min-width: 769px) and (max-width: 1300px) {
     .seats-selectors-wrapper {
