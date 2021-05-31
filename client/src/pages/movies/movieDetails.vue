@@ -19,7 +19,7 @@
             <filter-session v-if="roomSelected" :sessions="roomSessions" @save-session="saveSession" @day-changed="unselectSession"></filter-session>
             <filter-seats v-if="sessionSelected" :seats="roomSeats" @save-seats="saveSeats"></filter-seats>
           </div>
-          <shopping-cart v-if="selectedSeats.length" :tickets="selectedSeats"></shopping-cart>
+          <shopping-cart v-if="selectedSeats.length" :tickets="selectedSeats" @delete-ticket="deleteTicket" :movie="selectedMovie.title" :day="day" :time="sessionTime" :room="roomSelected"></shopping-cart>
         </div>
       </div>
   </div>
@@ -40,6 +40,7 @@ export default {
       allRoomsAvailable: [],
       roomSelected: null,
       roomSessions: [],
+      day: null,
       sessionId: null,
       sessionTime: null,
       roomSeats: [],
@@ -75,7 +76,8 @@ export default {
     },
     saveSession(data) {
       this.sessionId = data.sessionId,
-      this.sessionTime = data.sessionTime
+      this.sessionTime = data.sessionTime,
+      this.day = data.day
       this.getRoomSeats()
     },
     getRoomSeats() {
@@ -98,6 +100,9 @@ export default {
         seats: this.selectedSeats
       }
       this.$store.dispatch('saveOrder', orderInfo);
+    },
+    deleteTicket(ticket) {
+      this.selectedSeats.splice(ticket, 1)
     }
   }
 };

@@ -105,7 +105,8 @@ export default {
     saveSession() {
       const sessionInfo = {
         sessionId : this.sessionId,
-        sessionTime: this.sessionTime
+        sessionTime: this.sessionTime,
+        day: this.day
       }
       this.$emit('save-session', sessionInfo)
       console.log("sessionInfo", sessionInfo)
