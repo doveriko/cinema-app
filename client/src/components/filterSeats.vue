@@ -27,20 +27,7 @@
           ><br />
         </div>
       </div>
-
-      <!-- <select @change="selectedNumber()" v-model="selectedSeat">
-        <option value="" disabled selected>Select seat number</option>
-        <option v-if="!areaSelected.length" value="" disabled>No seats available</option>
-        <option
-          v-for="seat in areaSelected"
-          :key="seat.id"
-          :id="seat.id"
-          :value="seat"
-        >
-          {{ seat.number }}
-        </option>
-      </select> -->
-      <!-- <p class="auth-errors">{{errorMessage}}</p> -->
+      
     </div>
   </div>
 </template>

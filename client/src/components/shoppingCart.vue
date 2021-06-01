@@ -1,18 +1,23 @@
 <template>
  <div id="shopping-cart">
-   <span class="summary-label"><span>Your tickets for {{movie}} on {{dayTimeRoomFormatted()}}</span></span>
-   <button @click="showAlert">Hello world</button>
+   <span class="summary-label"><span>Your selection:</span></span>
    <div class="summary-table">
       <div v-for="(ticket, i) in tickets" :key="i" class="ticket-list">
         <div>
-          <font-awesome-icon icon="ticket-alt" class="ticket-icon"/> {{i+1}}.
-          <span class="ticket-item">{{ticket.area}} area. Seat number: {{ticket.number}}</span> 
+          <font-awesome-icon icon="ticket-alt" class="ticket-icon"/> Ticket {{i+1}}:
+          <span class="ticket-item">{{ticket.area}} area. Seat {{ticket.number}}</span> 
         </div>
         <font-awesome-icon icon="trash-alt" class="delete-ticket" @click="deleteTicket(i)" />
       </div>
     </div>
     <div class="total-price-container">
-      <div><span class="total-price-label">Total price:</span> {{tickets.length}} {{this.ticketOrTickets}} × {{this.unitPrice}} € = {{totalPrice}} €</div>
+      <div>
+        <div>
+          <span>{{tickets.length}} {{this.ticketOrTickets}} × {{this.unitPrice}} €</span>
+        </div>
+        <div>
+          <span class="total-price-label">Total price:</span> {{totalPrice}} €</div>
+        </div>
     </div>
     
   </div>
@@ -20,7 +25,7 @@
 
 <script>
 export default {
-  props: ['tickets', 'movie', 'day', 'time', 'room'],
+  props: ['tickets'],
   data() {
     return {
       unitPrice: 5,
@@ -38,28 +43,6 @@ export default {
   methods: {
     deleteTicket(ticket) {
       this.$emit("delete-ticket", ticket);
-    },
-    dayTimeRoomFormatted() {
-      return `${this.day} at ${this.time} at cine ${this.room}`
-    },
-    showAlert() {
-      this.$swal({
-          title: 'Cancel selection?',
-          text: "If you change the session, the current tickets will be removed",
-          icon: 'warning',
-          showDenyButton: true,
-          confirmButtonColor: '#3a0061',
-          denyButtonColor: '#f16b00',
-          confirmButtonText: 'Keep it',
-          denyButtonText: 'Cancel'
-        }).then((result) => {
-          if (result.isDenied) {
-            this.hola()
-          }
-        })
-    },
-    hola() {
-      this.$emit("delete-all-tickets");
     }
   }
 }

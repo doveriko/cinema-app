@@ -258,7 +258,7 @@ textarea:focus {
     margin: 0 2em;
 }
 
-.auth-button {
+.auth-button, .accept-button {
   text-decoration: none;
   padding: 0.75rem 1.5rem;
   font: inherit;
@@ -272,7 +272,7 @@ textarea:focus {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-.auth-button:hover {
+.auth-button:hover, .accept-button:hover {
   background-color: #f16b00
 }
 

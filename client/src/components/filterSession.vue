@@ -1,7 +1,7 @@
 <template>
   <div class="filter-session">
     <span class="select-tickets">1. Select your tickets for this week:</span>
-    <div class="session-selectors-wrapper">
+    <div class="session-selectors-wrapper" @click="activeSelector()">
       <select @change="selectedDay()" v-model="day">
         <option value="" disabled selected>Select day</option>
         <option value="1">Monday</option>
@@ -118,6 +118,9 @@ export default {
       // } else {
       //   this.errorMessage = "Please, select a valid session"
       // }
+    },
+    activeSelector() {
+      this.$emit('active-selector')
     }
   },
 };

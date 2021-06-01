@@ -16,10 +16,13 @@
             </div>
           </div>
           <div class="filters-wrapper">
-            <filter-session v-if="roomSelected" :sessions="roomSessions" @save-session="saveSession" @day-changed="unselectSession"></filter-session>
+            <filter-session v-if="roomSelected" :sessions="roomSessions" @save-session="saveSession" @day-changed="unselectSession" @active-selector="showAlert"></filter-session>
             <filter-seats v-if="sessionSelected" :seats="roomSeats" @save-seats="saveSeats"></filter-seats>
           </div>
-          <shopping-cart v-if="selectedSeats.length" :tickets="selectedSeats" @delete-ticket="deleteTicket" @delete-all-tickets="deleteAllTickets" :movie="selectedMovie.title" :day="day" :time="sessionTime" :room="roomSelected"></shopping-cart>
+          <shopping-cart v-if="selectedSeats.length" :tickets="selectedSeats" @delete-ticket="deleteTicket" :movie="selectedMovie.title" :day="day" :time="sessionTime" :room="roomSelected"></shopping-cart>
+          <div class="atc-btn-wrapper">
+            <button class="atc-btn accept-button" v-if="selectedSeats.length" @click.prevent="saveOrder()">CHECKOUT</button>
+          </div>
         </div>
       </div>
   </div>
@@ -87,6 +90,10 @@ export default {
     },
     unselectSession(data) {
       this.sessionSelected = data //false
+      console.log("no has dicho la palabra mágica", this.selectedSeats.length)
+      if (this.selectedSeats.length) {
+        this.showAlert()
+      }
     },
     saveSeats(data) {
       this.selectedSeats = data
@@ -100,13 +107,30 @@ export default {
         seats: this.selectedSeats
       }
       this.$store.dispatch('saveOrder', orderInfo);
+      console.log("order saved")
     },
     deleteTicket(ticket) {
       this.selectedSeats.splice(ticket, 1)
     },
-    deleteAllTickets() {
-      this.selectedSeats = [],
-      this.sessionSelected = false
+    showAlert() {
+      if (this.selectedSeats.length) {
+        this.$swal({
+          title: 'Cancel selection?',
+          text: "If you change the session, the current tickets will be removed",
+          icon: 'warning',
+          showDenyButton: true,
+          confirmButtonColor: '#3a0061',
+          denyButtonColor: '#f16b00',
+          confirmButtonText: 'No',
+          denyButtonText: 'Yes'
+        })
+        .then((result) => {
+          if (result.isDenied) {
+            this.selectedSeats = []
+            this.sessionSelected = false
+          }
+        })
+      }
     }
   }
 };
@@ -187,6 +211,14 @@ export default {
 }
 .filter-session {
     margin-right: 1em;
+}
+.atc-btn-wrapper {
+    display: flex
+}
+
+.atc-btn.accept-button {
+    margin-left: auto;
+    font-weight: bold;
 }
 @media (max-width: 768px) {
     .filters-wrapper, .session-selectors-wrapper, .seats-selectors-wrapper {
