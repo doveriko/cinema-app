@@ -55,4 +55,7 @@ export default {
 .mobile {
     margin-bottom: 3rem;
 }
+.swal2-container {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
 </style>

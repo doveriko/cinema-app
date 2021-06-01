@@ -29,6 +29,11 @@ import { faSignOutAlt, faUserCircle, faTrashAlt, faCheck, faTimes, faTicketAlt, 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 library.add(faSignOutAlt, faUserCircle, faTrashAlt, faCheck, faTimes, faTicketAlt, faFilm, faCalendarAlt);
 
+// Sweet Alert installation
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+Vue.use(VueSweetalert2);
+
 // Register components
 import BaseButton from './components/ui/BaseButton.vue';
 import BaseCard from './components/ui/BaseCard.vue';

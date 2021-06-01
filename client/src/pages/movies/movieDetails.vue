@@ -10,7 +10,7 @@
           <div class="rooms-list">
             <label class="available-label">Available in:</label>
             <div class="available-rooms">
-              <div v-for="(room, i) in allRoomsAvailable" :key="i" class="room" :class="{'selected' : roomSelected == room.id }" @click="filterRoomSession(room.id)">
+              <div v-for="(room, i) in allRoomsAvailable" :key="i" class="room" :class="{'selected' : roomSelected == room.id }" @click="filterRoomSessions(room.id)">
                 <label class="room-label">{{room.name}}</label>
               </div>
             </div>
@@ -19,7 +19,7 @@
             <filter-session v-if="roomSelected" :sessions="roomSessions" @save-session="saveSession" @day-changed="unselectSession"></filter-session>
             <filter-seats v-if="sessionSelected" :seats="roomSeats" @save-seats="saveSeats"></filter-seats>
           </div>
-          <shopping-cart v-if="selectedSeats.length" :tickets="selectedSeats" @delete-ticket="deleteTicket" :movie="selectedMovie.title" :day="day" :time="sessionTime" :room="roomSelected"></shopping-cart>
+          <shopping-cart v-if="selectedSeats.length" :tickets="selectedSeats" @delete-ticket="deleteTicket" @delete-all-tickets="deleteAllTickets" :movie="selectedMovie.title" :day="day" :time="sessionTime" :room="roomSelected"></shopping-cart>
         </div>
       </div>
   </div>
@@ -68,7 +68,7 @@ export default {
         self.allRoomsAvailable.push(self.oneRoom(room))
       })
     },
-    filterRoomSession(roomId) {
+    filterRoomSessions(roomId) {
       this.sessionSelected = false
       this.roomSessions = []
       this.roomSessions = this.selectedMovie.sessions.filter((session) => session.roomId == roomId)
@@ -103,6 +103,10 @@ export default {
     },
     deleteTicket(ticket) {
       this.selectedSeats.splice(ticket, 1)
+    },
+    deleteAllTickets() {
+      this.selectedSeats = [],
+      this.sessionSelected = false
     }
   }
 };

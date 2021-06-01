@@ -1,7 +1,7 @@
 <template>
  <div id="shopping-cart">
    <span class="summary-label"><span>Your tickets for {{movie}} on {{dayTimeRoomFormatted()}}</span></span>
-   
+   <button @click="showAlert">Hello world</button>
    <div class="summary-table">
       <div v-for="(ticket, i) in tickets" :key="i" class="ticket-list">
         <div>
@@ -41,6 +41,25 @@ export default {
     },
     dayTimeRoomFormatted() {
       return `${this.day} at ${this.time} at cine ${this.room}`
+    },
+    showAlert() {
+      this.$swal({
+          title: 'Cancel selection?',
+          text: "If you change the session, the current tickets will be removed",
+          icon: 'warning',
+          showDenyButton: true,
+          confirmButtonColor: '#3a0061',
+          denyButtonColor: '#f16b00',
+          confirmButtonText: 'Keep it',
+          denyButtonText: 'Cancel'
+        }).then((result) => {
+          if (result.isDenied) {
+            this.hola()
+          }
+        })
+    },
+    hola() {
+      this.$emit("delete-all-tickets");
     }
   }
 }
