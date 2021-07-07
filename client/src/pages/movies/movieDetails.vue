@@ -21,10 +21,12 @@
           </div>
           <shopping-cart v-if="selectedSeats.length" :tickets="selectedSeats" @delete-ticket="deleteTicket" :movie="selectedMovie.title" :day="day" :time="sessionTime" :room="roomSelected"></shopping-cart>
           <div class="atc-btn-wrapper">
-            <button class="atc-btn accept-button" v-if="selectedSeats.length" @click.prevent="saveOrder()">CHECKOUT</button>
+            <button class="atc-btn accept-button" v-if="selectedSeats.length" @click.prevent="saveOrder()">CONTINUE SHOPPING</button>
           </div>
         </div>
       </div>
+
+      <user-auth v-if="orderSent"></user-auth>
   </div>
 </template>
 
@@ -32,6 +34,7 @@
 import filterSession from '../../components/filterSession.vue';
 import filterSeats from '../../components/filterSeats.vue';
 import shoppingCart from '../../components/shoppingCart.vue';
+import userAuth from '../auth/userAuth.vue';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -48,10 +51,11 @@ export default {
       sessionTime: null,
       roomSeats: [],
       sessionSelected: false,
-      selectedSeats: []
+      selectedSeats: [],
+      orderSent: false
     };
   },
-  components: { filterSession, filterSeats, shoppingCart },
+  components: { filterSession, filterSeats, shoppingCart, userAuth },
   computed: {
     ...mapGetters(['oneRoom']),
   },
@@ -90,7 +94,6 @@ export default {
     },
     unselectSession(data) {
       this.sessionSelected = data //false
-      console.log("no has dicho la palabra mágica", this.selectedSeats.length)
       if (this.selectedSeats.length) {
         this.showAlert()
       }
@@ -100,14 +103,31 @@ export default {
     },
     saveOrder() {
       let orderInfo = {
-        title: this.selectedMovie.title,
+        movieTitle: this.selectedMovie.title,
         imageUrl: this.selectedMovie.imageUrl,
         sessionId : this.sessionId,
         sessionTime: this.sessionTime,
         seats: this.selectedSeats
       }
       this.$store.dispatch('saveOrder', orderInfo);
-      console.log("order saved")
+      this.continueToCheckout()
+    },
+    continueToCheckout() {
+      // let redirectUrl = ""
+      // if (!this.$store.getters.isAuthenticated) redirectUrl = "/auth?redirect=checkout";
+      // else redirectUrl = "/checkout";
+      // this.$router.replace(redirectUrl);
+      if (!this.$store.getters.isAuthenticated) {
+        this.orderSent = true;
+        var authInDOM = setInterval(function() {
+          var auth = document.getElementById("auth");
+          if (auth) {
+              auth.scrollIntoView({behavior : 'smooth'});
+              clearInterval(authInDOM);
+          }
+        }, 100); 
+      }
+      else this.$router.replace("/checkout");
     },
     deleteTicket(ticket) {
       this.selectedSeats.splice(ticket, 1)

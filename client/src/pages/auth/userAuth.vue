@@ -167,9 +167,7 @@ export default {
       let orderStatus = this.$store.state.orders.orderStatus;
       console.log(this.authControllerError);
       if (typeof this.authControllerError != 'string' && this.emptyFieldsError != "All the fields need to be filled") {
-        orderStatus == "pending" ?
-        this.$router.replace(this.$route.query.redirect) :     //'/checkout'
-        this.$router.replace('/my-account')
+        orderStatus == "pending" ? this.$router.replace('/checkout') : this.$router.replace('/my-account')
       }
     }
   },

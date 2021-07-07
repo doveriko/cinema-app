@@ -109,15 +109,6 @@ export default {
         day: this.day
       }
       this.$emit('save-session', sessionInfo)
-      console.log("sessionInfo", sessionInfo)
-      // let redirectUrl = ""
-      // if (!this.selectionError.noSession && !this.selectionError.differentDay && this.selectionError.noSession != null) {
-      //       if (!this.$store.getters.isAuthenticated) redirectUrl = "/auth?redirect=checkout";
-      //       else redirectUrl = "/checkout";
-      //     this.$router.replace(redirectUrl);
-      // } else {
-      //   this.errorMessage = "Please, select a valid session"
-      // }
     },
     activeSelector() {
       this.$emit('active-selector')

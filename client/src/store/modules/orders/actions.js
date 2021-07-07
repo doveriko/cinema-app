@@ -6,7 +6,8 @@ export default {
             sessionId: data.sessionId,
             sessionTime: data.sessionTime,
             movieTitle: data.movieTitle,
-            imageUrl: data.imageUrl
+            imageUrl: data.imageUrl,
+            seats: data.seats,
         }
         context.commit('saveOrder', orderInfo)
     },

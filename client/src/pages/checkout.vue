@@ -11,6 +11,7 @@
         <div class="booking-data" v-if="this.orderStatus != 'inactive'">
           <div><font-awesome-icon icon="ticket-alt"/> 1 ticket</div>
           <div><font-awesome-icon icon="film"/> {{ movieTitle }}</div>
+          <div>{{roomName()}}</div>
           <div><font-awesome-icon icon="calendar-alt"/> {{ day }}/{{ month }}/{{ year }} at {{ hour }}</div>
         </div>
         <div v-if="this.orderStatus == 'pending'" class="complete-order">
@@ -90,6 +91,14 @@ export default {
       }
       this.$store.dispatch("cancelOrder", resetOrder);
       setTimeout( () => this.$router.push({ path: '/movies'}), 5000);
+    },
+    roomName() {
+      let sessionId = this.$store.state.orders.sessionId;
+      let findMovie = this.$store.state.movies.movies.map( movie => movie.sessions.filter( session => session.id == sessionId))
+      let filterMovieObject = findMovie.filter( s => s.length)
+      let room = this.$store.getters.oneRoom(filterMovieObject[0][0].roomId);
+      let roomName = room.name
+      console.log("roomName", roomName)
     }
   },
 };
