@@ -63,7 +63,8 @@ router.post('/:userId', auth, (req, res) => {
         },
         {
             include: {
-            model: Seat
+            model: Seat,
+            attributes: ['area', 'number', 'roomId']
         }
     }).then(order => {
         res.json(order);

@@ -14,14 +14,15 @@ export default {
     registerOrder(context, data) {
         let newOrder = {
             userId: context.getters.userId,
-            sessionId: data.sessionId
+            sessionId: data.sessionId,
+            seats: data.seats
         }
 
-        let { userId, sessionId } = newOrder;
+        let { userId, sessionId, seats } = newOrder;
 
         axios
         .post(process.env.VUE_APP_API_URL + `/orders/${userId}`,
-          { userId, sessionId }
+          { userId, sessionId, seats }
         )
         .then(() => {
           context.commit('registerOrder', newOrder);

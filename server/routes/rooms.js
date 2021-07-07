@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
             },
             {
                 model: Seat,
-                attributes: ['id', 'area', 'number']
+                attributes: ['id', 'area', 'number', 'roomId']
             },
         ],
         attributes: ['id', 'name', 'ticketUnitPrice']

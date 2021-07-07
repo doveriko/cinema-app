@@ -74,9 +74,11 @@ export default {
     },
     completeOrder() {
       let sessionId = this.$store.state.orders.sessionId;
+      let seats = this.$store.state.orders.seats;
 
       let order = {
         sessionId : sessionId,
+        seats: seats
       };
       this.$store.dispatch("registerOrder", order);
       this.$store.dispatch("loadOrders");

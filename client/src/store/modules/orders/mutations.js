@@ -10,6 +10,7 @@ export default {
     registerOrder(state, payload) {
         state.userId = payload.userId,
         state.sessionId = payload.sessionId,
+        state.seats = payload.seats,
         state.orderStatus = "completed"
     },
     cancelOrder(state, payload) {
