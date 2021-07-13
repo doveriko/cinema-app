@@ -9,9 +9,9 @@
       <div class="booking-details">
         <h3>Booking details:</h3>
         <div class="booking-data" v-if="this.orderStatus != 'inactive'">
-          <div><font-awesome-icon icon="ticket-alt"/> 1 ticket</div>
+          <div><font-awesome-icon icon="ticket-alt"/>{{ numOfTickets }}</div>
           <div><font-awesome-icon icon="film"/> {{ movieTitle }}</div>
-          <div>{{roomName()}}</div>
+          <div><font-awesome-icon icon="building"/> {{ room }} </div>
           <div><font-awesome-icon icon="calendar-alt"/> {{ day }}/{{ month }}/{{ year }} at {{ hour }}</div>
         </div>
         <div v-if="this.orderStatus == 'pending'" class="complete-order">
@@ -43,6 +43,7 @@ export default {
       month: "",
       year: "",
       hour: "",
+      room: ""
     };
   },
   beforeCreate() {
@@ -59,10 +60,15 @@ export default {
     },
     imageUrl() {
       return this.$store.state.orders.imageUrl;
+    },
+    numOfTickets() {
+      let tickets = this.$store.state.orders.seats;
+      return tickets.length > 1 ? `${tickets.length} tickets` : "1 ticket"
     }
   },
   created() {
     this.sessionTime();
+    this.roomName();
   },
   methods: {
     sessionTime() {
@@ -95,12 +101,9 @@ export default {
       setTimeout( () => this.$router.push({ path: '/movies'}), 5000);
     },
     roomName() {
-      let sessionId = this.$store.state.orders.sessionId;
-      let findMovie = this.$store.state.movies.movies.map( movie => movie.sessions.filter( session => session.id == sessionId))
-      let filterMovieObject = findMovie.filter( s => s.length)
-      let room = this.$store.getters.oneRoom(filterMovieObject[0][0].roomId);
-      let roomName = room.name
-      console.log("roomName", roomName)
+      let roomId = this.$store.state.orders.seats[0].roomId;
+      let roomInfo = this.$store.getters.oneRoom(roomId);
+      this.room = roomInfo.name
     }
   },
 };

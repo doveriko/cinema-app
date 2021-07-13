@@ -25,9 +25,9 @@ Vue.use(VueAxios, axios);
 
 // Font Awesome installation
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faSignOutAlt, faUserCircle, faTrashAlt, faCheck, faTimes, faTicketAlt, faFilm, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt, faUserCircle, faTrashAlt, faCheck, faTimes, faTicketAlt, faFilm, faCalendarAlt, faBuilding } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-library.add(faSignOutAlt, faUserCircle, faTrashAlt, faCheck, faTimes, faTicketAlt, faFilm, faCalendarAlt);
+library.add(faSignOutAlt, faUserCircle, faTrashAlt, faCheck, faTimes, faTicketAlt, faFilm, faCalendarAlt, faBuilding);
 
 // Sweet Alert installation
 import VueSweetalert2 from 'vue-sweetalert2';
