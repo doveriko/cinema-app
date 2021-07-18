@@ -80,6 +80,7 @@ export default {
         orderFormatted.hour = order.session.time.slice(11, 16)
         orderFormatted.title = order.session.movie.title
         orderFormatted.seats = order.seats
+        orderFormatted.id = order.id
 
         self.orderDataObj.push(orderFormatted)
       })
@@ -100,7 +101,7 @@ export default {
       }
     },
     async deleteOrder(order) {
-      this.$store.dispatch("deleteOrder", order.orderId)
+      this.$store.dispatch("deleteOrder", order.id)
       console.log("order removed from database and store");
 
       const idx = this.orderDataObj.indexOf(order);
