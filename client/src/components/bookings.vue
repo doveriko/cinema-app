@@ -1,7 +1,7 @@
 <template>
   <div id="bookings">
     <h1 class="section-header">BOOKINGS</h1>
-      <div class="no-orders" v-if="orderDataObj.length == 0">
+      <div class="no-orders" v-if="!orderDataObj.length">
         <div>No orders available</div>
         <base-button link :to="'movies'">Go to Movies</base-button>
       </div>
@@ -11,10 +11,28 @@
         :key="order.key"
       >
         <div class="order-title">{{ order.title }}</div>
-        <div class="order-date">Day: {{ order.date }}</div>
-        <div class="order-hour">Hour: {{ order.hour }}</div>
 
-        <span v-if="!deletionIsActive" @click.prevent="activateDeletion(order.orderId)"><font-awesome-icon icon="trash-alt"/></span>
+        <div class="info-icons">
+          <div>
+            <font-awesome-icon icon="calendar-alt"/> <span class="order-date">Day: {{ order.date }}</span>
+          </div>
+          <div>
+            <font-awesome-icon icon="clock"/> <span class="order-hour">Time: {{ order.hour }}</span>
+          </div>
+          <div>
+            <font-awesome-icon icon="building"/> <span class="order-room">Room: {{ order.room }}</span>
+          </div>
+          <div>
+            <font-awesome-icon icon="ticket-alt"/> <span>{{numOfTickets(order.seats.length)}}</span>
+          </div>
+        </div>
+
+        <div v-for="seat in order.seats" :key="seat.key" class="seats-info">
+          <span>{{seat.area}} area, </span> 
+          <span>number {{seat.number}}</span>
+        </div>
+
+        <div class="delete-btn" v-if="!deletionIsActive" @click.prevent="activateDeletion(order.orderId)"><font-awesome-icon icon="trash-alt"/></div>
 
         <div class="delete-order" v-if="deletionIsActive && order.orderId == selectedOrder">
           <div>Are you sure you want to delete this order?</div>
@@ -32,11 +50,6 @@
 export default {
   data() {
     return {
-      sessionTime: [],
-      movieTitle: [],
-      orderId: [],
-      dates: [],
-      hours: [],
       orderDataObj: [],
       deletionIsActive: false,
       selectedOrderId: null
@@ -50,42 +63,41 @@ export default {
   created() {
     this.loadOrders();
   },
-  // beforeMount() {
-  //   this.formatData();
-  // },
   methods: {
     async loadOrders() {
       await this.$store.dispatch("loadOrders");
+      this.formatOrders()
+    },
+    formatOrders() {
       let allOrders = this.$store.getters.allOrders;
       var self = this;
-      allOrders.map((order) => {
-        self.sessionTime.push(order.session.time);
-        self.movieTitle.push(order.session.movie.title);
-        self.orderId.push(order.id);
-      });
-      this.formatData()
+
+      allOrders.forEach(order => {
+        let orderFormatted = {};
+
+        orderFormatted.room = self.roomName(order.seats)
+        orderFormatted.date = self.formatTime(order.session.time)
+        orderFormatted.hour = order.session.time.slice(11, 16)
+        orderFormatted.title = order.session.movie.title
+        orderFormatted.seats = order.seats
+
+        self.orderDataObj.push(orderFormatted)
+      })
     },
-    async formatData() {
-      var self = this;
-      this.sessionTime.map((timeStr) => {
-        let day = timeStr.slice(8, 10);
-        let month = timeStr.slice(5, 7);
-        let year = timeStr.slice(0, 4);
-        let dateFormatted = day + "/" + month + "/" + year;
-        self.dates.push(dateFormatted);
-        self.hours.push(timeStr.slice(11, 16));
-      });
-      this.orders();
+    formatTime(time) {
+      let day = time.slice(8, 10);
+      let month = time.slice(5, 7);
+      let year = time.slice(0, 4);
+      let dateFormatted = day + "/" + month + "/" + year;
+      return dateFormatted;
     },
-    async orders() {
-      this.orderDataObj = this.dates.map((date, i) => {
-        return {
-          date: date,
-          hour: this.hours[i],
-          title: this.movieTitle[i],
-          orderId: this.orderId[i],
-        };
-      });
+    roomName(seats) {
+      if (seats.length > 0) {
+        let roomSelector = this.$store.getters.oneRoom;
+        let roomId = seats[0].roomId;
+        let myRoom = roomSelector(roomId)
+        return myRoom.name
+      }
     },
     async deleteOrder(order) {
       this.$store.dispatch("deleteOrder", order.orderId)
@@ -102,6 +114,9 @@ export default {
       this.selectedOrderId = orderId;
       this.deletionIsActive = true;
     },
+    numOfTickets(tickets) {
+      return tickets > 1 ? `${tickets} tickets:` : `1 ticket:`
+    }
   },
 };
 </script>
@@ -130,6 +145,7 @@ h1.section-header {
 }
 .order-title {
     font-weight: bold;
+    font-size: 18px;
 }
 .booking-details {padding: 10px 0;}
 .booking-details div {
@@ -156,5 +172,30 @@ h1.section-header {
 .delete-order svg {
     margin: 10px 20px 0;
     cursor: pointer;
+}
+
+.booking-details .info-icons div {
+    width: 200px;
+    margin: 0 auto;
+    display: flex;
+}
+
+.booking-details .info-icons svg {
+    width: 30px;
+    margin-right: 1rem;
+}
+
+.booking-details .info-icons svg path {
+    fill: #f16b00
+}
+
+.booking-details .seats-info {
+    display: list-item;
+    list-style-type: disc;
+    list-style-position: inside;
+}
+
+.booking-details .delete-btn, .booking-details .delete-order {
+  margin-top: 1rem
 }
 </style>
