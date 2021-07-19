@@ -39,14 +39,16 @@ export default {
       'registerRooms',
       'registerMovies',
       'registerSessions',
-      'registerSeats'
+      'registerSeats',
+      'registerOffsiteProducts'
       ]),
   },
-  created() {
-    // this.registerMovies();
-    // this.registerRooms();
-    // this.registerSessions();
-    // this.registerSeats();
+  async created() {
+    // await this.registerMovies();
+    // await this.registerRooms();
+    // await this.registerSessions();
+    // await this.registerSeats();
+    // await this.registerOffsiteProducts()
   }
 };
 </script>

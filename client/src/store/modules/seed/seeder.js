@@ -1227,5 +1227,19 @@ export let seed = {
             number: 3,
             roomId: 3
         }
+    ],
+    offsiteProducts: [
+        {
+            name: 'Drink',
+            unitPrice: 3.50
+        },
+        {
+            name: 'Full Menu: Drink + Popcorns',
+            unitPrice: 7.50
+        },
+        {
+            name: 'Popcorns',
+            unitPrice: 5.00
+        }
     ]
 }

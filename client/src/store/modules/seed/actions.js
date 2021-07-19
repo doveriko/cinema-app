@@ -74,4 +74,21 @@ export default {
         .catch((err) => console.log(err));
     }
   },
+  registerOffsiteProducts(context) {
+    let allProducts = context.getters.seedOffsiteProducts;
+
+    for (let i = 0; i < allProducts.length; i++) {
+      var name = allProducts[i].name
+      var unitPrice = allProducts[i].unitPrice
+
+      axios
+        .post(process.env.VUE_APP_API_URL + "/offsiteproducts",
+          { name, unitPrice }
+        )
+        .then((response) => {
+          console.log("offsite products created", response.data);
+        })
+        .catch((err) => console.log(err));
+    }
+  },
 }

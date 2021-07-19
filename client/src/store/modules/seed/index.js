@@ -9,6 +9,7 @@ export default {
             movies: seed.movies,
             sessions: seed.sessions,
             seats: seed.seats,
+            offsiteProducts: seed.offsiteProducts,
         };
     },
     actions,

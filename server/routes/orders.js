@@ -5,6 +5,8 @@ const Session = require('../models/Session');
 const User = require('../models/User');
 const Seat = require('../models/Seat');
 const Movie = require('../models/Movie');
+const Room = require('../models/Room');
+const OffsiteProduct = require('../models/OffsiteProduct');
 
 //Middleware to protect private routes
 const auth = require('../middlewares/auth');
@@ -28,7 +30,16 @@ router.get('/:id', (req, res) => {
                         ]
                     },
                     {
-                        model: Seat
+                        model: Seat,
+                        include: [
+                            {
+                              model: Room,
+                              attributes: ['name', 'ticketUnitPrice'],
+                            }
+                        ]
+                    },
+                    {
+                        model: OffsiteProduct
                     }
                 ]
             }
@@ -40,32 +51,34 @@ router.get('/:id', (req, res) => {
 // GET all orders from all users /orders
 router.get('/', (req, res) => {
     Order.findAll({
-        include: {
+        include: [{
             model: Seat
+        },
+        {
+            model: OffsiteProduct
         }
-        }).then(users => res.json(users));
+        ]}).then(users => res.json(users));
 });
-
-// router.get('/:id', (req, res) => {
-//     Order.findByPk(req.params.id).then(user => {
-//         user.getSeats().then(domicilio => {
-//             res.json(domicilio);
-//         })
-//     });
-// });
 
 // POST one order /orders/:userId
 router.post('/:userId', auth, (req, res) => {
     Order.create({
-            userId: req.body.userId, // Provisional
-            sessionId: req.body.sessionId, // Provisional
-            seats: req.body.seats // Array ?
+            userId: req.body.userId,
+            sessionId: req.body.sessionId,
+            seats: req.body.seats,
+            offsiteProducts: req.body.offsiteProducts // Aquí habrá que meter 'id' y 'name' de cada offsite product + la 'quantity' asignada a la junction table 'reserved_offsite_products'
         },
         {
-            include: {
-            model: Seat,
-            attributes: ['area', 'number', 'roomId']
-        }
+        include: [
+            {
+                model: Seat,
+                attributes: ['area', 'number', 'roomId']
+            },
+            {
+                model: OffsiteProduct,
+                attributes: ['name', 'unitPrice']
+            }
+        ]
     }).then(order => {
         res.json(order);
     })

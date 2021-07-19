@@ -10,5 +10,8 @@ export default {
     },
     seedRooms(state) {
         return state.rooms;
+    },
+    seedOffsiteProducts(state) {
+        return state.offsiteProducts;
     }
 }
