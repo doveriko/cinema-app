@@ -80,10 +80,12 @@ export default {
     for (let i = 0; i < allProducts.length; i++) {
       var name = allProducts[i].name
       var unitPrice = allProducts[i].unitPrice
+      var description = allProducts[i].description
+      var imageUrl = allProducts[i].imageUrl
 
       axios
         .post(process.env.VUE_APP_API_URL + "/offsiteproducts",
-          { name, unitPrice }
+          { name, unitPrice, description, imageUrl }
         )
         .then((response) => {
           console.log("offsite products created", response.data);

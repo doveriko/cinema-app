@@ -19,14 +19,24 @@
             <filter-session v-if="roomSelected" :sessions="roomSessions" @save-session="saveSession" @day-changed="unselectSession" @active-selector="showAlert"></filter-session>
             <filter-seats v-if="sessionSelected" :seats="roomSeats" @save-seats="saveSeats"></filter-seats>
           </div>
+
           <shopping-cart v-if="selectedSeats.length" :tickets="selectedSeats" @delete-ticket="deleteTicket" :movie="selectedMovie.title" :day="day" :time="sessionTime" :room="roomSelected"></shopping-cart>
-          <div class="atc-btn-wrapper">
-            <button class="atc-btn accept-button" v-if="selectedSeats.length" @click.prevent="saveOrder()">CONTINUE SHOPPING</button>
+          
+          <offsite-products v-if="continueShopping"></offsite-products>
+
+          <div class="atc-btn-wrapper" v-if="selectedSeats.length && !continueShopping">
+            <button class="atc-btn accept-button" @click.prevent="continueToCheckout()">CONTINUE SHOPPING</button>
           </div>
+
+          <div class="atc-btn-wrapper" v-if="selectedSeats.length && continueShopping">
+            <button class="atc-btn accept-button" @click.prevent="addOffsite()">ADD OFFER</button>
+            <button class="atc-btn continue-button" @click.prevent="saveOrder()">CONTINUE WITHOUT OFFER</button>
+          </div>
+
         </div>
       </div>
 
-      <user-auth v-if="orderSent"></user-auth>
+      <!-- <user-auth v-if="orderSent"></user-auth> -->
   </div>
 </template>
 
@@ -34,7 +44,7 @@
 import filterSession from '../../components/filterSession.vue';
 import filterSeats from '../../components/filterSeats.vue';
 import shoppingCart from '../../components/shoppingCart.vue';
-import userAuth from '../auth/userAuth.vue';
+import offsiteProducts from '../../components/offsiteProducts.vue';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -52,10 +62,10 @@ export default {
       roomSeats: [],
       sessionSelected: false,
       selectedSeats: [],
-      orderSent: false
+      continueShopping: false
     };
   },
-  components: { filterSession, filterSeats, shoppingCart, userAuth },
+  components: { filterSession, filterSeats, shoppingCart, offsiteProducts },
   computed: {
     ...mapGetters(['oneRoom']),
   },
@@ -107,28 +117,29 @@ export default {
         imageUrl: this.selectedMovie.imageUrl,
         sessionId : this.sessionId,
         sessionTime: this.sessionTime,
-        seats: this.selectedSeats
+        seats: this.selectedSeats,
+        offsiteProducts: this.offsiteProducts
       }
       this.$store.dispatch('saveOrder', orderInfo);
       this.continueToCheckout()
     },
-    continueToCheckout() {
-      // let redirectUrl = ""
-      // if (!this.$store.getters.isAuthenticated) redirectUrl = "/auth?redirect=checkout";
-      // else redirectUrl = "/checkout";
-      // this.$router.replace(redirectUrl);
-      if (!this.$store.getters.isAuthenticated) {
-        this.orderSent = true;
-        var authInDOM = setInterval(function() {
-          var auth = document.getElementById("auth");
-          if (auth) {
-              auth.scrollIntoView({behavior : 'smooth'});
-              clearInterval(authInDOM);
-          }
-        }, 100); 
-      }
-      else this.$router.replace("/checkout");
-    },
+    // continueToCheckout() {
+    //   // let redirectUrl = ""
+    //   // if (!this.$store.getters.isAuthenticated) redirectUrl = "/auth?redirect=checkout";
+    //   // else redirectUrl = "/checkout";
+    //   // this.$router.replace(redirectUrl);
+    //   if (!this.$store.getters.isAuthenticated) {
+    //     this.orderSent = true;
+    //     var authInDOM = setInterval(function() {
+    //       var auth = document.getElementById("auth");
+    //       if (auth) {
+    //           auth.scrollIntoView({behavior : 'smooth'});
+    //           clearInterval(authInDOM);
+    //       }
+    //     }, 100); 
+    //   }
+    //   else this.$router.replace("/checkout");
+    // },
     deleteTicket(ticket) {
       this.selectedSeats.splice(ticket, 1)
     },
@@ -151,6 +162,9 @@ export default {
           }
         })
       }
+    },
+    continueToCheckout() {
+      this.continueShopping = true
     }
   }
 };
@@ -239,6 +253,20 @@ export default {
 .atc-btn.accept-button {
     margin-left: auto;
     font-weight: bold;
+}
+
+button.atc-btn.continue-button {
+  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  font: inherit;
+  font-weight: bold;
+  background-color: white;
+  border: 1px solid #3a0061;
+  color: #3a0061;
+  cursor: pointer;
+  border-radius: 30px;
+  display: inline-block;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 @media (max-width: 768px) {
     .filters-wrapper, .session-selectors-wrapper, .seats-selectors-wrapper {

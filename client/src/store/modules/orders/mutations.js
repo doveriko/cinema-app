@@ -5,12 +5,14 @@ export default {
         state.movieTitle = payload.movieTitle,
         state.imageUrl = payload.imageUrl,
         state.seats = payload.seats,
+        state.offsiteProducts = payload.offsiteProducts,
         state.orderStatus = "pending"
     },
     registerOrder(state, payload) {
         state.userId = payload.userId,
         state.sessionId = payload.sessionId,
         state.seats = payload.seats,
+        state.offsiteProducts = payload.offsiteProducts,
         state.orderStatus = "completed"
     },
     cancelOrder(state, payload) {

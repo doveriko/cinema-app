@@ -53,7 +53,8 @@ export default {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   background: #ffeddf;
   padding: 1rem 2rem;
-  margin: 1rem;
+  margin: 1rem 0;
+  border-radius: 20px;
 }
 .ticket-list {
   margin: 10px 0;

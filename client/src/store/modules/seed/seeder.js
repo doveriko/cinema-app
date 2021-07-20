@@ -1231,15 +1231,21 @@ export let seed = {
     offsiteProducts: [
         {
             name: 'Drink',
-            unitPrice: 3.50
+            unitPrice: 3.50,
+            description: "Choose from our selections of soda, water and beer",
+            imageUrl: "https://yaffa-cdn.s3.amazonaws.com/yaffadsp/images/dmImage/StandardImage/softdrink.jpg"
         },
         {
             name: 'Full Menu: Drink + Popcorns',
-            unitPrice: 7.50
+            unitPrice: 7.50,
+            description: "Get it all for a bargain",
+            imageUrl: "https://media.istockphoto.com/photos/cinema-objects-picture-id498956113?k=6&m=498956113&s=612x612&w=0&h=EeMPBS_j6DmPnWjXgOWNX1Ydw8SNInhJ_VImIpm_BQY="
         },
         {
             name: 'Popcorns',
-            unitPrice: 5.00
+            unitPrice: 5.00,
+            description: "Who wouldn't want to enjoy the movie with a bucket of popcorns?",
+            imageUrl: "https://wholefully.com/wp-content/uploads/2017/06/movie-theatre-popcorn-800x1200-720x540.jpg"
         }
     ]
 }

@@ -12,7 +12,8 @@ export default {
         orderStatus: "inactive",
         imageUrl: "",
         seats: [],
-        allOrders: []
+        allOrders: [],
+        offsiteProducts: []
       };
     },
     mutations,

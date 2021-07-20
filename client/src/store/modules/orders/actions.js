@@ -8,6 +8,7 @@ export default {
             movieTitle: data.movieTitle,
             imageUrl: data.imageUrl,
             seats: data.seats,
+            offsiteProducts: data.offsiteProducts
         }
         context.commit('saveOrder', orderInfo)
     },
@@ -15,14 +16,15 @@ export default {
         let newOrder = {
             userId: context.getters.userId,
             sessionId: data.sessionId,
-            seats: data.seats
+            seats: data.seats,
+            offsiteProducts: data.offsiteProducts
         }
 
-        let { userId, sessionId, seats } = newOrder;
+        let { userId, sessionId, seats, offsiteProducts } = newOrder;
 
         axios
         .post(process.env.VUE_APP_API_URL + `/orders/${userId}`,
-          { userId, sessionId, seats }
+          { userId, sessionId, seats, offsiteProducts }
         )
         .then(() => {
           context.commit('registerOrder', newOrder);

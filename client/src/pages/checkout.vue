@@ -84,7 +84,8 @@ export default {
 
       let order = {
         sessionId : sessionId,
-        seats: seats
+        seats: seats,
+        offsiteProducts: []
       };
       this.$store.dispatch("registerOrder", order);
       this.$store.dispatch("loadOrders");
@@ -98,7 +99,7 @@ export default {
         orderStatus : "inactive"
       }
       this.$store.dispatch("cancelOrder", resetOrder);
-      setTimeout( () => this.$router.push({ path: '/movies'}), 5000);
+      setTimeout( () => this.$router.push({ path: '/movies'}), 3000);
     },
     roomName() {
       let roomId = this.$store.state.orders.seats[0].roomId;
