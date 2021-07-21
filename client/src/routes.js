@@ -10,7 +10,7 @@ export default [
     { path: '/movies', component: movies },
     { path: '/movies/:id', component: movieDetails },
     { path: '/auth', component: userAuth, meta: { requiresUnauth: true } },
-    { path: '/checkout', component: checkout, meta: { requiresAuth: true } },
+    { path: '/checkout', component: checkout },
     { path: '/my-account', component: myAccount, meta: { requiresAuth: true } },
     { path: '/:notFound(.*)', component: notFound }
 ]

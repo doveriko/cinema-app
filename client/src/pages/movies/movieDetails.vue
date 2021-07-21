@@ -29,8 +29,8 @@
           </div>
 
           <div class="atc-btn-wrapper" id="atc-buttons" v-if="selectedSeats.length && continueShopping">
-            <button class="atc-btn accept-button" @click.prevent="addOffsite()">CONTINUE WITH OFFER</button>
-            <button class="atc-btn continue-button" @click.prevent="saveOrder()">CONTINUE WITHOUT OFFER</button>
+            <button class="atc-btn accept-button" @click.prevent="continueWithOffer()">CONTINUE WITH OFFER</button>
+            <button class="atc-btn continue-button" @click.prevent="continueWithoutOffer()">CONTINUE WITHOUT OFFER</button>
           </div>
 
         </div>
@@ -113,7 +113,7 @@ export default {
     saveSeats(data) {
       this.selectedSeats = data
     },
-    saveOrder() {
+    continueWithOffer() {
       let orderInfo = {
         movieTitle: this.selectedMovie.title,
         imageUrl: this.selectedMovie.imageUrl,
@@ -123,7 +123,19 @@ export default {
         offsiteProducts: this.offsiteProducts
       }
       this.$store.dispatch('saveOrder', orderInfo);
-      this.continueToCheckout()
+      this.$router.push({ path: '/checkout'})
+    },
+    continueWithoutOffer() {
+      let orderInfo = {
+        movieTitle: this.selectedMovie.title,
+        imageUrl: this.selectedMovie.imageUrl,
+        sessionId : this.sessionId,
+        sessionTime: this.sessionTime,
+        seats: this.selectedSeats,
+        offsiteProducts: []
+      }
+      this.$store.dispatch('saveOrder', orderInfo);
+      this.$router.push({ path: '/checkout'})
     },
     // continueToCheckout() {
     //   // let redirectUrl = ""

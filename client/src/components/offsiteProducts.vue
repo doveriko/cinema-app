@@ -5,11 +5,12 @@
 
     <div class="offsite-products-catalogue">
       <div v-for="product in allOffsiteProducts" :key="product.id" class="product">
-
-        <span class="product-name">{{product.name}}</span>
-        <img class="product-image" :src="product.imageUrl" alt="">
-        <span class="product-description">{{product.description}}</span>
-        <span class="product-price">{{product.unitPrice}} € / u</span>
+        <div class="product-info">
+          <span class="product-name">{{product.name}}</span>
+          <img class="product-image" :src="product.imageUrl" alt="">
+          <span class="product-description">{{product.description}}</span>
+          <span class="product-price">{{product.unitPrice}} € / u</span>
+        </div>
 
         <div class="qty-selector">
           <label for="quantity">Quantity</label>
@@ -17,7 +18,6 @@
           <button class="add-btn" v-if="!productAdded(product.id)" @click="addProduct(product)">Add</button>
           <button class="remove-btn" v-if="productAdded(product.id)" @click="removeProduct(product)">Remove</button>
         </div>
-
       </div>
 
       <div class="offsite-summary-wrapper" v-if="addedProducts.length">
@@ -208,9 +208,20 @@ export default {
 }
 
 .offsite-header {
-    text-align: center;
-    font-style: italic;
-    color: #3a0061;
-    margin: 10px 0 20px;
+  text-align: center;
+  font-style: italic;
+  color: #3a0061;
+  margin: 10px 0 20px;
+}
+
+.product-info {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.qty-selector label {
+    font-size: 11px;
 }
 </style>

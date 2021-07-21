@@ -4,30 +4,71 @@
 
     <div class="checkout-panel">
       <div class="booking-image">
-        <img class="movie-img" :src="imageUrl" />
+        <img class="movie-img" :src="currentOrder.imageUrl" />
       </div>
       <div class="booking-details">
         <h3>Booking details:</h3>
-        <div class="booking-data" v-if="this.orderStatus != 'inactive'">
-          <div><font-awesome-icon icon="ticket-alt"/>{{ numOfTickets }}</div>
-          <div><font-awesome-icon icon="film"/> {{ movieTitle }}</div>
-          <div><font-awesome-icon icon="building"/> {{ room }} </div>
-          <div><font-awesome-icon icon="calendar-alt"/> {{ day }}/{{ month }}/{{ year }} at {{ hour }}</div>
+        <div class="booking-data" v-if="currentOrder.orderStatus != 'inactive'">
+          <div class="movie-title"><font-awesome-icon icon="film"/> {{ currentOrder.movieTitle }}</div>
+          <div class="room"><font-awesome-icon icon="building"/> {{ room }} </div>
+          <div class="session"><font-awesome-icon icon="calendar-alt"/> {{sessionTime()}}</div>
+
+          <div class="tickets"><font-awesome-icon icon="ticket-alt"/>{{ numOfTickets }}</div>
+          <table>
+            <tr>
+              <th>Area</th>
+              <th>Seat number</th>
+              <th>Unit Price</th>
+            </tr>
+            <tr v-for="seat in currentOrder.seats" :key="seat.id">
+              <td>{{seat.area}}</td>
+              <td>{{seat.number}}</td>
+              <td>{{ticketUnitPrice}} €</td>
+            </tr>
+          </table>
+          <div class="subtotal" v-show="currentOrder.offsiteProducts.length">
+            <span>Tickets subtotal:</span><span>{{ticketsSubtotal()}} €</span>
+          </div>
+
+        <div v-if="currentOrder.offsiteProducts.length">
+          <div class="offsite-products"><font-awesome-icon icon="cocktail"/>{{ numOfOffsiteProducts }}</div>
+          <table>
+            <tr>
+              <th>Product</th>
+              <th>Quantity</th>
+              <th>Unit Price</th>
+            </tr>
+            <tr v-for="offsiteProduct in currentOrder.offsiteProducts" :key="offsiteProduct.id">
+              <td>{{offsiteProduct.name}}</td>
+              <td>{{offsiteProduct.quantity}}</td>
+              <td>{{offsiteProduct.unitPrice}} €</td>
+            </tr>
+          </table>
+          <div class="subtotal">
+            <span>Extra products subtotal:</span><span>{{offsiteProductsSubtotal()}} €</span>
+          </div>
         </div>
-        <div v-if="this.orderStatus == 'pending'" class="complete-order">
+
+        <div class="total-price">
+          <h3><span>TOTAL:</span> <span>{{totalPrice}} €</span></h3>
+        </div>
+
+        </div>
+
+        <div v-if="currentOrder.orderStatus == 'pending'" class="complete-order">
           <p>Complete order?</p>
           <span @click="cancelOrder"><font-awesome-icon icon="times"/></span>
           <span @click="completeOrder"><font-awesome-icon icon="check"/></span>
         </div>
 
-      <div v-if="this.orderStatus == 'completed'">
+      <div v-if="currentOrder.orderStatus == 'completed'">
       <h3 class="booking-completed">Booking completed!</h3>
       <p>You will receive an e-mail shortly with the reference number to show at the box office</p>
 
       <base-button link :to="'my-account'">Go to My Account</base-button>
     </div>
 
-    <div v-if="this.orderStatus == 'inactive'" >
+    <div v-if="currentOrder.orderStatus == 'inactive'" >
       <p class="booking-cancelled">Your booking has been cancelled. You will be redirected to the home page</p>
     </div>
       </div>
@@ -36,34 +77,29 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
-      day: "",
-      month: "",
-      year: "",
-      hour: "",
-      room: ""
+      room: "",
+      ticketUnitPrice: null,
+      ticketsSubtotalPrice: null,
+      offsiteProductsSubtotalPrice: null
     };
   },
-  beforeCreate() {
-    if(this.$store.state.orders.orderStatus != "pending") {
-      this.$router.replace("/my-account");
-    }
-  },
   computed: {
-    movieTitle() {
-      return this.$store.state.orders.movieTitle;
-    },
-    orderStatus() {
-      return this.$store.state.orders.orderStatus;
-    },
-    imageUrl() {
-      return this.$store.state.orders.imageUrl;
-    },
+    ...mapGetters(['currentOrder', 'oneRoom']),
     numOfTickets() {
-      let tickets = this.$store.state.orders.seats;
-      return tickets.length > 1 ? `${tickets.length} tickets` : "1 ticket"
+      let tickets = this.currentOrder.seats;
+      return tickets.length > 1 ? `${tickets.length} tickets:` : "1 ticket:"
+    },
+    numOfOffsiteProducts() {
+      let offsiteProducts = this.currentOrder.offsiteProducts;
+      return offsiteProducts.length > 1 ? `${offsiteProducts.length} extra products:` : "1 extra product:"
+    },
+    totalPrice() {
+      return this.ticketsSubtotalPrice + this.offsiteProductsSubtotalPrice
     }
   },
   created() {
@@ -72,15 +108,16 @@ export default {
   },
   methods: {
     sessionTime() {
-      let sessionTime = this.$store.state.orders.sessionTime;
-      this.day = sessionTime.slice(8, 10);
-      this.month = sessionTime.slice(5, 7);
-      this.year = sessionTime.slice(0, 4);
-      this.hour = sessionTime.slice(11, 16);
+      let day = this.currentOrder.sessionTime.slice(8, 10);
+      let month = this.currentOrder.sessionTime.slice(5, 7);
+      let year = this.currentOrder.sessionTime.slice(0, 4);
+      let hour = this.currentOrder.sessionTime.slice(11, 16);
+
+      return `${day}/${month}/${year} at ${hour}`
     },
     completeOrder() {
-      let sessionId = this.$store.state.orders.sessionId;
-      let seats = this.$store.state.orders.seats;
+      let sessionId = this.currentOrder.sessionId;
+      let seats = this.currentOrder.seats;
 
       let order = {
         sessionId : sessionId,
@@ -102,11 +139,27 @@ export default {
       setTimeout( () => this.$router.push({ path: '/movies'}), 3000);
     },
     roomName() {
-      let roomId = this.$store.state.orders.seats[0].roomId;
-      let roomInfo = this.$store.getters.oneRoom(roomId);
+      let roomId = this.currentOrder.seats[0].roomId;
+      let roomInfo = this.oneRoom(roomId);
       this.room = roomInfo.name
+      this.ticketUnitPrice = roomInfo.ticketUnitPrice
+    },
+    ticketsSubtotal() {
+      let price = this.currentOrder.seats.length * this.ticketUnitPrice
+      this.ticketsSubtotalPrice = price
+      return price
+    },
+    offsiteProductsSubtotal() {
+      let totalSum = []
+      this.currentOrder.offsiteProducts.forEach( product => {
+        let partialSum = product.quantity * product.unitPrice
+        totalSum.push(partialSum)
+      })
+      let price = totalSum.reduce( (a, b) => a + b )
+      this.offsiteProductsSubtotalPrice = price
+      return price
     }
-  },
+  }
 };
 </script>
 
@@ -118,7 +171,7 @@ export default {
 }
 .checkout-panel {
     display: flex;
-    width: 60%;
+    width: 80%;
 }
 
 #checkout .booking-image {
@@ -180,5 +233,50 @@ export default {
     flex-basis: 100%;
     padding-bottom: 2em;
     margin-top: 1em;
+}
+
+table {
+  width: 100%;
+  text-align: center;
+}
+
+table th {
+  background-color: #f16b00;
+  font-weight: normal;
+  width: 33%
+}
+
+table tr {
+  background: #ffcfa9;
+  height: 28px;
+}
+
+table tr:nth-of-type(odd) {
+    background: #ffb478;
+}
+
+table tr td {
+  font-size: smaller
+}
+
+.booking-data .tickets, .booking-data .offsite-products {
+    margin: 12px 0 5px;
+}
+
+.subtotal {
+    text-align: center;
+    font-weight: 600;
+    margin: 3px;
+}
+
+.total-price {
+    text-align: center;
+    border: 1px solid #f16b00;
+    margin-top: 15px;
+    border-radius: 5px;
+}
+
+.total-price h3 {
+    margin: 10px;
 }
 </style>
