@@ -16,7 +16,7 @@
           <span>{{tickets.length}} {{this.ticketOrTickets}} × {{this.unitPrice}} €</span>
         </div>
         <div>
-          <span class="total-price-label">Total price:</span> {{totalPrice}} €</div>
+          <span class="total-price-label">Total:</span> {{totalPrice}} €</div>
         </div>
     </div>
     

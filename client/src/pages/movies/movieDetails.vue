@@ -22,14 +22,14 @@
 
           <shopping-cart v-if="selectedSeats.length" :tickets="selectedSeats" @delete-ticket="deleteTicket" :movie="selectedMovie.title" :day="day" :time="sessionTime" :room="roomSelected"></shopping-cart>
           
-          <offsite-products v-if="continueShopping"></offsite-products>
+          <offsite-products v-if="continueShopping && selectedSeats.length" @products-list="productsList"></offsite-products>
 
           <div class="atc-btn-wrapper" v-if="selectedSeats.length && !continueShopping">
             <button class="atc-btn accept-button" @click.prevent="continueToCheckout()">CONTINUE SHOPPING</button>
           </div>
 
-          <div class="atc-btn-wrapper" v-if="selectedSeats.length && continueShopping">
-            <button class="atc-btn accept-button" @click.prevent="addOffsite()">ADD OFFER</button>
+          <div class="atc-btn-wrapper" id="atc-buttons" v-if="selectedSeats.length && continueShopping">
+            <button class="atc-btn accept-button" @click.prevent="addOffsite()">CONTINUE WITH OFFER</button>
             <button class="atc-btn continue-button" @click.prevent="saveOrder()">CONTINUE WITHOUT OFFER</button>
           </div>
 
@@ -62,7 +62,8 @@ export default {
       roomSeats: [],
       sessionSelected: false,
       selectedSeats: [],
-      continueShopping: false
+      continueShopping: false,
+      offsiteProducts: []
     };
   },
   components: { filterSession, filterSeats, shoppingCart, offsiteProducts },
@@ -71,6 +72,7 @@ export default {
   },
   created() {
     this.selectedMovie = this.$store.getters.oneMovie(this.id)
+    this.continueShopping = false
     this.findRooms();
   },
   methods: {
@@ -159,12 +161,23 @@ export default {
           if (result.isDenied) {
             this.selectedSeats = []
             this.sessionSelected = false
+            this.continueShopping = false
           }
         })
       }
     },
     continueToCheckout() {
       this.continueShopping = true
+      var offsiteProductsInDOM = setInterval(function() {
+          var offsiteProducts = document.getElementById("offsite-products");
+          if (offsiteProducts) {
+              offsiteProducts.scrollIntoView({behavior : 'smooth'});
+              clearInterval(offsiteProductsInDOM);
+          }
+        }, 100); 
+    },
+    productsList(data) {
+      this.offsiteProducts = data
     }
   }
 };

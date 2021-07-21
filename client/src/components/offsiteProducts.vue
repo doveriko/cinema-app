@@ -1,18 +1,37 @@
 <template>
   <div id="offsite-products">
-    <div v-for="(product, i) in allOffsiteProducts" :key="i" class="product">
 
-      <span class="product-name">{{product.name}}</span>
-      <img class="product-image" :src="product.imageUrl" alt="">
-      <span class="product-description">{{product.description}}</span>
-      <span class="product-price">{{product.unitPrice}} € / u</span>
+    <h2 class="offsite-header">Fancy some extra entertainment?</h2>
 
-      <label for="quantity">Quantity</label>
-      <input type="number" :id="product.id" v-model="product.quantity" min="1" max="10">
-      <button v-if="!productAdded(product.id)" @click="addProduct(product)">Add</button>
-      <button v-if="productAdded(product.id)" @click="removeProduct(product)">Remove</button>
+    <div class="offsite-products-catalogue">
+      <div v-for="product in allOffsiteProducts" :key="product.id" class="product">
 
+        <span class="product-name">{{product.name}}</span>
+        <img class="product-image" :src="product.imageUrl" alt="">
+        <span class="product-description">{{product.description}}</span>
+        <span class="product-price">{{product.unitPrice}} € / u</span>
+
+        <div class="qty-selector">
+          <label for="quantity">Quantity</label>
+          <input type="number" :id="product.id" v-model="product.quantity" min="1" max="10" @change="updateProduct(product)">
+          <button class="add-btn" v-if="!productAdded(product.id)" @click="addProduct(product)">Add</button>
+          <button class="remove-btn" v-if="productAdded(product.id)" @click="removeProduct(product)">Remove</button>
+        </div>
+
+      </div>
+
+      <div class="offsite-summary-wrapper" v-if="addedProducts.length">
+        <div class="offsite-summary" >
+          <div class="product-summary-details" v-for="(product, i) in addedProducts" :key="i">
+            <span>{{product.quantity}}</span> x <span>{{product.name}}</span> = {{product.quantity * product.unitPrice}} €
+          </div>
+          <div class="product-summary-total">
+            <span class="total-label">Total: </span><span class="total-price">{{totalPrice()}} €</span>
+          </div>
+        </div>
+      </div>
     </div>
+
   </div>
 </template>
 
@@ -23,6 +42,7 @@ export default {
   data() {
     return {
       addedProducts: [],
+      qty: null
     }
   },
   computed: {
@@ -36,18 +56,44 @@ export default {
       let productObj = {
         id: product.id,
         name: product.name,
-        quantity: product.quantity
+        quantity: product.quantity,
+        unitPrice: product.unitPrice
       }
-      this.addedProducts.push(productObj)
+      if (product.quantity > 0) {
+        this.addedProducts.push(productObj)
+      }
+      this.$emit("products-list", this.addedProducts);
+
+            var buttonsInDOM = setInterval(function() {
+          var ATCbuttons = document.getElementById("atc-buttons");
+          if (ATCbuttons) {
+              ATCbuttons.scrollIntoView({behavior : 'smooth'});
+              clearInterval(buttonsInDOM);
+          }
+        }, 100);
     },
     removeProduct(product) {
       let productCopy = this.addedProducts.find( p => p.id == product.id);
       const idx = this.addedProducts.indexOf(productCopy);
       this.addedProducts.splice(idx, 1)
+      this.$emit("products-list", this.addedProducts);
       product.quantity = null
     },
     productAdded(productId) {
       return this.addedProducts.some(product => product.id == productId)
+    },
+    totalPrice() {
+      let totalSum = []
+      this.addedProducts.forEach( product => {
+        let partialSum = product.quantity * product.unitPrice
+        totalSum.push(partialSum)
+      })
+      let price = totalSum.reduce( (a, b) => a + b )
+      return price
+    },
+    updateProduct(product) {
+      let updatedProduct = this.addedProducts.find( p => p.id == product.id)
+      if (updatedProduct) updatedProduct.quantity = product.quantity
     }
   },
   created() {
@@ -58,47 +104,113 @@ export default {
 
 <style>
 #offsite-products {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    background: #d7b9ff;
-    display: flex;
-    padding: 10px;
-    margin: 1rem 0;
-    border-radius: 20px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  background: #d7b9ff;
+  padding: 10px;
+  margin: 1rem 0;
+  border-radius: 20px;
+}
+
+.offsite-products-catalogue {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .product {
-    border: 1px solid #3a0061;
-    padding: 10px;
-    margin: 0 5px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    text-align: center;
-    background: white;
-    border-radius: 10px;
+  border: 1px solid #3a0061;
+  padding: 10px;
+  margin: 0 5px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  background: white;
+  border-radius: 10px;
 }
 
 .product-name {
-    font-weight: bold;
-    min-height: 35px;
+  font-weight: bold;
+  min-height: 35px;
 }
 
 .product-description {
   font-size: 13px;
-  height: 40px;
+  min-height: 40px;
 }
 
 .product-price {
-    font-size: 14px;
-    font-weight: 600;
-    margin-top: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 10px;
 }
 
 .product-image {
-    width: 100%;
-    object-fit: cover;
-    max-height: 160px;
-    margin: 5px 0;
+  width: 100%;
+  object-fit: cover;
+  max-height: 160px;
+  margin: 5px 0;
+}
+
+.qty-selector input {
+  height: 30px;
+  width: 30px;
+  margin-right: 10px;
+}
+
+.qty-selector button {
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  padding: 5px 8px;
+  font-weight: bold;
+  cursor: pointer;
+  display: inline-block;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.qty-selector .add-btn {
+  background: #3a0061;
+  border: 1px solid #3a0061;
+}
+
+.qty-selector .remove-btn {
+  background: #f16b00;
+  border: 1px solid #f16b00;
+}
+
+.offsite-summary-wrapper {
+    flex-basis: 100%;
+}
+.offsite-summary {
+    padding: 1rem;
+    border: 1px solid #3a0061;
+    margin: 1rem;
+}
+.offsite-summary {
+    padding: 1rem;
+    border: 1px solid #3a0061;
+    margin: 1rem;
+}
+
+.product-summary-details {
+    text-align: center;
+    font-size: 14px;
+}
+
+.product-summary-total {
+    text-align: center;
+    margin-top: 5px;
+}
+
+.product-summary-total .total-label {
+  font-weight: bold
+}
+
+.offsite-header {
+    text-align: center;
+    font-style: italic;
+    color: #3a0061;
+    margin: 10px 0 20px;
 }
 </style>
