@@ -7,6 +7,7 @@ const Seat = require('../models/Seat');
 const Movie = require('../models/Movie');
 const Room = require('../models/Room');
 const OffsiteProduct = require('../models/OffsiteProduct');
+const sequelize = require('../database/db');
 
 //Middleware to protect private routes
 const auth = require('../middlewares/auth');
@@ -39,7 +40,8 @@ router.get('/:id', (req, res) => {
                         ]
                     },
                     {
-                        model: OffsiteProduct
+                        model: OffsiteProduct,
+                        attributes: ['id', 'name', 'unitPrice'],
                     }
                 ]
             }
@@ -61,27 +63,26 @@ router.get('/', (req, res) => {
 });
 
 // POST one order /orders/:userId
-router.post('/:userId', auth, (req, res) => {
-    Order.create({
+router.post('/:userId', auth, async (req, res) => {
+    let t = await sequelize.transaction()
+
+    try { 
+        let order = await Order.create({
             userId: req.body.userId,
-            sessionId: req.body.sessionId,
-            seats: req.body.seats,
-            offsiteProducts: req.body.offsiteProducts // Aquí habrá que meter 'id' y 'name' de cada offsite product + la 'quantity' asignada a la junction table 'reserved_offsite_products'
-        },
-        {
-        include: [
-            {
-                model: Seat,
-                attributes: ['area', 'number', 'roomId']
-            },
-            {
-                model: OffsiteProduct,
-                attributes: ['name', 'unitPrice']
-            }
-        ]
-    }).then(order => {
-        res.json(order);
-    })
+            sessionId: req.body.sessionId
+        }, {
+            transaction: t
+        })
+    
+        await order.addSeats(req.body.seats, { transaction: t })
+        await order.addOffsiteProducts(req.body.offsiteProducts, { transaction: t })
+    
+        await t.commit()
+    } catch (err) {
+        if (t) {
+            await t.rollback()
+        }
+    }
 });
 
 // Delete one order /orders/:orderId

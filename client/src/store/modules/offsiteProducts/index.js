@@ -8,14 +8,14 @@ export default {
     },
     actions: {
         async loadOffsiteProducts(context) {
-            let allOffsiteProducts = []
             await axios
                 .get(process.env.VUE_APP_API_URL + "/offsiteproducts")
                 .then((response) => {
+                    let allOffsiteProducts = []
                     allOffsiteProducts = response.data
+                    context.commit('loadOffsiteProducts', allOffsiteProducts)
                 })
-                .catch((err) => console.log(err));
-                context.commit('loadOffsiteProducts', allOffsiteProducts)
+                .catch((err) => console.log(err));                
         }
     },
     mutations: {

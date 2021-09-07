@@ -10,9 +10,6 @@ export default {
     },
     registerOrder(state, payload) {
         state.userId = payload.userId,
-        state.sessionId = payload.sessionId,
-        state.seats = payload.seats,
-        state.offsiteProducts = payload.offsiteProducts,
         state.orderStatus = "completed"
     },
     cancelOrder(state, payload) {
@@ -21,7 +18,9 @@ export default {
         state.sessionTime = payload.sessionTime,
         state.movieTitle = payload.movieTitle,
         state.imageUrl = "",
-        state.orderStatus = payload.orderStatus
+        state.orderStatus = payload.orderStatus,
+        state.seats = payload.seats,
+        state.offsiteProducts = payload.offsiteProducts
     },
     loadOrders(state, payload) {
         state.allOrders = payload

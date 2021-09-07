@@ -12,10 +12,10 @@ export default {
             await axios
                 .get(process.env.VUE_APP_API_URL + "/rooms")
                 .then((response) => {
-                allRooms = response.data
-                })
-                .catch((err) => console.log(err));
+                allRooms = response.data;
                 context.commit('loadRooms', allRooms)
+                })
+                .catch((err) => console.log(err));  
         }
     },
     mutations: {

@@ -26,10 +26,9 @@ export default {
         .post(process.env.VUE_APP_API_URL + `/orders/${userId}`,
           { userId, sessionId, seats, offsiteProducts }
         )
-        .then(() => {
-          context.commit('registerOrder', newOrder);
-        })
-        .catch((err) => console.log(err));
+        .then(response => response.data)
+        .then(context.commit('registerOrder', newOrder))
+        .catch((err) => console.log(err));        
     },
     cancelOrder(context, data) {
         let resetOrder = {
@@ -37,23 +36,24 @@ export default {
             sessionId : data.sessionId,
             sessionTime : data.sessionTime,
             movieTitle : data.movieTitle,
-            orderStatus : data.orderStatus
+            orderStatus : data.orderStatus,
+            seats: data.seats,
+            offsiteProducts: data.offsiteProducts
           }
         
         context.commit('cancelOrder', resetOrder)
     },
     async loadOrders(context) {
         let userId = context.getters.userId;
-        let allOrders = [];
-
+        
         await axios
         .get(process.env.VUE_APP_API_URL + `/orders/${userId}`)
         .then((response) => {
+          let allOrders = [];
           allOrders = response.data.orders;
+          context.commit('loadOrders', allOrders);
         })
-        .catch((err) => console.log(err));
-        
-        context.commit('loadOrders', allOrders);
+        .catch((err) => console.log(err));        
     },
     deleteOrder(context, data) {
       let orderId = data;

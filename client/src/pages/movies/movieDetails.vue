@@ -22,7 +22,7 @@
 
           <shopping-cart v-if="selectedSeats.length" :tickets="selectedSeats" @delete-ticket="deleteTicket" :movie="selectedMovie.title" :day="day" :time="sessionTime" :room="roomSelected"></shopping-cart>
           
-          <offsite-products v-if="continueShopping && selectedSeats.length" @products-list="productsList"></offsite-products>
+          <offsite-products v-if="continueShopping && selectedSeats.length" @save-offsite-products="saveOffsiteProducts"></offsite-products>
 
           <div class="atc-btn-wrapper" v-if="selectedSeats.length && !continueShopping">
             <button class="atc-btn accept-button" @click.prevent="continueToCheckout()">CONTINUE SHOPPING</button>
@@ -68,10 +68,10 @@ export default {
   },
   components: { filterSession, filterSeats, shoppingCart, offsiteProducts },
   computed: {
-    ...mapGetters(['oneRoom']),
+    ...mapGetters(['oneRoom', 'oneMovie']),
   },
   created() {
-    this.selectedMovie = this.$store.getters.oneMovie(this.id)
+    this.selectedMovie = this.oneMovie(this.id)
     this.continueShopping = false
     this.findRooms();
   },
@@ -188,7 +188,7 @@ export default {
           }
         }, 100); 
     },
-    productsList(data) {
+    saveOffsiteProducts(data) {
       this.offsiteProducts = data
     }
   }

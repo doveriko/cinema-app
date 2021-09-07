@@ -13,4 +13,12 @@ router.post('/', (req, res) => {
     })
 })
 
+// POST one seat /seats (route made to create seed from store)
+router.get('/', (req, res) => {
+    Seat.findAll({
+    }).then(seat => {
+        res.json(seat)
+    })
+})
+
 module.exports = router;

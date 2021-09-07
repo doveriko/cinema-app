@@ -62,21 +62,21 @@ export default {
       if (product.quantity > 0) {
         this.addedProducts.push(productObj)
       }
-      this.$emit("products-list", this.addedProducts);
+      this.$emit("save-offsite-products", this.addedProducts);
 
-            var buttonsInDOM = setInterval(function() {
-          var ATCbuttons = document.getElementById("atc-buttons");
-          if (ATCbuttons) {
-              ATCbuttons.scrollIntoView({behavior : 'smooth'});
-              clearInterval(buttonsInDOM);
-          }
-        }, 100);
+      var buttonsInDOM = setInterval(function() {
+      var ATCbuttons = document.getElementById("atc-buttons");
+      if (ATCbuttons) {
+          ATCbuttons.scrollIntoView({behavior : 'smooth'});
+          clearInterval(buttonsInDOM);
+        }
+      }, 100);
     },
     removeProduct(product) {
       let productCopy = this.addedProducts.find( p => p.id == product.id);
       const idx = this.addedProducts.indexOf(productCopy);
       this.addedProducts.splice(idx, 1)
-      this.$emit("products-list", this.addedProducts);
+      this.$emit("save-offsite-products", this.addedProducts);
       product.quantity = null
     },
     productAdded(productId) {

@@ -1,9 +1,9 @@
 <template>
 <div id="auth">
   <base-card :class="{ 'mobile' : isMobileMode }">
-    <div v-if="orderStatus == 'pending'" class="complete-order-message">
+    <!-- <div v-if="orderStatus == 'pending'" class="complete-order-message">
       <p>Please, log in or sign up to complete your order</p>
-    </div>
+    </div> -->
 
     <form @submit.prevent="submitForm">
       <div class="auth-panel" ref="auth">
@@ -304,5 +304,9 @@ textarea:focus {
 
 #auth .card.mobile form {
   padding: 10px 0;
+}
+
+#checkout #auth {
+    width: 350px;
 }
 </style>

@@ -1,4 +1,4 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, Sequelize } = require('sequelize');
 const sequelize = require('../database/db');
 
 const User = require('./User');
@@ -30,6 +30,7 @@ Order.belongsToMany(Seat, { through: "reserved_seats", timestamps : false });
 const ReservedOffsiteProduct = sequelize.define('reserved_offsite_products', {
     offsiteProductId: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       references: {
         model: OffsiteProduct,
         key: 'id'
@@ -37,6 +38,7 @@ const ReservedOffsiteProduct = sequelize.define('reserved_offsite_products', {
     },
     orderId: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       references: {
         model: Order,
         key: 'id'

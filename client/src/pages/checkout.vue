@@ -55,7 +55,11 @@
 
         </div>
 
-        <div v-if="currentOrder.orderStatus == 'pending'" class="complete-order">
+        <div v-if="currentOrder.orderStatus == 'pending' && !isAuthenticated" class="auth-message">
+          <p>You have to <a class="auth-link" @click="authenticate()">log in or sign up</a> to complete the order</p>
+        </div>
+
+        <div v-if="currentOrder.orderStatus == 'pending' && isAuthenticated" class="complete-order">
           <p>Complete order?</p>
           <span @click="cancelOrder"><font-awesome-icon icon="times"/></span>
           <span @click="completeOrder"><font-awesome-icon icon="check"/></span>
@@ -68,28 +72,38 @@
       <base-button link :to="'my-account'">Go to My Account</base-button>
     </div>
 
-    <div v-if="currentOrder.orderStatus == 'inactive'" >
-      <p class="booking-cancelled">Your booking has been cancelled. You will be redirected to the home page</p>
+        <div v-if="currentOrder.orderStatus == 'inactive'" >
+          <p class="booking-cancelled">Your booking has been cancelled. You will be redirected to the home page</p>
+        </div>
     </div>
-      </div>
+
     </div>
+
+    <user-auth v-if="!isAuthenticated && completePurchaseActivated"></user-auth>
+  
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+import userAuth from './auth/userAuth.vue';
 
 export default {
+  components: { userAuth },
   data() {
     return {
       room: "",
       ticketUnitPrice: null,
       ticketsSubtotalPrice: null,
-      offsiteProductsSubtotalPrice: null
+      offsiteProductsSubtotalPrice: null,
+      completePurchaseActivated: false,
     };
   },
+  updated() {
+    console.log("this.currentOrder.orderStatus", this.currentOrder)
+  },
   computed: {
-    ...mapGetters(['currentOrder', 'oneRoom']),
+    ...mapGetters(['currentOrder', 'oneRoom', 'isAuthenticated']),
     numOfTickets() {
       let tickets = this.currentOrder.seats;
       return tickets.length > 1 ? `${tickets.length} tickets:` : "1 ticket:"
@@ -105,6 +119,7 @@ export default {
   created() {
     this.sessionTime();
     this.roomName();
+    this.completePurchaseActivated = false
   },
   methods: {
     sessionTime() {
@@ -115,15 +130,38 @@ export default {
 
       return `${day}/${month}/${year} at ${hour}`
     },
+    authenticate() {
+      this.completePurchaseActivated = true
+      var authInDOM = setInterval(function() {
+      var auth = document.getElementById("auth");
+      if (auth) {
+          auth.scrollIntoView({behavior : 'smooth'});
+          clearInterval(authInDOM);
+      }
+      }, 100);
+    },
     completeOrder() {
       let sessionId = this.currentOrder.sessionId;
-      let seats = this.currentOrder.seats;
+      let seats = []
+      this.currentOrder.seats.forEach( seat => seats.push(seat.id))
 
+      let offsiteProducts = []
+      this.currentOrder.offsiteProducts.forEach( offsiteProduct => offsiteProducts.push(offsiteProduct.id))
+
+      // if (offsiteProducts.length) {
+      //     offsiteProducts.forEach( product => {
+      //     product.reserved_offsite_products = {}
+      //     product.reserved_offsite_products.quantity = product.quantity
+      //   })
+      // }
+      
       let order = {
         sessionId : sessionId,
         seats: seats,
-        offsiteProducts: []
+        offsiteProducts: offsiteProducts
       };
+      console.log("order", order)
+
       this.$store.dispatch("registerOrder", order);
       this.$store.dispatch("loadOrders");
     },
@@ -133,7 +171,9 @@ export default {
         sessionId : null,
         sessionTime : "",
         movieTitle : "",
-        orderStatus : "inactive"
+        orderStatus : "inactive",
+        seats: null,
+        offsiteProducts: null
       }
       this.$store.dispatch("cancelOrder", resetOrder);
       setTimeout( () => this.$router.push({ path: '/movies'}), 3000);
@@ -263,20 +303,37 @@ table tr td {
     margin: 12px 0 5px;
 }
 
-.subtotal {
+#checkout .booking-details .subtotal {
     text-align: center;
     font-weight: 600;
     margin: 3px;
 }
 
-.total-price {
+#checkout .booking-details .total-price {
     text-align: center;
     border: 1px solid #f16b00;
     margin-top: 15px;
     border-radius: 5px;
 }
 
-.total-price h3 {
+#checkout .booking-details .total-price h3 {
     margin: 10px;
+}
+
+#checkout #auth .card {
+    width: 100%
+}
+
+.booking-details .auth-link {  
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.booking-details .auth-link:hover {
+    color: #f16b00
+}
+
+.auth-message {
+    margin-top: 10px;
 }
 </style>

@@ -6,7 +6,7 @@ OffsiteProduct.init({
     name: DataTypes.STRING,
     unitPrice: DataTypes.DECIMAL(10,2),
     description: DataTypes.TEXT,
-    imageUrl: DataTypes.STRING,
+    imageUrl: DataTypes.STRING
 }, {
     sequelize,
     modelName: "offsiteProduct",

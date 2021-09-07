@@ -9,14 +9,15 @@ export default {
     },
     actions: {
         async loadMovies(context) {
-            let allMovies = []
             await axios
                 .get(process.env.VUE_APP_API_URL + "/movies")
                 .then((response) => {
-                allMovies = response.data
-                })
+                    let allMovies = []
+                    allMovies = response.data
+                    context.commit('loadMovies', allMovies)
+                    })
                 .catch((err) => console.log(err));
-                context.commit('loadMovies', allMovies)
+                
         },
         // getOneMovie(context, data) {
         //     let movieId = data
