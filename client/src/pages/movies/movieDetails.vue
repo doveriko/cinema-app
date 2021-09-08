@@ -22,14 +22,14 @@
 
           <shopping-cart v-if="selectedSeats.length" :tickets="selectedSeats" @delete-ticket="deleteTicket" :movie="selectedMovie.title" :day="day" :time="sessionTime" :room="roomSelected"></shopping-cart>
           
-          <offsite-products v-if="continueShopping && selectedSeats.length" @save-offsite-products="saveOffsiteProducts"></offsite-products>
+          <offsite-products v-if="continueShopping && selectedSeats.length" @save-offsite-products="saveOffsiteProducts" @offsite-validator="offsiteValidator"></offsite-products>
 
           <div class="atc-btn-wrapper" v-if="selectedSeats.length && !continueShopping">
             <button class="atc-btn accept-button" @click.prevent="continueToCheckout()">CONTINUE SHOPPING</button>
           </div>
 
           <div class="atc-btn-wrapper" id="atc-buttons" v-if="selectedSeats.length && continueShopping">
-            <button class="atc-btn accept-button" @click.prevent="continueWithOffer()">CONTINUE WITH OFFER</button>
+            <button class="atc-btn accept-button" :class="{'disabled' : !offsiteIsValid || !offsiteProducts.length}" @click.prevent="continueWithOffer()">CONTINUE WITH OFFER</button>
             <button class="atc-btn continue-button" @click.prevent="continueWithoutOffer()">CONTINUE WITHOUT OFFER</button>
           </div>
 
@@ -63,7 +63,8 @@ export default {
       sessionSelected: false,
       selectedSeats: [],
       continueShopping: false,
-      offsiteProducts: []
+      offsiteProducts: [],
+      offsiteIsValid: false
     };
   },
   components: { filterSession, filterSeats, shoppingCart, offsiteProducts },
@@ -114,16 +115,18 @@ export default {
       this.selectedSeats = data
     },
     continueWithOffer() {
-      let orderInfo = {
-        movieTitle: this.selectedMovie.title,
-        imageUrl: this.selectedMovie.imageUrl,
-        sessionId : this.sessionId,
-        sessionTime: this.sessionTime,
-        seats: this.selectedSeats,
-        offsiteProducts: this.offsiteProducts
-      }
-      this.$store.dispatch('saveOrder', orderInfo);
-      this.$router.push({ path: '/checkout'})
+      if (this.offsiteIsValid && this.offsiteProducts.length) {
+        let orderInfo = {
+          movieTitle: this.selectedMovie.title,
+          imageUrl: this.selectedMovie.imageUrl,
+          sessionId : this.sessionId,
+          sessionTime: this.sessionTime,
+          seats: this.selectedSeats,
+          offsiteProducts: this.offsiteProducts
+        }
+        this.$store.dispatch('saveOrder', orderInfo);
+        this.$router.push({ path: '/checkout'})
+        }
     },
     continueWithoutOffer() {
       let orderInfo = {
@@ -186,10 +189,13 @@ export default {
               offsiteProducts.scrollIntoView({behavior : 'smooth'});
               clearInterval(offsiteProductsInDOM);
           }
-        }, 100); 
+        }, 300); 
     },
     saveOffsiteProducts(data) {
       this.offsiteProducts = data
+    },
+    offsiteValidator(data) {
+      this.offsiteIsValid = data
     }
   }
 };
@@ -278,6 +284,12 @@ export default {
 .atc-btn.accept-button {
     margin-left: auto;
     font-weight: bold;
+}
+
+.atc-btn.accept-button.disabled {
+  background: lightgrey;
+  cursor: not-allowed;
+  border: grey
 }
 
 button.atc-btn.continue-button {

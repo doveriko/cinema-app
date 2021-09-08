@@ -29,7 +29,12 @@
             <span class="total-label">Total: </span><span class="total-price">{{totalPrice()}} €</span>
           </div>
         </div>
-      </div>
+      </div>  
+    
+    </div>
+
+    <div v-if="maxQuantityMsg">
+      <p class="errorMsg">{{maxQuantityMsg}}</p>
     </div>
 
   </div>
@@ -42,7 +47,8 @@ export default {
   data() {
     return {
       addedProducts: [],
-      qty: null
+      qty: null,
+      maxQuantityMsg: null
     }
   },
   computed: {
@@ -59,8 +65,12 @@ export default {
         quantity: product.quantity,
         unitPrice: product.unitPrice
       }
-      if (product.quantity > 0) {
+      if (product.quantity <= 0 || product.quantity > 10) {
+        this.maxQuantityMsg = "Please select a maximum of 10 products"
+      }
+      else if (product.quantity > 0) {
         this.addedProducts.push(productObj)
+        this.maxQuantityMsg = null
       }
       this.$emit("save-offsite-products", this.addedProducts);
 
@@ -94,6 +104,8 @@ export default {
     updateProduct(product) {
       let updatedProduct = this.addedProducts.find( p => p.id == product.id)
       if (updatedProduct) updatedProduct.quantity = product.quantity
+      let offsiteValidator = (product.quantity > 0 && product.quantity < 11) ? true : false
+      this.$emit("offsite-validator", offsiteValidator)
     }
   },
   created() {
@@ -186,11 +198,7 @@ export default {
     padding: 1rem;
     border: 1px solid #3a0061;
     margin: 1rem;
-}
-.offsite-summary {
-    padding: 1rem;
-    border: 1px solid #3a0061;
-    margin: 1rem;
+    margin-bottom: 0
 }
 
 .product-summary-details {
@@ -223,5 +231,13 @@ export default {
 
 .qty-selector label {
     font-size: 11px;
+}
+
+.errorMsg {
+    font-size: 14px;
+    margin: 0;
+    margin-top: 10px;
+    color: red;
+    text-align: center;
 }
 </style>
