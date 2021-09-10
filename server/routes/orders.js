@@ -75,7 +75,7 @@ router.post('/:userId', auth, async (req, res) => {
         })
     
         await order.addSeats(req.body.seats, { transaction: t })
-        await order.addOffsiteProducts(req.body.offsiteProducts, { transaction: t })
+        await order.addOffsiteProducts(req.body.offsiteProducts.ids, { through : { quantity : req.body.offsiteProducts.quantities }, transaction: t })
     
         await t.commit()
     } catch (err) {

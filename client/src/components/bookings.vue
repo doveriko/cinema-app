@@ -32,6 +32,10 @@
           <span>number {{seat.number}}</span>
         </div>
 
+        <div v-for="offsiteProduct in order.offsiteProducts" :key="offsiteProduct.key" class="seats-info">
+          <span>{{offsiteProduct.name}}</span> 
+        </div>
+
         <div class="delete-btn" v-if="!deletionIsActive" @click.prevent="activateDeletion(order.orderId)"><font-awesome-icon icon="trash-alt"/></div>
 
         <div class="delete-order" v-if="deletionIsActive && order.orderId == selectedOrder">
@@ -45,8 +49,6 @@
 </template>
 
 <script>
-// import axios from "axios";
-
 export default {
   data() {
     return {
@@ -80,6 +82,7 @@ export default {
         orderFormatted.hour = order.session.time.slice(11, 16)
         orderFormatted.title = order.session.movie.title
         orderFormatted.seats = order.seats
+        orderFormatted.offsiteProducts = order.offsiteProducts
         orderFormatted.id = order.id
 
         self.orderDataObj.push(orderFormatted)

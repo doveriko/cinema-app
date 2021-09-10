@@ -145,8 +145,16 @@ export default {
       let seats = []
       this.currentOrder.seats.forEach( seat => seats.push(seat.id))
 
-      let offsiteProducts = []
-      this.currentOrder.offsiteProducts.forEach( offsiteProduct => offsiteProducts.push(offsiteProduct.id))
+      let offsiteProducts = {
+        ids: [],
+        quantities: []
+      }
+      this.currentOrder.offsiteProducts.forEach(offsiteProduct => {
+        offsiteProducts.ids.push(offsiteProduct.id)
+        offsiteProducts.quantities.push(parseInt(offsiteProduct.quantity))
+      })
+
+      console.log("offsiteProducts", offsiteProducts)
 
       // if (offsiteProducts.length) {
       //     offsiteProducts.forEach( product => {
