@@ -1,9 +1,6 @@
 <template>
 <div id="auth">
   <base-card :class="{ 'mobile' : isMobileMode }">
-    <!-- <div v-if="orderStatus == 'pending'" class="complete-order-message">
-      <p>Please, log in or sign up to complete your order</p>
-    </div> -->
 
     <form @submit.prevent="submitForm">
       <div class="auth-panel" ref="auth">
@@ -165,9 +162,8 @@ export default {
     },
     async redirectAfterAuth() {
       let orderStatus = this.$store.state.orders.orderStatus;
-      console.log(this.authControllerError);
       if (typeof this.authControllerError != 'string' && this.emptyFieldsError != "All the fields need to be filled") {
-        orderStatus == "pending" ? this.$router.replace('/checkout') : this.$router.replace('/my-account')
+        orderStatus == "pending" ? null : this.$router.replace('/my-account')
       }
     }
   },
