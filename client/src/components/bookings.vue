@@ -2,7 +2,12 @@
   <div id="bookings">
     <h1 class="section-header">BOOKINGS</h1>
       <div class="no-orders" v-if="!orderDataObj.length">
-        <div>No orders available</div>
+        <div v-if="loadingMessage">
+          <span>{{loadingMessage}}</span>
+        </div>
+        <div v-else>
+          <span>No orders available</span>
+        </div>
         <base-button link :to="'movies'">Go to Movies</base-button>
       </div>
       <div
@@ -12,28 +17,43 @@
       >
         <div class="order-title">{{ order.title }}</div>
 
-        <div class="info-icons">
-          <div>
+        <div class="order-content">
+
+          <div class="date">
             <font-awesome-icon icon="calendar-alt"/> <span class="order-date">Day: {{ order.date }}</span>
           </div>
-          <div>
+
+          <div class="hour">
             <font-awesome-icon icon="clock"/> <span class="order-hour">Time: {{ order.hour }}</span>
           </div>
-          <div>
+
+          <div class="room">
             <font-awesome-icon icon="building"/> <span class="order-room">Room: {{ order.room }}</span>
           </div>
-          <div>
-            <font-awesome-icon icon="ticket-alt"/> <span>{{numOfTickets(order.seats.length)}}</span>
+
+          <div class="seats">
+            <div>
+              <font-awesome-icon icon="ticket-alt"/> <span>{{numOfTickets(order.seats.length)}}</span>
+            </div>
+            <div v-for="seat in order.seats" :key="seat.key" class="seats-info">
+              <span>{{seat.area}} area, </span> 
+              <span>number {{seat.number}}</span>
+            </div>
           </div>
-        </div>
 
-        <div v-for="seat in order.seats" :key="seat.key" class="seats-info">
-          <span>{{seat.area}} area, </span> 
-          <span>number {{seat.number}}</span>
-        </div>
+          <div class="offsite-products">
+            <div>
+              <font-awesome-icon icon="beer"/> <span>{{numOfProducts(order.offsiteProducts.length)}}</span>
+            </div>
+            <div v-for="product in order.offsiteProducts" :key="product.key" class="offsite-products-info">
+              <span>{{product.reserved_offsite_products.quantity}} x {{product.name}}</span> 
+            </div>
+          </div>
 
-        <div v-for="offsiteProduct in order.offsiteProducts" :key="offsiteProduct.key" class="seats-info">
-          <span>{{offsiteProduct.name}}</span> 
+          <div class="booking-code-wrapper">
+            <span>Booking code: </span><span class="booking-code">{{order.bookingCode}}</span>
+          </div>
+
         </div>
 
         <div class="delete-btn" v-if="!deletionIsActive" @click.prevent="activateDeletion(order.orderId)"><font-awesome-icon icon="trash-alt"/></div>
@@ -49,15 +69,21 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
       orderDataObj: [],
       deletionIsActive: false,
-      selectedOrderId: null
+      selectedOrderId: null,
+      loadingMessage: null
     };
   },
   computed: {
+    ...mapGetters([
+      'allOrders'
+    ]),
     selectedOrder () {
       return this.selectedOrderId
     }
@@ -67,14 +93,15 @@ export default {
   },
   methods: {
     async loadOrders() {
+      this.loadingMessage = "Loading orders"
       await this.$store.dispatch("loadOrders");
+      this.loadingMessage = null
       this.formatOrders()
     },
     formatOrders() {
-      let allOrders = this.$store.getters.allOrders;
       var self = this;
 
-      allOrders.forEach(order => {
+      this.allOrders.forEach(order => {
         let orderFormatted = {};
 
         orderFormatted.room = self.roomName(order.seats)
@@ -84,6 +111,7 @@ export default {
         orderFormatted.seats = order.seats
         orderFormatted.offsiteProducts = order.offsiteProducts
         orderFormatted.id = order.id
+        orderFormatted.bookingCode = order.bookingCode
 
         self.orderDataObj.push(orderFormatted)
       })
@@ -97,10 +125,8 @@ export default {
     },
     roomName(seats) {
       if (seats.length > 0) {
-        let roomSelector = this.$store.getters.oneRoom;
-        let roomId = seats[0].roomId;
-        let myRoom = roomSelector(roomId)
-        return myRoom.name
+        let myRoom = seats[0].room.name
+        return myRoom
       }
     },
     async deleteOrder(order) {
@@ -117,9 +143,13 @@ export default {
     activateDeletion(orderId) {
       this.selectedOrderId = orderId;
       this.deletionIsActive = true;
+
     },
     numOfTickets(tickets) {
       return tickets > 1 ? `${tickets} tickets:` : `1 ticket:`
+    },
+    numOfProducts(offsiteProducts) {
+      return offsiteProducts > 1 ? `${offsiteProducts} deals:` : `1 deal:`
     }
   },
 };
@@ -178,28 +208,40 @@ h1.section-header {
     cursor: pointer;
 }
 
-.booking-details .info-icons div {
+.booking-details .order-content div {
     width: 200px;
     margin: 0 auto;
     display: flex;
 }
 
-.booking-details .info-icons svg {
+.booking-details .order-content svg {
     width: 30px;
     margin-right: 1rem;
 }
 
-.booking-details .info-icons svg path {
+.booking-details .order-content svg path {
     fill: #f16b00
 }
 
-.booking-details .seats-info {
+.booking-details .order-content .seats-info, .booking-details .order-content .offsite-products-info {
     display: list-item;
     list-style-type: disc;
+    font-size: smaller;
+    margin-left: 48px;
+    justify-content: flex-start;
     list-style-position: inside;
+    text-align: start;
 }
 
 .booking-details .delete-btn, .booking-details .delete-order {
   margin-top: 1rem
+}
+
+.seats, .offsite-products {
+    display: flex;
+    flex-direction: column;
+}
+.booking-code-wrapper {
+    justify-content: center;
 }
 </style>

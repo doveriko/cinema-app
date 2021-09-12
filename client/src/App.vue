@@ -27,12 +27,12 @@ export default {
     })
   },
   computed: {
-    isMobile() {
-      return this.windowWidth <= 768
-    },
     ...mapGetters([
       'isMobileMode'
     ]),
+    isMobile() {
+      return this.windowWidth <= 768
+    },
   },
   methods: {
     ...mapActions([

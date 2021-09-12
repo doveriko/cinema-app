@@ -70,7 +70,7 @@
           <div v-if="currentOrder.bookingCode">
             <span>This is your booking code: </span><span class="booking-code">{{currentOrder.bookingCode}}</span>
           </div>
-          <p class="email-sent">You will receive an e-mail shortly with all the booking details</p>
+          <p class="email-sent">You will receive an e-mail shortly with all the details</p>
           <base-button link :to="'my-account'">Go to My Account</base-button>
         </div>
 
@@ -100,9 +100,6 @@ export default {
       completePurchaseActivated: false,
       bookingCode: null
     };
-  },
-  updated() {
-    console.log("this.currentOrder.orderStatus", this.currentOrder)
   },
   computed: {
     ...mapGetters(['currentOrder', 'oneRoom', 'isAuthenticated']),
@@ -150,20 +147,19 @@ export default {
     generateBookingCode() {
       function makeid(length) {        
       var result = '';
-        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         var charactersLength = characters.length;
         for ( var i = 0; i < length; i++ ) {
-          result += characters.charAt(Math.floor(Math.random() * 
-        charactersLength));
-          }
-          return result;
+          result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
       }
-      this.bookingCode = makeid(5).toUpperCase()
+      this.bookingCode = makeid(5)
     },
     sendOrder() {
       let sessionId = this.currentOrder.sessionId;
       let seats = []
-      this.currentOrder.seats.forEach( seat => seats.push(seat.id))
+      this.currentOrder.seats.forEach(seat => seats.push(seat.id))
 
       let offsiteProducts = {
         ids: [],
@@ -186,7 +182,9 @@ export default {
       this.$store.dispatch("loadOrders");
     },
     sendEmailConfirmation() {
-      console.log("sendEmailConfirmation")
+      if (this.currentOrder.orderStatus == 'completed') {
+        console.log("sendEmailConfirmation")
+      }
     },
     cancelOrder() {
       let resetOrder = {

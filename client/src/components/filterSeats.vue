@@ -47,9 +47,6 @@ export default {
       areaSelected: [],
     };
   },
-  updated() {
-    console.log("selectedSeats", this.selectedSeats)
-  },
   watch: {
     selectedSeats: function() {
       this.$emit('day-changed', this.selectedSeats)
