@@ -88,6 +88,9 @@
 <script>
 import { mapGetters } from 'vuex';
 import userAuth from './auth/userAuth.vue';
+// import emailjs from 'emailjs-com';
+const $ = require('jquery')
+window.$ = $
 
 export default {
   components: { userAuth },
@@ -102,7 +105,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['currentOrder', 'oneRoom', 'isAuthenticated']),
+    ...mapGetters(['currentOrder', 'oneRoom', 'isAuthenticated', 'userName']),
     numOfTickets() {
       let tickets = this.currentOrder.seats;
       return tickets.length > 1 ? `${tickets.length} tickets:` : "1 ticket:"
@@ -183,7 +186,44 @@ export default {
     },
     sendEmailConfirmation() {
       if (this.currentOrder.orderStatus == 'completed') {
-        console.log("sendEmailConfirmation")
+
+        let emailInfo = {
+          bookingCode: this.bookingCode,
+          name: this.userName,
+          movieTitle: this.currentOrder.movieTitle,
+          room: this.room
+        }
+
+        let data = {
+          service_id: 'service_tel559n',
+          template_id: 'template_fr1zr8m',
+          user_id: 'user_rPHVQWG28jEKupx59UenZ',
+          template_params: emailInfo
+        };
+
+        // let data = {
+        //   service_id: process.env.EMAILJS_SERVICE,
+        //   template_id: process.env.EMAILJS_TEMPLATE,
+        //   user_id: process.env.EMAILJS_USER,
+        //   template_params: emailInfo
+        // };
+ 
+        $.ajax('https://api.emailjs.com/api/v1.0/email/send', {
+            type: 'POST',
+            data: JSON.stringify(data),
+            contentType: 'application/json'
+        }).done(function() {
+            console.log("Email sent!")
+        }).fail(function(error) {
+            alert('Oops... ' + JSON.stringify(error));
+        });
+    
+        // try {
+        //   emailjs.sendForm('service_tel559n', 'template_fr1zr8m', emailInfo, 'user_rPHVQWG28jEKupx59UenZ')
+        //   console.log("Email sent")
+        // } catch(error) {
+        //   console.log({error})
+        // }
       }
     },
     cancelOrder() {

@@ -143,7 +143,6 @@ export default {
     activateDeletion(orderId) {
       this.selectedOrderId = orderId;
       this.deletionIsActive = true;
-
     },
     numOfTickets(tickets) {
       return tickets > 1 ? `${tickets} tickets:` : `1 ticket:`
