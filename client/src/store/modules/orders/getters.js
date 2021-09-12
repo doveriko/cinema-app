@@ -11,7 +11,8 @@ export default {
             orderStatus: state.orderStatus,
             imageUrl: state.imageUrl,
             seats: state.seats,
-            offsiteProducts: state.offsiteProducts
+            offsiteProducts: state.offsiteProducts,
+            bookingCode: state.bookingCode
         }
         return order;
     }

@@ -13,7 +13,8 @@ export default {
         imageUrl: "",
         seats: [],
         allOrders: [],
-        offsiteProducts: []
+        offsiteProducts: [],
+        bookingCode: null
       };
     },
     mutations,

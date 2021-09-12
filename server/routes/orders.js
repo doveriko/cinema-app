@@ -18,7 +18,7 @@ router.get('/:id', (req, res) => {
         include: [
             {
                 model: Order,
-                attributes: ['id'],
+                attributes: ['id', 'bookingCode'],
                 include: [
                     {
                         model: Session,
@@ -59,7 +59,9 @@ router.get('/', (req, res) => {
         {
             model: OffsiteProduct
         }
-        ]}).then(users => res.json(users));
+        ],
+        attributes: ['bookingCode']
+    }).then(users => res.json(users));
 });
 
 // POST one order /orders/:userId
@@ -69,7 +71,8 @@ router.post('/:userId', auth, async (req, res) => {
     try { 
         let order = await Order.create({
             userId: req.body.userId,
-            sessionId: req.body.sessionId
+            sessionId: req.body.sessionId,
+            bookingCode: req.body.bookingCode
         }, {
             transaction: t
         })

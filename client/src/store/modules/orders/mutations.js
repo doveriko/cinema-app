@@ -10,6 +10,7 @@ export default {
     },
     registerOrder(state, payload) {
         state.userId = payload.userId,
+        state.bookingCode = payload.bookingCode,
         state.orderStatus = "completed"
     },
     cancelOrder(state, payload) {

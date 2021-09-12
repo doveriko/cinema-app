@@ -17,14 +17,15 @@ export default {
             userId: context.getters.userId,
             sessionId: data.sessionId,
             seats: data.seats,
-            offsiteProducts: data.offsiteProducts
+            offsiteProducts: data.offsiteProducts,
+            bookingCode: data.bookingCode
         }
 
-        let { userId, sessionId, seats, offsiteProducts } = newOrder;
+        let { userId, sessionId, seats, offsiteProducts, bookingCode } = newOrder;
 
         axios
         .post(process.env.VUE_APP_API_URL + `/orders/${userId}`,
-          { userId, sessionId, seats, offsiteProducts }
+          { userId, sessionId, seats, offsiteProducts, bookingCode }
         )
         .then(response => response.data)
         .then(context.commit('registerOrder', newOrder))

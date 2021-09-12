@@ -30,28 +30,28 @@
             <span>Tickets subtotal:</span><span>{{ticketsSubtotal()}} €</span>
           </div>
 
-        <div v-if="currentOrder.offsiteProducts.length">
-          <div class="offsite-products"><font-awesome-icon icon="cocktail"/>{{ numOfOffsiteProducts }}</div>
-          <table>
-            <tr>
-              <th>Product</th>
-              <th>Quantity</th>
-              <th>Unit Price</th>
-            </tr>
-            <tr v-for="offsiteProduct in currentOrder.offsiteProducts" :key="offsiteProduct.id">
-              <td>{{offsiteProduct.name}}</td>
-              <td>{{offsiteProduct.quantity}}</td>
-              <td>{{offsiteProduct.unitPrice}} €</td>
-            </tr>
-          </table>
-          <div class="subtotal">
-            <span>Extra products subtotal:</span><span>{{offsiteProductsSubtotal()}} €</span>
+          <div v-if="currentOrder.offsiteProducts.length">
+            <div class="offsite-products"><font-awesome-icon icon="cocktail"/>{{ numOfOffsiteProducts }}</div>
+            <table>
+              <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+              </tr>
+              <tr v-for="offsiteProduct in currentOrder.offsiteProducts" :key="offsiteProduct.id">
+                <td>{{offsiteProduct.name}}</td>
+                <td>{{offsiteProduct.quantity}}</td>
+                <td>{{offsiteProduct.unitPrice}} €</td>
+              </tr>
+            </table>
+            <div class="subtotal">
+              <span>Extra products subtotal:</span><span>{{offsiteProductsSubtotal()}} €</span>
+            </div>
           </div>
-        </div>
 
-        <div class="total-price">
-          <h3><span>TOTAL:</span> <span>{{totalPrice}} €</span></h3>
-        </div>
+          <div class="total-price">
+            <h3><span>TOTAL:</span> <span>{{totalPrice}} €</span></h3>
+          </div>
 
         </div>
 
@@ -65,18 +65,19 @@
           <span @click="completeOrder"><font-awesome-icon icon="check"/></span>
         </div>
 
-      <div v-if="currentOrder.orderStatus == 'completed'">
-      <h3 class="booking-completed">Booking completed!</h3>
-      <p>You will receive an e-mail shortly with the reference number to show at the box office</p>
-
-      <base-button link :to="'my-account'">Go to My Account</base-button>
-    </div>
+        <div v-if="currentOrder.orderStatus == 'completed'">
+          <h3 class="booking-completed">Booking completed!</h3>
+          <div v-if="currentOrder.bookingCode">
+            <span>This is your booking code: </span><span class="booking-code">{{currentOrder.bookingCode}}</span>
+          </div>
+          <p class="email-sent">You will receive an e-mail shortly with all the booking details</p>
+          <base-button link :to="'my-account'">Go to My Account</base-button>
+        </div>
 
         <div v-if="currentOrder.orderStatus == 'inactive'" >
           <p class="booking-cancelled">Your booking has been cancelled. You will be redirected to the home page</p>
         </div>
-    </div>
-
+      </div>
     </div>
 
     <user-auth v-if="!isAuthenticated && completePurchaseActivated"></user-auth>
@@ -97,6 +98,7 @@ export default {
       ticketsSubtotalPrice: null,
       offsiteProductsSubtotalPrice: null,
       completePurchaseActivated: false,
+      bookingCode: null
     };
   },
   updated() {
@@ -140,7 +142,25 @@ export default {
       }
       }, 100);
     },
-    completeOrder() {
+    async completeOrder() {
+      this.generateBookingCode()
+      this.sendOrder()
+      this.sendEmailConfirmation()
+    },
+    generateBookingCode() {
+      function makeid(length) {        
+      var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+          result += characters.charAt(Math.floor(Math.random() * 
+        charactersLength));
+          }
+          return result;
+      }
+      this.bookingCode = makeid(5).toUpperCase()
+    },
+    sendOrder() {
       let sessionId = this.currentOrder.sessionId;
       let seats = []
       this.currentOrder.seats.forEach( seat => seats.push(seat.id))
@@ -153,25 +173,20 @@ export default {
         offsiteProducts.ids.push(offsiteProduct.id)
         offsiteProducts.quantities.push(parseInt(offsiteProduct.quantity))
       })
-
-      console.log("offsiteProducts", offsiteProducts)
-
-      // if (offsiteProducts.length) {
-      //     offsiteProducts.forEach( product => {
-      //     product.reserved_offsite_products = {}
-      //     product.reserved_offsite_products.quantity = product.quantity
-      //   })
-      // }
       
       let order = {
         sessionId : sessionId,
         seats: seats,
-        offsiteProducts: offsiteProducts
+        offsiteProducts: offsiteProducts,
+        bookingCode: this.bookingCode
       };
       console.log("order", order)
 
       this.$store.dispatch("registerOrder", order);
       this.$store.dispatch("loadOrders");
+    },
+    sendEmailConfirmation() {
+      console.log("sendEmailConfirmation")
     },
     cancelOrder() {
       let resetOrder = {
@@ -343,5 +358,9 @@ table tr td {
 
 .auth-message {
     margin-top: 10px;
+}
+
+.booking-code {
+  font-weight: bold;
 }
 </style>
