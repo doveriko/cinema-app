@@ -13,7 +13,7 @@
           <div class="room"><font-awesome-icon icon="building"/> {{ room }} </div>
           <div class="session"><font-awesome-icon icon="calendar-alt"/> {{sessionTime()}}</div>
 
-          <div class="tickets"><font-awesome-icon icon="ticket-alt"/>{{ numOfTickets }}</div>
+          <div class="tickets"><font-awesome-icon icon="ticket-alt"/>{{ numOfTickets() }}:</div>
           <table>
             <tr>
               <th>Area</th>
@@ -31,7 +31,7 @@
           </div>
 
           <div v-if="currentOrder.offsiteProducts.length">
-            <div class="offsite-products"><font-awesome-icon icon="cocktail"/>{{ numOfOffsiteProducts }}</div>
+            <div class="offsite-products"><font-awesome-icon icon="cocktail"/>{{ numOfOffsiteProducts() }}:</div>
             <table>
               <tr>
                 <th>Product</th>
@@ -101,19 +101,15 @@ export default {
       ticketsSubtotalPrice: null,
       offsiteProductsSubtotalPrice: null,
       completePurchaseActivated: false,
-      bookingCode: null
+      bookingCode: null,
+      sessionDay: null,
+      sessionHour: null,
+      totalTickets: null,
+      totalOffsiteProducts: null
     };
   },
   computed: {
     ...mapGetters(['currentOrder', 'oneRoom', 'isAuthenticated', 'userName']),
-    numOfTickets() {
-      let tickets = this.currentOrder.seats;
-      return tickets.length > 1 ? `${tickets.length} tickets:` : "1 ticket:"
-    },
-    numOfOffsiteProducts() {
-      let offsiteProducts = this.currentOrder.offsiteProducts;
-      return offsiteProducts.length > 1 ? `${offsiteProducts.length} extra products:` : "1 extra product:"
-    },
     totalPrice() {
       return this.ticketsSubtotalPrice + this.offsiteProductsSubtotalPrice
     }
@@ -130,6 +126,9 @@ export default {
       let year = this.currentOrder.sessionTime.slice(0, 4);
       let hour = this.currentOrder.sessionTime.slice(11, 16);
 
+      this.sessionHour = hour
+      this.sessionDay = `${day}/${month}/${year}`
+
       return `${day}/${month}/${year} at ${hour}`
     },
     authenticate() {
@@ -141,6 +140,16 @@ export default {
           clearInterval(authInDOM);
       }
       }, 100);
+    },
+    numOfTickets() {
+      let tickets = this.currentOrder.seats;
+      this.totalTickets = tickets.length > 1 ? `${tickets.length} tickets` : "1 ticket"
+      return this.totalTickets
+    },
+    numOfOffsiteProducts() {
+      let offsiteProducts = this.currentOrder.offsiteProducts;
+      this.totalOffsiteProducts = offsiteProducts.length > 1 ? `${offsiteProducts.length} extra products` : "1 extra product"
+      return this.totalOffsiteProducts
     },
     async completeOrder() {
       this.generateBookingCode()
@@ -191,17 +200,21 @@ export default {
           bookingCode: this.bookingCode,
           name: this.userName,
           movieTitle: this.currentOrder.movieTitle,
-          room: this.room
+          room: this.room,
+          day: this.sessionDay,
+          hour: this.sessionHour,
+          totalTickets: this.totalTickets,
+          totalOffsiteProducts: this.totalOffsiteProducts
         }
 
         let emailConfig = {
-          service_id: process.env.EMAILJS_SERVICE,
-          template_id: process.env.EMAILJS_TEMPLATE,
-          user_id: process.env.EMAILJS_USER,
+          service_id: process.env.VUE_APP_EMAILJS_SERVICE,
+          template_id: process.env.VUE_APP_EMAILJS_TEMPLATE,
+          user_id: process.env.VUE_APP_EMAILJS_USER,
           template_params: emailInfo
         };
  
-        $.ajax('https://api.emailjs.com/api/v1.0/email/send', {
+        $.ajax(process.env.VUE_APP_EMAILJS_API_URL, {
             type: 'POST',
             data: JSON.stringify(emailConfig),
             contentType: 'application/json'
