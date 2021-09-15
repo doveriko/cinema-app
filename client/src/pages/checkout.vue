@@ -194,23 +194,16 @@ export default {
           room: this.room
         }
 
-        let data = {
-          service_id: 'service_tel559n',
-          template_id: 'template_fr1zr8m',
-          user_id: 'user_rPHVQWG28jEKupx59UenZ',
+        let emailConfig = {
+          service_id: process.env.EMAILJS_SERVICE,
+          template_id: process.env.EMAILJS_TEMPLATE,
+          user_id: process.env.EMAILJS_USER,
           template_params: emailInfo
         };
-
-        // let data = {
-        //   service_id: process.env.EMAILJS_SERVICE,
-        //   template_id: process.env.EMAILJS_TEMPLATE,
-        //   user_id: process.env.EMAILJS_USER,
-        //   template_params: emailInfo
-        // };
  
         $.ajax('https://api.emailjs.com/api/v1.0/email/send', {
             type: 'POST',
-            data: JSON.stringify(data),
+            data: JSON.stringify(emailConfig),
             contentType: 'application/json'
         }).done(function() {
             console.log("Email sent!")
