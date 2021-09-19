@@ -22,7 +22,7 @@
 
           <shopping-cart v-if="selectedSeats.length" :tickets="selectedSeats" @delete-ticket="deleteTicket" :movie="selectedMovie.title" :day="day" :time="sessionTime" :room="roomSelected"></shopping-cart>
           
-          <offsite-products v-if="continueShopping && selectedSeats.length" @save-offsite-products="saveOffsiteProducts" @offsite-validator="offsiteValidator"></offsite-products>
+          <offsite-products v-if="continueShopping && selectedSeats.length" @save-offsite-products="saveOffsiteProducts" @offsite-validator="offsiteValidator" @products-loaded="loadOffsiteProducts()"></offsite-products>
 
           <div class="atc-btn-wrapper" v-if="selectedSeats.length && !continueShopping">
             <button class="atc-btn accept-button" @click.prevent="continueToCheckout()">CONTINUE SHOPPING</button>
@@ -140,23 +140,6 @@ export default {
       this.$store.dispatch('saveOrder', orderInfo);
       this.$router.push({ path: '/checkout'})
     },
-    // continueToCheckout() {
-    //   // let redirectUrl = ""
-    //   // if (!this.$store.getters.isAuthenticated) redirectUrl = "/auth?redirect=checkout";
-    //   // else redirectUrl = "/checkout";
-    //   // this.$router.replace(redirectUrl);
-    //   if (!this.$store.getters.isAuthenticated) {
-    //     this.orderSent = true;
-    //     var authInDOM = setInterval(function() {
-    //       var auth = document.getElementById("auth");
-    //       if (auth) {
-    //           auth.scrollIntoView({behavior : 'smooth'});
-    //           clearInterval(authInDOM);
-    //       }
-    //     }, 100); 
-    //   }
-    //   else this.$router.replace("/checkout");
-    // },
     deleteTicket(ticket) {
       this.selectedSeats.splice(ticket, 1)
     },
@@ -183,13 +166,12 @@ export default {
     },
     continueToCheckout() {
       this.continueShopping = true
-      var offsiteProductsInDOM = setInterval(function() {
-          var offsiteProducts = document.getElementById("offsite-products");
-          if (offsiteProducts) {
-              offsiteProducts.scrollIntoView({behavior : 'smooth'});
-              clearInterval(offsiteProductsInDOM);
-          }
-        }, 300); 
+    },
+    loadOffsiteProducts() {
+      this.$nextTick(() => {
+        var offsiteProducts = document.getElementById("offsite-products");
+        offsiteProducts.scrollIntoView({behavior : 'smooth'});
+      });
     },
     saveOffsiteProducts(data) {
       this.offsiteProducts = data

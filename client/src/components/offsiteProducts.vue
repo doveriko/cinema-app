@@ -108,8 +108,9 @@ export default {
       this.$emit("offsite-validator", offsiteValidator)
     }
   },
-  created() {
-    this.loadOffsiteProducts()
+  async created() {
+    await this.loadOffsiteProducts()
+    this.$emit("products-loaded")
   }
 };
 </script>
