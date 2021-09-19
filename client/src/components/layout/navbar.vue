@@ -37,10 +37,9 @@ export default {
   methods: {
     ...mapActions(['cancelOrder', 'clearSession']),
     async destroySession() {
-      // window.sessionStorage.clear();
       await this.cancelOrder()
       await this.clearSession()
-      this.$router.push({ path: '/movies'})
+      this.$router.push({ path: '/'})
     },
   },
 };

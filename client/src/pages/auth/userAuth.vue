@@ -162,8 +162,9 @@ export default {
     },
     async redirectAfterAuth() {
       let orderStatus = this.$store.state.orders.orderStatus;
-      if (typeof this.authControllerError != 'string' && this.emptyFieldsError != "All the fields need to be filled" && orderStatus != "pending") {
-        this.$router.replace('/my-account')
+      if (typeof this.authControllerError != 'string' && this.emptyFieldsError != "All the fields need to be filled") {
+        if (orderStatus != "pending") this.$router.replace('/my-account')
+        else if (orderStatus == "pending" && this.$route.path == "/auth") this.$router.go(-1)
       }
     }
   },
