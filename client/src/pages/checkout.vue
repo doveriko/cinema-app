@@ -134,11 +134,11 @@ export default {
     authenticate() {
       this.completePurchaseActivated = true
       var authInDOM = setInterval(function() {
-      var auth = document.getElementById("auth");
-      if (auth) {
-          auth.scrollIntoView({behavior : 'smooth'});
-          clearInterval(authInDOM);
-      }
+        var auth = document.getElementById("auth");
+        if (auth) {
+            auth.scrollIntoView({behavior : 'smooth'});
+            clearInterval(authInDOM);
+        }
       }, 100);
     },
     numOfTickets() {
@@ -166,7 +166,7 @@ export default {
         }
         return result;
       }
-      this.bookingCode = makeid(5)
+      this.bookingCode = makeid(6)
     },
     sendOrder() {
       let sessionId = this.currentOrder.sessionId;
@@ -221,28 +221,12 @@ export default {
         }).done(function() {
             console.log("Email sent!")
         }).fail(function(error) {
-            alert('Oops... ' + JSON.stringify(error));
+            console.log(error)
         });
-    
-        // try {
-        //   emailjs.sendForm('service_tel559n', 'template_fr1zr8m', emailInfo, 'user_rPHVQWG28jEKupx59UenZ')
-        //   console.log("Email sent")
-        // } catch(error) {
-        //   console.log({error})
-        // }
       }
     },
     cancelOrder() {
-      let resetOrder = {
-        userId : null,
-        sessionId : null,
-        sessionTime : "",
-        movieTitle : "",
-        orderStatus : "inactive",
-        seats: null,
-        offsiteProducts: null
-      }
-      this.$store.dispatch("cancelOrder", resetOrder);
+      this.$store.dispatch("cancelOrder");
       setTimeout( () => this.$router.push({ path: '/movies'}), 3000);
     },
     roomName() {

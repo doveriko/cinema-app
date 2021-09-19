@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   computed: {
@@ -35,9 +35,12 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['cancelOrder', 'clearSession']),
     async destroySession() {
-      window.sessionStorage.clear();
-      window.location.reload();
+      // window.sessionStorage.clear();
+      await this.cancelOrder()
+      await this.clearSession()
+      this.$router.push({ path: '/movies'})
     },
   },
 };

@@ -31,17 +31,15 @@ export default {
         .then(context.commit('registerOrder', newOrder))
         .catch((err) => console.log(err));        
     },
-    cancelOrder(context, data) {
+    cancelOrder(context) {
         let resetOrder = {
-            userId : data.userId,
-            sessionId : data.sessionId,
-            sessionTime : data.sessionTime,
-            movieTitle : data.movieTitle,
-            orderStatus : data.orderStatus,
-            seats: data.seats,
-            offsiteProducts: data.offsiteProducts
+            sessionId : null,
+            sessionTime : "",
+            movieTitle : "",
+            orderStatus : "inactive",
+            seats: null,
+            offsiteProducts: null
           }
-        
         context.commit('cancelOrder', resetOrder)
     },
     async loadOrders(context) {

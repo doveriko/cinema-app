@@ -74,5 +74,16 @@ export default {
       err : ""
     }
     context.commit('deleteUser', resetAuthState)
+  },
+
+  clearSession(context) {
+    let clearUser = {
+      name: "",
+      email: "",
+      token: "",
+      err: "",
+      userId: null
+    }
+    context.commit('clearSession', clearUser)
   }
 }

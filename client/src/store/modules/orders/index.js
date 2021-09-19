@@ -5,7 +5,6 @@ import mutations from './mutations';
 export default {
     state() {
       return {
-        userId: null,
         sessionId: null,
         sessionTime: "",
         movieTitle: "",
