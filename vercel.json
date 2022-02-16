@@ -12,8 +12,12 @@
     ],
     "routes": [
         {
-        "src": "/(.*)",
+        "src": "/client/(.*)",
         "dest": "/src/routes.js"
+        },
+        {
+        "src": "/server/(.*)",
+        "dest": "/app.js"
         }
     ]
 }
