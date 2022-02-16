@@ -12,12 +12,8 @@
     ],
     "rewrites": [
         {
-        "src": "/client/(.*)",
-        "dest": "/src/routes.js"
-        },
-        {
-        "src": "/server/(.*)",
-        "dest": "/app.js"
+          "source": "/(.*)",
+          "destination": "/server/app.js"
         }
-    ]
+      ]
 }
