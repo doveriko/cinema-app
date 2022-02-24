@@ -15,17 +15,17 @@ app.use(express.urlencoded({extended: true}));
 app.use(logger('dev'));
 
 app.use(serveStatic(__dirname + "/dist"));
-var distDir = __dirname + "/dist/";
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(distDir));
+// var distDir = __dirname + "/dist/";
+// app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(distDir));
 
-//here we are configuring dist to serve app files
-app.use('/', serveStatic(path.join(__dirname, '/dist')))
+// //here we are configuring dist to serve app files
+// app.use('/', serveStatic(path.join(__dirname, '/dist')))
 
-// this * route is to serve project on different page routes except root `/`
-app.get(/.*/, function (req, res) {
-	res.sendFile(path.join(__dirname, '/dist/index.html'))
-})
+// // this * route is to serve project on different page routes except root `/`
+// app.get(/.*/, function (req, res) {
+// 	res.sendFile(path.join(__dirname, '/dist/index.html'))
+// })
 
 // API routes
 const usersRouter = require('./routes/users');

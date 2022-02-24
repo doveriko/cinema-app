@@ -24,12 +24,13 @@ export const store = new Vuex.Store({
   },
   state() {
     return {
-      isMobile : null
+      screenBreakMobile: 768,
+      isMobile : false
     }
   },
   mutations: {
-    isMobile(state, payload) {
-      state.isMobile = payload
+    calcDisplay(state, isMobile) {
+      state.isMobile = isMobile
     }
   },
   getters: {

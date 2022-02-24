@@ -89,8 +89,8 @@
 import { mapGetters } from 'vuex';
 import userAuth from './auth/userAuth.vue';
 // import emailjs from 'emailjs-com';
-const $ = require('jquery')
-window.$ = $
+// const $ = require('jquery')
+// window.$ = $
 
 export default {
   components: { userAuth },
@@ -154,7 +154,7 @@ export default {
     async completeOrder() {
       this.generateBookingCode()
       this.sendOrder()
-      this.sendEmailConfirmation()
+      // this.sendEmailConfirmation()
     },
     generateBookingCode() {
       function makeid(length) {        
@@ -193,38 +193,38 @@ export default {
       this.$store.dispatch("registerOrder", order);
       this.$store.dispatch("loadOrders");
     },
-    sendEmailConfirmation() {
-      if (this.currentOrder.orderStatus == 'completed') {
+    // sendEmailConfirmation() {
+    //   if (this.currentOrder.orderStatus == 'completed') {
 
-        let emailInfo = {
-          bookingCode: this.bookingCode,
-          name: this.userName,
-          movieTitle: this.currentOrder.movieTitle,
-          room: this.room,
-          day: this.sessionDay,
-          hour: this.sessionHour,
-          totalTickets: this.totalTickets,
-          totalOffsiteProducts: this.totalOffsiteProducts
-        }
+    //     let emailInfo = {
+    //       bookingCode: this.bookingCode,
+    //       name: this.userName,
+    //       movieTitle: this.currentOrder.movieTitle,
+    //       room: this.room,
+    //       day: this.sessionDay,
+    //       hour: this.sessionHour,
+    //       totalTickets: this.totalTickets,
+    //       totalOffsiteProducts: this.totalOffsiteProducts
+    //     }
 
-        let emailConfig = {
-          service_id: process.env.VUE_APP_EMAILJS_SERVICE,
-          template_id: process.env.VUE_APP_EMAILJS_TEMPLATE,
-          user_id: process.env.VUE_APP_EMAILJS_USER,
-          template_params: emailInfo
-        };
+    //     let emailConfig = {
+    //       service_id: process.env.VUE_APP_EMAILJS_SERVICE,
+    //       template_id: process.env.VUE_APP_EMAILJS_TEMPLATE,
+    //       user_id: process.env.VUE_APP_EMAILJS_USER,
+    //       template_params: emailInfo
+    //     };
  
-        $.ajax(process.env.VUE_APP_EMAILJS_API_URL, {
-            type: 'POST',
-            data: JSON.stringify(emailConfig),
-            contentType: 'application/json'
-        }).done(function() {
-            console.log("Email sent!")
-        }).fail(function(error) {
-            console.log(error)
-        });
-      }
-    },
+    //     $.ajax(process.env.VUE_APP_EMAILJS_API_URL, {
+    //         type: 'POST',
+    //         data: JSON.stringify(emailConfig),
+    //         contentType: 'application/json'
+    //     }).done(function() {
+    //         console.log("Email sent!")
+    //     }).fail(function(error) {
+    //         console.log(error)
+    //     });
+    //   }
+    // },
     cancelOrder() {
       this.$store.dispatch("cancelOrder");
       setTimeout( () => this.$router.push({ path: '/movies'}), 3000);

@@ -1,6 +1,6 @@
 <template>
 <div id="auth">
-  <base-card :class="{ 'mobile' : isMobileMode }">
+  <base-card>
 
     <form @submit.prevent="submitForm">
       <div class="auth-panel" ref="auth">
@@ -43,7 +43,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 
 export default {
   data() {
@@ -71,9 +70,6 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'isMobileMode'
-    ]),
     login() {
       return "Log in";
     },
@@ -287,19 +283,19 @@ textarea:focus {
   width: 40%;
 }
 
-#auth .card.mobile {
+.mobile #auth .card {
   width: 100%;
   padding: 0;
   box-shadow: none;
 }
 
 @media (min-width: 450px) and (max-width: 768px) {
-  #auth .card.mobile {
+  .mobile #auth .card {
     width: 60%
   }
 }
 
-#auth .card.mobile form {
+.mobile #auth .card form {
   padding: 10px 0;
 }
 
