@@ -104,7 +104,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .all-movies {
     display: flex;
     flex-flow: wrap;
