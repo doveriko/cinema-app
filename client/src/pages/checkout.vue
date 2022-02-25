@@ -61,7 +61,7 @@
 
         <div v-if="currentOrder.orderStatus == 'pending' && isAuthenticated" class="complete-order">
           <p>Complete order?</p>
-          <span @click="cancelOrder"><font-awesome-icon icon="times"/></span>
+          <span @click="cancelAndRedirect"><font-awesome-icon icon="times"/></span>
           <span @click="completeOrder"><font-awesome-icon icon="check"/></span>
         </div>
 
@@ -80,13 +80,19 @@
       </div>
     </div>
 
-    <user-auth v-if="!isAuthenticated && completePurchaseActivated"></user-auth>
+    <div v-if="!isAuthenticated && proceedWithOrder" class="auth-modal">
+      <div class="modal-mask"></div>      
+      <div class="modal-container">
+        <span class="close-symbol" @click="proceedWithOrder = false">&#10006;</span>
+        <user-auth></user-auth>
+      </div>  
+    </div>   
   
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import userAuth from './auth/userAuth.vue';
 // import emailjs from 'emailjs-com';
 // const $ = require('jquery')
@@ -100,10 +106,8 @@ export default {
       ticketUnitPrice: null,
       ticketsSubtotalPrice: null,
       offsiteProductsSubtotalPrice: null,
-      completePurchaseActivated: false,
+      proceedWithOrder: false,
       bookingCode: null,
-      sessionDay: null,
-      sessionHour: null,
       totalTickets: null,
       totalOffsiteProducts: null
     };
@@ -114,32 +118,18 @@ export default {
       return this.ticketsSubtotalPrice + this.offsiteProductsSubtotalPrice
     }
   },
-  created() {
-    this.sessionTime();
-    this.roomName();
-    this.completePurchaseActivated = false
-  },
   methods: {
+    ...mapActions(['cancelOrder']),
     sessionTime() {
       let day = this.currentOrder.sessionTime.slice(8, 10);
       let month = this.currentOrder.sessionTime.slice(5, 7);
       let year = this.currentOrder.sessionTime.slice(0, 4);
       let hour = this.currentOrder.sessionTime.slice(11, 16);
-
-      this.sessionHour = hour
-      this.sessionDay = `${day}/${month}/${year}`
-
+      
       return `${day}/${month}/${year} at ${hour}`
     },
     authenticate() {
-      this.completePurchaseActivated = true
-      var authInDOM = setInterval(function() {
-        var auth = document.getElementById("auth");
-        if (auth) {
-            auth.scrollIntoView({behavior : 'smooth'});
-            clearInterval(authInDOM);
-        }
-      }, 100);
+      this.proceedWithOrder = true
     },
     numOfTickets() {
       let tickets = this.currentOrder.seats;
@@ -225,9 +215,9 @@ export default {
     //     });
     //   }
     // },
-    cancelOrder() {
-      this.$store.dispatch("cancelOrder");
-      setTimeout( () => this.$router.push({ path: '/movies'}), 3000);
+    async cancelAndRedirect() {
+      await this.cancelOrder();
+      this.$router.push({ path: '/movies'});
     },
     roomName() {
       let roomId = this.currentOrder.seats[0].roomId;
@@ -250,11 +240,16 @@ export default {
       this.offsiteProductsSubtotalPrice = price
       return price
     }
-  }
+  },
+  created() {
+    this.sessionTime();
+    this.roomName();
+    this.proceedWithOrder = false
+  },
 };
 </script>
 
-<style>
+<style lang="scss">
 #checkout {
     align-items: center;
     display: flex;
@@ -267,6 +262,47 @@ export default {
 
 #checkout .booking-image {
     flex-basis: 30%;
+}
+
+.auth-modal {
+  display: flex;
+  justify-content: center;
+  
+  .modal-mask {
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.5);
+  }
+  .modal-container {
+    z-index: 9999;
+    position: fixed;
+    top: 10%;
+
+    .close-symbol {
+      color: #3a0061;
+      cursor: pointer;
+      display: block;
+      text-align: right;
+      font-size: 25px;
+      margin-bottom: 10px;
+      font-weight: bold;
+
+      &:hover {
+        color: #f16b00;
+    }
+
+    .card {
+      margin: 0;
+    }
+  }
+
+}
 }
 
 #checkout .booking-details {
@@ -372,7 +408,8 @@ table tr td {
 }
 
 #checkout #auth .card {
-    width: 100%
+    width: auto;
+    margin: 0;
 }
 
 .booking-details .auth-link {  

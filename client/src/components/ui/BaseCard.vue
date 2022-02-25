@@ -12,5 +12,6 @@
   margin: 2rem auto;
   padding: 1rem;
   flex-basis: 25%;
+  background-color: #fff;
 }
 </style>
