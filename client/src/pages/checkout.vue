@@ -56,7 +56,7 @@
         </div>
 
         <div v-if="currentOrder.orderStatus == 'pending' && !isAuthenticated" class="auth-message">
-          <p>You have to <a class="auth-link" @click="authenticate()">log in or sign up</a> to complete the order</p>
+          <p>You have to <a class="auth-link" @click="openAuthModal = true">log in or sign up</a> to complete the order</p>
         </div>
 
         <div v-if="currentOrder.orderStatus == 'pending' && isAuthenticated" class="complete-order">
@@ -80,10 +80,10 @@
       </div>
     </div>
 
-    <div v-if="!isAuthenticated && proceedWithOrder" class="auth-modal">
+    <div v-if="!isAuthenticated && openAuthModal" class="auth-modal">
       <div class="modal-mask"></div>      
       <div class="modal-container">
-        <span class="close-symbol" @click="proceedWithOrder = false">&#10006;</span>
+        <span class="close-symbol" @click="openAuthModal = false">&#10006;</span>
         <user-auth></user-auth>
       </div>  
     </div>   
@@ -106,7 +106,7 @@ export default {
       ticketUnitPrice: null,
       ticketsSubtotalPrice: null,
       offsiteProductsSubtotalPrice: null,
-      proceedWithOrder: false,
+      openAuthModal: false,
       bookingCode: null,
       totalTickets: null,
       totalOffsiteProducts: null
@@ -125,11 +125,8 @@ export default {
       let month = this.currentOrder.sessionTime.slice(5, 7);
       let year = this.currentOrder.sessionTime.slice(0, 4);
       let hour = this.currentOrder.sessionTime.slice(11, 16);
-      
+
       return `${day}/${month}/${year} at ${hour}`
-    },
-    authenticate() {
-      this.proceedWithOrder = true
     },
     numOfTickets() {
       let tickets = this.currentOrder.seats;
@@ -244,7 +241,6 @@ export default {
   created() {
     this.sessionTime();
     this.roomName();
-    this.proceedWithOrder = false
   },
 };
 </script>
