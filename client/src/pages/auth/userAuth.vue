@@ -167,7 +167,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 form {
   margin: 1rem;
   padding: 1rem;
@@ -197,7 +197,7 @@ label {
   height: 32px;
   border-bottom: 1px solid #ccc;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  color:#f16b00;
+  color:$base-secondary-color;
   font-size: 11pt;
 }
 
@@ -214,7 +214,7 @@ textarea:focus {
 
 .login-tab,
 .signup-tab {
-  border-bottom: 1px solid #3a0061;
+  border-bottom: 1px solid $base-color;
   flex-basis: 50%;
   text-align: center;
   padding: 1rem 0;
@@ -224,16 +224,16 @@ textarea:focus {
 }
 
 .login-tab {
-  border-right: 1px solid #3a0061;
+  border-right: 1px solid $base-color;
 }
 
 .auth-panel .active {
-    background: #3a0061;
+    background: $base-color;
     color: white;
 }
 
 .auth-panel div:hover {
-  background: #3a00619c;
+  background: $base-color;
   color: white;
 }
 
@@ -253,8 +253,8 @@ textarea:focus {
   text-decoration: none;
   padding: 0.75rem 1.5rem;
   font: inherit;
-  background-color: #3a0061;
-  border: 1px solid #3a0061;
+  background-color: $base-color;
+  border: 1px solid $base-color;
   color: white;
   cursor: pointer;
   border-radius: 30px;
@@ -264,7 +264,7 @@ textarea:focus {
 }
 
 .auth-button:hover, .accept-button:hover {
-  background-color: #f16b00
+  background-color: $base-secondary-color
 }
 
 #auth .button-wrapper {

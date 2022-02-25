@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   data() {
@@ -88,13 +88,11 @@ export default {
       return this.selectedOrderId
     }
   },
-  created() {
-    this.loadOrders();
-  },
   methods: {
-    async loadOrders() {
+    ...mapActions(['loadOrders']),
+    async loadFormattedOrders() {
       this.loadingMessage = "Loading orders"
-      await this.$store.dispatch("loadOrders");
+      await this.loadOrders();
       this.loadingMessage = null
       this.formatOrders()
     },
@@ -130,12 +128,12 @@ export default {
       }
     },
     async deleteOrder(order) {
-      this.$store.dispatch("deleteOrder", order.id)
-      console.log("order removed from database and store");
-
-      const idx = this.orderDataObj.indexOf(order);
+      //Remove order from database and store
+      this.$store.dispatch("deleteOrder", order.id);
+      
+      //Remove order from DOM
+      let idx = this.orderDataObj.indexOf(order);
       this.orderDataObj.splice(idx, 1);
-      console.log("order removed from DOM");
 
       this.selectedOrderId = null;
       this.deletionIsActive = false;
@@ -151,10 +149,13 @@ export default {
       return offsiteProducts > 1 ? `${offsiteProducts} deals:` : `1 deal:`
     }
   },
+  created() {
+    this.loadFormattedOrders();
+  },
 };
 </script>
 
-<style>
+<style lang="scss">
 #bookings {
   display: flex;
   flex-direction: column;
@@ -174,7 +175,7 @@ h1.section-header {
     font-size: 20pt;
     margin: 10px 0;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    color: #f16b00;
+    color: $base-secondary-color;
 }
 .order-title {
     font-weight: bold;
@@ -219,7 +220,7 @@ h1.section-header {
 }
 
 .booking-details .order-content svg path {
-    fill: #f16b00
+    fill: $base-secondary-color
 }
 
 .booking-details .order-content .seats-info, .booking-details .order-content .offsite-products-info {

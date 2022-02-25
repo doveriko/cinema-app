@@ -18,7 +18,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 img.movie-img {
     display: flex;
     margin: 0 auto;
@@ -28,6 +28,6 @@ h3.movie-title {
     text-align: center;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size: 16pt;
-    color: #3a0061;
+    color: $base-color;
 }
 </style>

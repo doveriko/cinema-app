@@ -155,7 +155,7 @@ export default {
       }
       this.bookingCode = makeid(6)
     },
-    sendOrder() {
+    async sendOrder() {
       let sessionId = this.currentOrder.sessionId;
       let seats = []
       this.currentOrder.seats.forEach(seat => seats.push(seat.id))
@@ -175,10 +175,9 @@ export default {
         offsiteProducts: offsiteProducts,
         bookingCode: this.bookingCode
       };
-      console.log("order", order)
 
-      this.$store.dispatch("registerOrder", order);
-      this.$store.dispatch("loadOrders");
+      await this.registerOrder(order);
+      await this.loadOrders();
     },
     // sendEmailConfirmation() {
     //   if (this.currentOrder.orderStatus == 'completed') {
@@ -281,7 +280,7 @@ export default {
     top: 10%;
 
     .close-symbol {
-      color: #3a0061;
+      color: $base-color;
       cursor: pointer;
       display: block;
       text-align: right;
@@ -290,7 +289,7 @@ export default {
       font-weight: bold;
 
       &:hover {
-        color: #f16b00;
+        color: $base-secondary-color;
     }
 
     .card {
@@ -364,7 +363,7 @@ table {
 }
 
 table th {
-  background-color: #f16b00;
+  background-color: $base-secondary-color;
   font-weight: normal;
   width: 33%
 }
@@ -394,7 +393,7 @@ table tr td {
 
 #checkout .booking-details .total-price {
     text-align: center;
-    border: 1px solid #f16b00;
+    border: 1px solid $base-secondary-color;
     margin-top: 15px;
     border-radius: 5px;
 }
@@ -414,7 +413,7 @@ table tr td {
 }
 
 .booking-details .auth-link:hover {
-    color: #f16b00
+    color: $base-secondary-color
 }
 
 .auth-message {

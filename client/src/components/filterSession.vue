@@ -117,13 +117,13 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .filter-session form {
   margin: 0;
     padding-left: 0;
   }
 .select-tickets, .select-seats {
-    color: #3a0061;
+    color: $base-color;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-weight: bold;
     font-size: 13pt;

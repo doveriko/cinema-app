@@ -8,7 +8,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .not-found {
     text-align: center;
     padding-top: 1em;

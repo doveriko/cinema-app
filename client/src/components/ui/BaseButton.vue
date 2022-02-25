@@ -26,14 +26,14 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 button,
 a {
   text-decoration: none;
   padding: 0.75rem 1.5rem;
   font: inherit;
-  background-color: #3a0061;
-  border: 1px solid #3a0061;
+  background-color: $base-color;
+  border: 1px solid $base-color;
   color: white;
   cursor: pointer;
   border-radius: 30px;
@@ -46,13 +46,13 @@ a:hover,
 a:active,
 button:hover,
 button:active {
-  background-color: #f16b00;
+  background-color: $base-secondary-color;
   border-color: #270041;
 }
 
 .flat {
   background-color: transparent;
-  color: #3a0061;
+  color: $base-color;
   border: none;
 }
 

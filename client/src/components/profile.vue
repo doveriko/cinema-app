@@ -2,7 +2,7 @@
   <div id="profile">
     <div class="user-info">
       <h1 class="section-header">PROFILE</h1>
-      <p class="user-name">{{ name }}</p>
+      <p class="user-name">{{ userName }}</p>
       <p class="user-email">{{ email }}</p>
     </div>
     <div v-if="this.deletionIsActive" class="delete-order">
@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   data() {
     return {
@@ -24,12 +26,7 @@ export default {
     };
   },
   computed: {
-    name() {
-      return this.$store.state.auth.name;
-    },
-    email() {
-      return this.$store.state.auth.email;
-    },
+    ...mapGetters(['userName, email'])
   },
   methods: {
     activateDeletion() {
@@ -45,8 +42,8 @@ export default {
 };
 </script>
 
-<style>
-div#profile {
+<style lang="scss">
+#profile {
   display: flex;
   flex-direction: column;
   justify-content: space-between;

@@ -115,7 +115,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 #offsite-products {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   background: #d7b9ff;
@@ -130,7 +130,7 @@ export default {
 }
 
 .product {
-  border: 1px solid #3a0061;
+  border: 1px solid $base-color;
   padding: 10px;
   margin: 0 5px;
   flex: 1;
@@ -183,13 +183,13 @@ export default {
 }
 
 .qty-selector .add-btn {
-  background: #3a0061;
-  border: 1px solid #3a0061;
+  background: $base-color;
+  border: 1px solid $base-color;
 }
 
 .qty-selector .remove-btn {
-  background: #f16b00;
-  border: 1px solid #f16b00;
+  background: $base-secondary-color;
+  border: 1px solid $base-secondary-color;
 }
 
 .offsite-summary-wrapper {
@@ -197,7 +197,7 @@ export default {
 }
 .offsite-summary {
     padding: 1rem;
-    border: 1px solid #3a0061;
+    border: 1px solid $base-color;
     margin: 1rem;
     margin-bottom: 0
 }
@@ -219,7 +219,7 @@ export default {
 .offsite-header {
   text-align: center;
   font-style: italic;
-  color: #3a0061;
+  color: $base-color;
   margin: 10px 0 20px;
 }
 

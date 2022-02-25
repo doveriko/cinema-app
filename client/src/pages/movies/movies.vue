@@ -105,6 +105,7 @@ export default {
 </script>
 
 <style lang="scss">
+
 .all-movies {
     display: flex;
     flex-flow: wrap;
@@ -135,7 +136,7 @@ export default {
     width: 180px;
     margin: 10px;
     padding: 10px 18px;
-    color: #3a0061;
+    color: $base-color;
     border-radius: 20px;
     background: #fff;
     border: 1px solid #ccc;

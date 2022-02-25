@@ -19,7 +19,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 #my-account .panel {
   display: flex;
 }

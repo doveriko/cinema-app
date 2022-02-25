@@ -45,7 +45,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 #navbar {
   margin: 0;
   display: flex;
@@ -61,18 +61,18 @@ a {
 }
 .username {
   margin-left: 5px;
-  color: #f16b00;
+  color: $base-secondary-color;
   font-size: 15pt;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 .fa-w-16 path {
-    fill: #3a0061;
+    fill: $base-color;
 }
 .fa-w-16 {
     font-size: 16pt
 }
 .login-text {
-    color: #f16b00;
+    color: $base-secondary-color;
     font-size: 13pt;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     margin-left: 5px;
@@ -96,7 +96,7 @@ a {
   cursor: pointer
 }
 .hidden-text {
-      color: #f16b00;
+      color: $base-secondary-color;
     font-size: 13pt;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     margin-left: 5px;

@@ -10,5 +10,8 @@ export default {
     },
     userName(state) {
       return state.name
+    },
+    email(state) {
+      return state.email
     }
   };

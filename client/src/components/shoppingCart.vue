@@ -48,7 +48,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 #shopping-cart {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   background: #ffeddf;
@@ -62,7 +62,7 @@ export default {
   justify-content: center;
 }
 #shopping-cart .ticket-icon {
-    color: #f16b00;
+    color: $base-secondary-color;
 }
 .summary-label {
     text-align: center;

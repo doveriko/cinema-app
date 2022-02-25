@@ -45,7 +45,7 @@ import filterSession from '../../components/filterSession.vue';
 import filterSeats from '../../components/filterSeats.vue';
 import shoppingCart from '../../components/shoppingCart.vue';
 import offsiteProducts from '../../components/offsiteProducts.vue';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   props: ['selectedMovieId'],
@@ -77,6 +77,7 @@ export default {
     this.findRooms();
   },
   methods: {
+    ...mapActions(['saveOrder']),
     findRooms() {
       // 1. Filter ids of all rooms attached to the selected movie sessions
       let filterRooms = this.selectedMovie.sessions.map(session => session.roomId)
@@ -124,7 +125,7 @@ export default {
           seats: this.selectedSeats,
           offsiteProducts: this.offsiteProducts
         }
-        this.$store.dispatch('saveOrder', orderInfo);
+        this.saveOrder(orderInfo);
         this.$router.push({ path: '/checkout'})
         }
     },
@@ -137,7 +138,7 @@ export default {
         seats: this.selectedSeats,
         offsiteProducts: []
       }
-      this.$store.dispatch('saveOrder', orderInfo);
+      this.saveOrder(orderInfo);
       this.$router.push({ path: '/checkout'})
     },
     deleteTicket(ticket) {
@@ -150,8 +151,8 @@ export default {
           text: "If you change the session, the current tickets will be removed",
           icon: 'warning',
           showDenyButton: true,
-          confirmButtonColor: '#3a0061',
-          denyButtonColor: '#f16b00',
+          confirmButtonColor: '$base-color',
+          denyButtonColor: '$base-secondary-color',
           confirmButtonText: 'No',
           denyButtonText: 'Yes'
         })
@@ -183,7 +184,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .movie-details {
     display: flex;
     justify-content: center
@@ -215,7 +216,7 @@ export default {
 .movie-details .room {
     border: 1px solid;
     width: fit-content;
-    background: #3a0061;
+    background: $base-color;
     border-radius: 30px;
     margin-right: 15px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -234,7 +235,7 @@ export default {
     cursor: pointer;
 }
 .room.selected {
-    background: #f16b00;
+    background: $base-secondary-color;
 }
 .filters-wrapper, .session-selectors-wrapper, .seats-selectors-wrapper {
     display: flex;
@@ -248,7 +249,7 @@ export default {
 }
 .filter-session select, .filter-seats select {
     height: 32px;
-    border: 1px solid #3a0061;
+    border: 1px solid $base-color;
     border-radius: 3px;
     margin: 10px;
     margin-left: 0;
@@ -280,8 +281,8 @@ button.atc-btn.continue-button {
   font: inherit;
   font-weight: bold;
   background-color: white;
-  border: 1px solid #3a0061;
-  color: #3a0061;
+  border: 1px solid $base-color;
+  color: $base-color;
   cursor: pointer;
   border-radius: 30px;
   display: inline-block;

@@ -65,7 +65,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .seat-number label {
   font-weight: normal;
   font-size: 14px;
