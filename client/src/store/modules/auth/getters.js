@@ -13,5 +13,8 @@ export default {
     },
     email(state) {
       return state.email;
+    },
+    authError(state) {
+      return state.err;
     }
   };

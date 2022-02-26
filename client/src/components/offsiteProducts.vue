@@ -110,7 +110,6 @@ export default {
   },
   async created() {
     await this.loadOffsiteProducts()
-    this.$emit("products-loaded")
   }
 };
 </script>

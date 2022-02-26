@@ -26,7 +26,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['userName', 'email'])
+    ...mapGetters(['userName', 'email', 'userId'])
   },
   methods: {
     ...mapActions(['deleteUser']),
@@ -34,8 +34,7 @@ export default {
       this.deletionIsActive = true;
     },
     deleteAccount() {
-      let userId = this.$store.getters.userId;
-      this.deleteUser(userId);
+      this.deleteUser(this.userId);
       this.deletionIsActive = false;
       this.$router.replace("/auth");
     }

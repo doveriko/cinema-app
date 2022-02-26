@@ -89,7 +89,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['loadOrders', 'deleteOrder']),
+    ...mapActions([
+      'loadOrders',
+      'deleteOrder'
+    ]),
     async loadFormattedOrders() {
       this.loadingMessage = "Loading orders"
       await this.loadOrders();
@@ -239,7 +242,7 @@ export default {
       margin-left: 48px;
       justify-content: flex-start;
       list-style-position: inside;
-      text-align: start;
+      text-align: start !important;
     }
   }
 

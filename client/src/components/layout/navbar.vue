@@ -7,13 +7,13 @@
           <router-link to="/my-account" exact>
           <div class="icon-wrapper">
             <font-awesome-icon icon="user-circle"/>
-            <span v-if="!isLoggedIn" class="hidden-text login">Log in</span>
-            <span v-if="isLoggedIn" class="username">{{ username }}</span>
+            <span v-if="!isAuthenticated" class="hidden-text login">Log in</span>
+            <span v-else class="username" v-html="userName"></span>
           </div>
           </router-link>
           <div class="icon-wrapper">
-            <font-awesome-icon v-if="isLoggedIn" icon="sign-out-alt" alt="Log out" @click="destroySession"/>
-            <span v-if="isLoggedIn" class="hidden-text logout" @click="destroySession">Log out</span>
+            <font-awesome-icon v-if="isAuthenticated" icon="sign-out-alt" alt="Log out" @click="destroySession"/>
+            <span v-if="isAuthenticated" class="hidden-text logout" @click="destroySession">Log out</span>
           </div>
       </div>
   </nav>
@@ -25,17 +25,16 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
   computed: {
     ...mapGetters([
-      'isMobileMode'
-    ]),
-    isLoggedIn() {
-      return this.$store.getters.isAuthenticated;
-    },
-    username() {
-      return this.$store.state.auth.name;
-    },
+      'isMobileMode',
+      'isAuthenticated',
+      'userName'
+    ])
   },
   methods: {
-    ...mapActions(['cancelOrder', 'clearSession']),
+    ...mapActions([
+      'cancelOrder',
+      'clearSession'
+    ]),
     async destroySession() {
       await this.cancelOrder()
       await this.clearSession()

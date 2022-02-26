@@ -29,8 +29,18 @@
           </div>
 
           <div class="atc-btn-wrapper" id="atc-buttons" v-if="selectedSeats.length && continueShopping">
-            <button class="atc-btn accept-button" :class="{'disabled' : !offsiteIsValid || !offsiteProducts.length}" @click.prevent="continueWithOffer()">CONTINUE WITH OFFER</button>
-            <button class="atc-btn continue-button" @click.prevent="continueWithoutOffer()">CONTINUE WITHOUT OFFER</button>
+            <button
+              class="atc-btn continue-button"
+              @click.prevent="continueWithoutOffer()">
+              CONTINUE WITHOUT OFFER
+            </button>
+
+            <button
+              class="atc-btn accept-button"
+              :class="{'disabled' : !offsiteIsValid || !offsiteProducts.length}"
+              @click.prevent="continueWithOffer()">
+              CONTINUE WITH OFFER
+            </button>
           </div>
 
         </div>
@@ -166,12 +176,10 @@ export default {
       }
     },
     continueToCheckout() {
-      this.continueShopping = true
-    },
-    loadOffsiteProducts() {
+      this.continueShopping = true;
       this.$nextTick(() => {
         var offsiteProducts = document.getElementById("offsite-products");
-        offsiteProducts.scrollIntoView({behavior : 'smooth'});
+        offsiteProducts.scrollIntoView({behavior : 'smooth', block: 'end'});
       });
     },
     saveOffsiteProducts(data) {
@@ -286,7 +294,7 @@ export default {
 
   .atc-btn {
     &.accept-button {
-      margin-left: auto;
+      margin-left: 20px;
       font-weight: bold;
 
       &.disabled {
@@ -308,6 +316,7 @@ export default {
       border-radius: 30px;
       display: inline-block;
       font-family: $base-font-family;
+      margin-left: auto;
     }
   }
 }

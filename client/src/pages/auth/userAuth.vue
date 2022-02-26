@@ -30,7 +30,7 @@
 
       <div class="auth-errors">
         <p>{{emptyFieldsError}}</p>
-        <p>{{authControllerError}}</p>
+        <p>{{authError}}</p>
         <p v-if="selectedTab === 2">{{signupError}}</p>
       </div>
 
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 
 export default {
   data() {
@@ -63,7 +63,7 @@ export default {
   mounted() {
     this.loginError == "";
     this.signupError == "";
-    this.$store.commit("clearErrorMessage", null)
+    this.clearErrorMessage(null);
   },
   updated() {
     if (this.email != '' && this.password != '') {
@@ -71,14 +71,12 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['authError', 'currentOrder']),
     loginLabel() {
       return "Log in";
     },
     signupLabel() {
       return "Sign up";
-    },
-    authControllerError() {
-      return this.$store.state.auth.err
     },
     buttonText(){
       if(this.viewMode === 'login') {
@@ -86,13 +84,11 @@ export default {
       } else {
         return this.signupLabel
       }
-    },
-    orderStatus() {
-      return this.$store.state.orders.orderStatus
-    },
+    }
   },
   methods: {
     ...mapActions(['login', 'signup']),
+    ...mapMutations(['clearErrorMessage']),
     changeViewMode(view, tab = 0) {
       this.viewMode = view;
       if (tab > 0) this.selectedTab = tab;
@@ -102,17 +98,17 @@ export default {
       this.repeatPassword = "";
       this.signupError = "";
       this.emptyFieldsError = "";
-      this.$store.commit("clearErrorMessage", null)
+      this.clearErrorMessage(null);
     },
     async submitForm() {
-      this.$store.commit("clearErrorMessage", null)
+      this.clearErrorMessage(null);
       try {
         // Login
         if (this.viewMode === 'login') {
           if (this.email === '' || this.password === '') {
             this.formIsValid = false;
             this.emptyFieldsError = "All the fields need to be filled";
-            this.$store.commit("clearErrorMessage", null)
+            this.clearErrorMessage(null);
           } else {
             await this.login({
               email: this.email,
@@ -159,8 +155,8 @@ export default {
       this.redirectAfterAuth();
     },
     async redirectAfterAuth() {
-      let orderStatus = this.$store.state.orders.orderStatus;
-      if (typeof this.authControllerError != 'string' && this.emptyFieldsError != "All the fields need to be filled") {
+      let orderStatus = this.currentOrder.orderStatus;
+      if (typeof this.authError != 'string' && this.emptyFieldsError != "All the fields need to be filled") {
         if (orderStatus != "pending") this.$router.replace('/my-account')
         else if (orderStatus == "pending" && this.$route.path == "/auth") this.$router.go(-1)
       }

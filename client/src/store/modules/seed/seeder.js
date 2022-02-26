@@ -21,37 +21,37 @@ export let seed = {
             id: 1,
             title: "Jumanji",
             description: "The story centers on a supernatural board game that releases jungle-based hazards upon its players with every turn they take. As a boy in 1969, Alan Parrish became trapped inside the game itself while playing with his friend Sarah Whittle. Twenty-six years later, siblings Judy and Peter Shepherd find the game, begin playing and then unwittingly release the now-adult Alan. After tracking down Sarah, the quartet resolves to finish the game in order to reverse all of the destruction it has caused.",
-            imageUrl: "https://upload.wikimedia.org/wikipedia/en/b/b6/Jumanji_poster.jpg"
+            imageUrl: "https://github.com/doveriko/cinema-app/blob/master/client/public/covers/jumanji.JPG"
         },
         {
             id: 2,
             title: "Inglourious Basterds",
             description: "A few Jewish soldiers are on an undercover mission to bring down the Nazi government and put an end to the war. Meanwhile, a woman wants to avenge the death of her family from a German officer.",
-            imageUrl: "https://i2.wp.com/salaocho.com/wp-content/uploads/2019/09/inglourious-basterds-poster.jpg"
+            imageUrl: "https://github.com/doveriko/cinema-app/blob/master/client/public/covers/malditos.JPG"
         },
         {
             id: 3,
             title: "Jurassic Park",
             description: "Jurassic Park is a 1993 American science fiction adventure giant monster film directed by Steven Spielberg and produced by Kathleen Kennedy and Gerald R. Molen.",
-            imageUrl: "https://images-na.ssl-images-amazon.com/images/I/616P7JHa2OL._AC_SY741_.jpg"
+            imageUrl: "https://github.com/doveriko/cinema-app/blob/master/client/public/covers/jurassic.JPG"
         },
         {
             id: 4,
             title: "The Jungle Book",
             description: "Mowgli is a boy brought up in the jungle by a pack of wolves. When Shere Khan, a tiger, threatens to kill him, a panther and a bear help him escape his clutches.",
-            imageUrl: "https://images-na.ssl-images-amazon.com/images/I/A1ueTokSaUL._RI_.jpg"
+            imageUrl: "https://github.com/doveriko/cinema-app/blob/master/client/public/covers/libro.JPG"
         },
         {
             id: 5,
             title: "Papá Piquillo",
             description: "When his young grandson suffers an accident, Papá Piquillo does everything to take him to be treated in Australia.",
-            imageUrl: "http://es.web.img3.acsta.net/medias/nmedia/18/69/34/02/20430874.jpg"
+            imageUrl: "https://github.com/doveriko/cinema-app/blob/master/client/public/covers/papa.JPG"
         },
         {
             id: 6,
             title: "Billy Elliot",
             description: "The life of 11-year-old Billy Elliot, a coal miner's son in Northern England, is forever changed one day when he stumbles upon a ballet class during his weekly boxing lesson. Before long, he finds himself in dance, demonstrating the kind of raw talent seldom seen by the class' exacting instructor, Mrs. Wilkinson. With a tart tongue and a never-ending stream of cigarettes in her hand, Mrs. Wilkinson's zest for teaching is revived when she sees Billy's potential.",
-            imageUrl: "https://www.cineworld.co.uk/xmedia-cw/repo/feats/posters/HO00007293-md.jpg"
+            imageUrl: "https://github.com/doveriko/cinema-app/blob/master/client/public/covers/billy.JPG"
         }
     ],
     sessions: [

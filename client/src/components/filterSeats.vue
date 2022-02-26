@@ -60,6 +60,10 @@ export default {
     },
     selectNumber() {
       this.$emit("save-seats", this.selectedSeats);
+      this.$nextTick(() => {
+        var shoppingcart = document.getElementById("shopping-cart");
+        shoppingcart.scrollIntoView({behavior : 'smooth'});
+      });
     },
   },
 };
@@ -92,5 +96,17 @@ export default {
     .seats-selectors-wrapper {
         flex-direction: column;
     }
+}
+
+.seat-number {
+  display: flex;
+  
+  label {
+    margin-top: 0;
+    margin-left: 5px;
+    font-family: $base-font-family;
+    font-weight: 400;
+    font-size: 14px;
+  }
 }
 </style>
