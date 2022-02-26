@@ -165,31 +165,33 @@ export default {
   margin: 5px 0;
 }
 
-.qty-selector input {
-  height: 30px;
-  width: 30px;
-  margin-right: 10px;
-}
+.qty-selector {
+    input {
+    height: 30px;
+    width: 30px;
+    margin-right: 10px;
+  }
 
-.qty-selector button {
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  padding: 5px 8px;
-  font-weight: bold;
-  cursor: pointer;
-  display: inline-block;
-  font-family: $base-font-family;
-}
+  button {
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 5px 8px;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-block;
+    font-family: $base-font-family;
+  }
 
-.qty-selector .add-btn {
-  background: $base-color;
-  border: 1px solid $base-color;
-}
+  .add-btn {
+    background: $base-color;
+    border: 1px solid $base-color;
+  }
 
-.qty-selector .remove-btn {
-  background: $base-secondary-color;
-  border: 1px solid $base-secondary-color;
+  .remove-btn {
+    background: $base-secondary-color;
+    border: 1px solid $base-secondary-color;
+  }
 }
 
 .offsite-summary-wrapper {
@@ -210,10 +212,10 @@ export default {
 .product-summary-total {
     text-align: center;
     margin-top: 5px;
-}
 
-.product-summary-total .total-label {
-  font-weight: bold
+    .total-label {
+      font-weight: bold
+    }
 }
 
 .offsite-header {
@@ -231,14 +233,14 @@ export default {
 }
 
 .qty-selector label {
-    font-size: 11px;
+  font-size: 11px;
 }
 
 .errorMsg {
-    font-size: 14px;
-    margin: 0;
-    margin-top: 10px;
-    color: red;
-    text-align: center;
+  font-size: 14px;
+  margin: 0;
+  margin-top: 10px;
+  color: red;
+  text-align: center;
 }
 </style>

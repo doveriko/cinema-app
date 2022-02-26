@@ -66,21 +66,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.seat-number label {
-  font-weight: normal;
-  font-size: 14px;
-  margin-bottom: 0;
-  margin-top: 10px;
-  margin-left: 5px;
-  display: inline-block;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
-}
-
-.seat-number-selector span {
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
-}
 .select-number {
   margin-top: 10px;
   margin-bottom: 0;
@@ -88,6 +73,20 @@ export default {
   padding: 8px;
   display: block;
   font-size: 13px;
+
+    label {
+    font-weight: normal;
+    font-size: 14px;
+    margin-bottom: 0;
+    margin-top: 10px;
+    margin-left: 5px;
+    display: inline-block;
+    font-family: $base-font-family;
+  }
+}
+
+.seat-number-selector span {
+  font-family: $base-font-family;
 }
 @media (min-width: 769px) and (max-width: 1300px) {
     .seats-selectors-wrapper {

@@ -5,10 +5,10 @@
     <form @submit.prevent="submitForm">
       <div class="auth-panel" ref="auth">
         <div class="login-tab" :class="{active: selectedTab === 1}" @click="changeViewMode('login', 1)">
-          {{ login }}
+          <span v-html="loginLabel"></span>
         </div>
         <div class="signup-tab" :class="{active: selectedTab === 2}" @click="changeViewMode('signup', 2)">
-          {{ signup }}
+          <span v-html="signupLabel"></span>
         </div>
       </div>
       <div v-if="selectedTab === 2" class="form-control">
@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 
 export default {
   data() {
@@ -70,10 +71,10 @@ export default {
     }
   },
   computed: {
-    login() {
+    loginLabel() {
       return "Log in";
     },
-    signup() {
+    signupLabel() {
       return "Sign up";
     },
     authControllerError() {
@@ -81,9 +82,9 @@ export default {
     },
     buttonText(){
       if(this.viewMode === 'login') {
-        return this.login
+        return this.loginLabel
       } else {
-        return this.signup
+        return this.signupLabel
       }
     },
     orderStatus() {
@@ -91,6 +92,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['login', 'signup']),
     changeViewMode(view, tab = 0) {
       this.viewMode = view;
       if (tab > 0) this.selectedTab = tab;
@@ -112,7 +114,7 @@ export default {
             this.emptyFieldsError = "All the fields need to be filled";
             this.$store.commit("clearErrorMessage", null)
           } else {
-            await this.$store.dispatch("login", {
+            await this.login({
               email: this.email,
               password: this.password
             });
@@ -145,7 +147,7 @@ export default {
                 this.signupError = "The passwords entered don't match. Please, try again";
               return;
             } 
-            await this.$store.dispatch("signup", {
+            await this.signup({
               name: this.name,
               email: this.email,
               password: this.password
@@ -261,10 +263,10 @@ textarea:focus {
   margin-right: 0.5rem;
   display: inline-block;
   font-family: $base-font-family;
-}
 
-.auth-button:hover, .accept-button:hover {
-  background-color: $base-secondary-color
+  &:hover {
+    background-color: $base-secondary-color;
+  }
 }
 
 #auth .button-wrapper {
@@ -287,16 +289,14 @@ textarea:focus {
   width: 100%;
   padding: 0;
   box-shadow: none;
-}
 
-@media (min-width: 450px) and (max-width: 768px) {
-  .mobile #auth .card {
-    width: 60%
+  @media (min-width: 450px) and (max-width: 768px) {
+    width: 60%;
   }
-}
 
-.mobile #auth .card form {
-  padding: 10px 0;
+  form {
+    padding: 10px 0;
+  }
 }
 
 #checkout #auth {

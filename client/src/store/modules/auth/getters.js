@@ -9,9 +9,9 @@ export default {
       return !!state.token;
     },
     userName(state) {
-      return state.name
+      return state.name;
     },
     email(state) {
-      return state.email
+      return state.email;
     }
   };

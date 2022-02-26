@@ -55,33 +55,40 @@ export default {
   padding: 1rem 2rem;
   margin: 1rem 0;
   border-radius: 20px;
+
+  .ticket-icon {
+    color: $base-secondary-color;
+  }
 }
+
 .ticket-list {
   margin: 10px 0;
   display: flex;
   justify-content: center;
 }
-#shopping-cart .ticket-icon {
-    color: $base-secondary-color;
-}
+
 .summary-label {
-    text-align: center;
-    display: block;
-    font-weight: bold;
-    font-size: 16px;
+  text-align: center;
+  display: block;
+  font-weight: bold;
+  font-size: 16px;
 }
+
 .total-price-container {
-    padding: 1rem;
-    border: 1px solid orange;
-    margin-top: 1rem;
-    text-align: center;
+  padding: 1rem;
+  border: 1px solid orange;
+  margin-top: 1rem;
+  text-align: center;
 }
+
 .total-price-label {
-    font-weight: bold;
+  font-weight: bold;
 }
+
 .summary-table {
-    margin: 1.5rem 0;
+  margin: 1.5rem 0;
 }
+
 .delete-ticket {
   margin-left: 1rem
 }

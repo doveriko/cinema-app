@@ -185,69 +185,87 @@ export default {
 </script>
 
 <style lang="scss">
+.mobile {
+
+  .movie-cover {
+      padding-right: 0;
+  }
+
+  .movie-details {
+      flex-direction: column;
+      padding: 0 1em;
+  }
+  
+  #filters {
+    select {
+      width: 100%;
+    }
+    form {
+      padding: 10px 0;
+    }
+  }
+}
+
 .movie-details {
-    display: flex;
-    justify-content: center
-}
-.movie-cover {
-    flex-basis: 20%;
-    padding-right: 2em;
-}
-.mobile .movie-cover {
-    padding-right: 0;
-}
-.movie-sessions {
-    flex-basis: 50%;
-}
-.movie-description, .available-label {
-    font-family: $base-font-family;
-    text-align: justify;
-}
-.mobile .movie-details {
-    flex-direction: column;
-    padding: 0 1em;
-}
-.mobile #filters select {
-    width: 100%;
-}
-.mobile #filters form {
-    padding: 10px 0;
-}
-.movie-details .room {
+  display: flex;
+  justify-content: center;
+
+  .room {
     border: 1px solid;
     width: fit-content;
     background: $base-color;
     border-radius: 30px;
     margin-right: 15px;
     font-family: $base-font-family;
+  }
+
+  .room-label {
+      text-align: center;
+      padding: 0px 5px;
+      color: white;
+      margin: 10px;
+  }
+
+  .available-rooms {
+      display: flex;
+      margin-top: 15px;
+  }
+
+  .room, .room-label {
+      cursor: pointer;
+  }
 }
-.movie-details .room-label {
-    text-align: center;
-    padding: 0px 5px;
-    color: white;
-    margin: 10px;
+
+.movie-cover {
+    flex-basis: 20%;
+    padding-right: 2em;
 }
-.movie-details .available-rooms {
-    display: flex;
-    margin-top: 15px;
+
+.movie-sessions {
+    flex-basis: 50%;
 }
-.movie-details .room, .room-label {
-    cursor: pointer;
+
+.movie-description, .available-label {
+    font-family: $base-font-family;
+    text-align: justify;
 }
+
 .room.selected {
     background: $base-secondary-color;
 }
+
 .filters-wrapper, .session-selectors-wrapper, .seats-selectors-wrapper {
     display: flex;
 }
-.filter-seats, .filter-session {
-    margin-top: 1.5rem;
-}
+
 .seat-number-selector, .seat-area-selector {
     flex-basis: 50%;
     margin-top: 5px;
 }
-.filter-session select, .filter-seats select {
+.filter-session, .filter-seats {
+  margin-top: 1.5rem;
+
+  select {
     height: 32px;
     border: 1px solid $base-color;
     border-radius: 3px;
@@ -256,49 +274,56 @@ export default {
     padding: 5px;
     min-width: 150px;
     font-family: $base-font-family;
+  }
 }
+
 .filter-session {
     margin-right: 1em;
 }
+
 .atc-btn-wrapper {
-    display: flex
-}
+  display: flex;
 
-.atc-btn.accept-button {
-    margin-left: auto;
-    font-weight: bold;
-}
+  .atc-btn {
+    &.accept-button {
+      margin-left: auto;
+      font-weight: bold;
 
-.atc-btn.accept-button.disabled {
-  background: lightgrey;
-  cursor: not-allowed;
-  border: grey
-}
+      &.disabled {
+        background: lightgrey;
+        cursor: not-allowed;
+        border: grey
+      }
+    }
 
-button.atc-btn.continue-button {
-  text-decoration: none;
-  padding: 0.75rem 1.5rem;
-  font: inherit;
-  font-weight: bold;
-  background-color: white;
-  border: 1px solid $base-color;
-  color: $base-color;
-  cursor: pointer;
-  border-radius: 30px;
-  display: inline-block;
-  font-family: $base-font-family;
-}
-@media (max-width: 768px) {
-    .filters-wrapper, .session-selectors-wrapper, .seats-selectors-wrapper {
-      justify-content: center;
+    &.continue-button {
+      text-decoration: none;
+      padding: 0.75rem 1.5rem;
+      font: inherit;
+      font-weight: bold;
+      background-color: white;
+      border: 1px solid $base-color;
+      color: $base-color;
+      cursor: pointer;
+      border-radius: 30px;
+      display: inline-block;
+      font-family: $base-font-family;
+    }
   }
 }
+
+@media (max-width: 768px) {
+  .filters-wrapper, .session-selectors-wrapper, .seats-selectors-wrapper {
+    justify-content: center;
+  }
+}
+
 @media (max-width: 650px) {
-    .filters-wrapper, .session-selectors-wrapper, .seats-selectors-wrapper {
-        flex-direction: column;
-    }
-    .filter-session, .filter-session select, .filter-seats select {
-      margin-right: 0
-    }
+  .filters-wrapper, .session-selectors-wrapper, .seats-selectors-wrapper {
+      flex-direction: column;
+  }
+  .filter-session, .filter-session select, .filter-seats select {
+    margin-right: 0
+  }
 }
 </style>

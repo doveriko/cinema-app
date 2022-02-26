@@ -2,8 +2,8 @@
   <div id="profile">
     <div class="user-info">
       <h1 class="section-header">PROFILE</h1>
-      <p class="user-name">{{ userName }}</p>
-      <p class="user-email">{{ email }}</p>
+      <p class="user-name" v-html="userName"></p>
+      <p class="user-email" v-html="email"></p>
     </div>
     <div v-if="this.deletionIsActive" class="delete-order">
       <p>Are you sure you want to delete your account?</p>
@@ -11,13 +11,13 @@
       <span @click.prevent="deleteAccount"><font-awesome-icon icon="check"/></span>
     </div>
     <div class="user-actions">
-      <a href="" @click.prevent="activateDeletion" v-if="!this.deletionIsActive">Delete account</a>
+      <span class="delete-account" @click.prevent="activateDeletion" v-if="!this.deletionIsActive">Delete account</span>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   data() {
@@ -26,19 +26,20 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['userName, email'])
+    ...mapGetters(['userName', 'email'])
   },
   methods: {
+    ...mapActions(['deleteUser']),
     activateDeletion() {
       this.deletionIsActive = true;
     },
     deleteAccount() {
       let userId = this.$store.getters.userId;
-      this.$store.dispatch("deleteUser", userId);
+      this.deleteUser(userId);
       this.deletionIsActive = false;
       this.$router.replace("/auth");
     }
-  },
+  }
 };
 </script>
 
@@ -50,7 +51,11 @@ export default {
   padding: 1em 0;
 }
 .user-actions {
-    padding-bottom: 10px;
+  padding-bottom: 10px;
+  .delete-account {
+    text-decoration: underline;
+    cursor: pointer;
+  }
 }
 .user-name {
   font-weight: bold;

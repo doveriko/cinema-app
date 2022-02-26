@@ -119,7 +119,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['cancelOrder']),
+    ...mapActions(['cancelOrder', 'registerOrder', 'loadOrders']),
     sessionTime() {
       let day = this.currentOrder.sessionTime.slice(8, 10);
       let month = this.currentOrder.sessionTime.slice(5, 7);
@@ -245,18 +245,63 @@ export default {
 </script>
 
 <style lang="scss">
-#checkout {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
+.mobile {
+ .checkout-panel {
+    width: 100%;
+  }
+  .booking-image {
+    display: none;
+  }
+  #checkout .booking-details {
+    margin: 0;
+    flex-basis: 100%;
+    padding-bottom: 2em;
+    margin-top: 1em;
+  }
 }
+
+#checkout {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+
+  .booking-image {
+    flex-basis: 30%;
+  }
+
+  .booking-details {
+    flex-basis: 70%;
+    margin-left: 2em;
+    text-align: center;
+    font-family: $base-font-family;
+
+    .subtotal {
+      text-align: center;
+      font-weight: 600;
+      margin: 3px;
+    }
+
+    .total-price {
+      text-align: center;
+      border: 1px solid $base-secondary-color;
+      margin-top: 15px;
+      border-radius: 5px;
+
+      h3 {
+        margin: 10px;
+      }
+    }
+  }
+
+  #auth .card {
+    width: auto;
+    margin: 0;
+  }
+}
+
 .checkout-panel {
     display: flex;
     width: 80%;
-}
-
-#checkout .booking-image {
-    flex-basis: 30%;
 }
 
 .auth-modal {
@@ -274,6 +319,7 @@ export default {
     height: 100%;
     background-color: rgba(0,0,0,.5);
   }
+
   .modal-container {
     z-index: 9999;
     position: fixed;
@@ -290,130 +336,99 @@ export default {
 
       &:hover {
         color: $base-secondary-color;
-    }
+      }
 
-    .card {
-      margin: 0;
+      .card {
+        margin: 0;
+      }
     }
   }
-
-}
 }
 
-#checkout .booking-details {
-    flex-basis: 70%;
-    margin-left: 2em;
-    text-align: center;
-    font-family: $base-font-family;
-}
 .booking-data {
     text-align: initial;
     width: 80%;
     margin: 0 auto;
-}
-.booking-data svg {
+
+  svg {
     margin-right: 5px;
+      path {
+      fill: #dc6200
+    }
+  }
 }
-.booking-data svg path {
-    fill: #dc6200
-}
+
 .booking-completed {
   color: #dc6200;
+  + p {
+    max-width: 70%;
+    margin: 0 auto;
+    font-size: 14px;
+  }
+}
 
-}
-.booking-completed + p {
-  max-width: 70%;
-  margin: 0 auto;
-  font-size: 14px;
-}
 .complete-order {
-    color: #dc6200;
-}
-.complete-order svg {
+  color: #dc6200;
+
+  svg {
     margin: 0 1em;
     font-size: 24px;
     cursor: pointer;
-}
-.complete-order .fa-times path {
+  }
+
+  .fa-times path {
     fill: #ff3b3bbf;
+  }
+
+  .fa-check path {
+      fill: #30b730;
+  }
 }
-.complete-order .fa-check path {
-    fill: #30b730;
-}
+
 .booking-cancelled p {
   display: block;
   margin: 0 auto;
-}
-.mobile .checkout-panel {
-    width: 100%;
-}
-.mobile .booking-image {
-    display: none;
-}
-.mobile #checkout .booking-details {
-    margin: 0;
-    flex-basis: 100%;
-    padding-bottom: 2em;
-    margin-top: 1em;
 }
 
 table {
   width: 100%;
   text-align: center;
-}
 
-table th {
+  th {
   background-color: $base-secondary-color;
   font-weight: normal;
   width: 33%
+  }
+
+  tr {
+    background: #ffcfa9;
+    height: 28px;
+
+    &:nth-of-type(odd) {
+      background: #ffb478;
+    }
+  }
+
+  td {
+    font-size: smaller;
+  }
 }
 
-table tr {
-  background: #ffcfa9;
-  height: 28px;
+.booking-data {
+  .tickets, .offsite-products {
+      margin: 12px 0 5px;
+  }
 }
 
-table tr:nth-of-type(odd) {
-    background: #ffb478;
-}
+.booking-details {
+  .auth-link {  
+    text-decoration: underline;
+    cursor: pointer;
 
-table tr td {
-  font-size: smaller
-}
-
-.booking-data .tickets, .booking-data .offsite-products {
-    margin: 12px 0 5px;
-}
-
-#checkout .booking-details .subtotal {
-    text-align: center;
-    font-weight: 600;
-    margin: 3px;
-}
-
-#checkout .booking-details .total-price {
-    text-align: center;
-    border: 1px solid $base-secondary-color;
-    margin-top: 15px;
-    border-radius: 5px;
-}
-
-#checkout .booking-details .total-price h3 {
-    margin: 10px;
-}
-
-#checkout #auth .card {
-    width: auto;
-    margin: 0;
-}
-
-.booking-details .auth-link {  
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.booking-details .auth-link:hover {
-    color: $base-secondary-color
+    :hover {
+      color: $base-secondary-color
+    }
+  }
 }
 
 .auth-message {

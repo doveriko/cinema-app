@@ -89,7 +89,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['loadOrders']),
+    ...mapActions(['loadOrders', 'deleteOrder']),
     async loadFormattedOrders() {
       this.loadingMessage = "Loading orders"
       await this.loadOrders();
@@ -129,7 +129,7 @@ export default {
     },
     async deleteOrder(order) {
       //Remove order from database and store
-      this.$store.dispatch("deleteOrder", order.id);
+      this.deleteOrder(order.id);
       
       //Remove order from DOM
       let idx = this.orderDataObj.indexOf(order);

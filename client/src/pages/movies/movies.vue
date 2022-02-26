@@ -105,34 +105,38 @@ export default {
 </script>
 
 <style lang="scss">
+.mobile {
+  .movie-img {
+      width: 280px;
+      height: auto
+  }
+  .all-movies .card {
+      margin: 20px;
+  }
+}
 
 .all-movies {
-    display: flex;
-    flex-flow: wrap;
-    justify-content: center;
-}
-.card {
-    flex-basis: 30%;
-}
-.mobile .movie-img {
-    width: 280px;
-    height: auto
-}
-.mobile .all-movies .card {
-    margin: 20px;
-}
-@media(min-width: 1200px) {
-  .all-movies {
+  display: flex;
+  flex-flow: wrap;
+  justify-content: center;
+
+  @media(min-width: 1200px) {
     width: 80%;
     margin: 0 auto;
   }
 }
+
+.card {
+    flex-basis: 30%;
+}
+
 .filters, .remove-filters {
     display: flex;
     justify-content: center;
 }
 
-.filter-title select, .filter-room select {
+.filter-title, .filter-room {
+  select {
     width: 180px;
     margin: 10px;
     padding: 10px 18px;
@@ -142,26 +146,27 @@ export default {
     border: 1px solid #ccc;
     font-size: 16px;
     font-family: $base-font-family;
-    cursor: pointer
+    cursor: pointer;
+  }
 }
 
 .remove-button {
-    margin: 10px;
-    padding: 10px 18px;
-    color: #b90012;
-    border-radius: 20px;
-    background: #fff;
-    border: 1px solid #b90012;
-    font-size: 16px;
-    font-family: $base-font-family;
-    cursor: pointer;
-}
+  margin: 10px;
+  padding: 10px 18px;
+  color: #b90012;
+  border-radius: 20px;
+  background: #fff;
+  border: 1px solid #b90012;
+  font-size: 16px;
+  font-family: $base-font-family;
+  cursor: pointer;
 
-.remove-button:hover {
+  &:hover {
     background: #ffd1d5;
+  }
 }
 
 .section-header.filter-applied {
-    display: none;
+  display: none;
 }
 </style>

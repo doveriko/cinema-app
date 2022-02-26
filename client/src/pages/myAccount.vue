@@ -20,33 +20,37 @@ export default {
 </script>
 
 <style lang="scss">
-#my-account .panel {
-  display: flex;
+.mobile {
+  #my-account {
+    .panel  {
+      flex-direction: column-reverse;
+      .user-actions {
+        padding-top: 2rem;
+      }
+      #bookings {
+          padding: 0
+      }
+    }
+  } 
 }
 
-.panel div {
-  text-align: center;
-  width: 100%;
-}
-#my-account * {
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
-}
-#my-account .section-header {
-  margin-bottom: 25px;
-}
-#my-account .panel {
-  min-height: 300px;
-  width: 90%;
-  margin: 0 auto;
-}
-.mobile #my-account .panel  {
-    flex-direction: column-reverse;
-}
-.mobile #my-account .panel .user-actions {
-    padding-top: 2rem;
-}
-.mobile #my-account .panel #bookings {
-    padding: 0
-}
+#my-account {
+  * {
+    font-family: $base-font-family;
+  }
+  .panel {
+    display: flex;
+    min-height: 300px;
+    width: 90%;
+    margin: 0 auto;
+
+    div {
+      text-align: center;
+      width: 100%;
+    }
+  }
+  .section-header {
+    margin-bottom: 25px;
+  }
+} 
 </style>
