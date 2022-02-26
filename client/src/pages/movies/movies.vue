@@ -141,7 +141,7 @@ export default {
     background: #fff;
     border: 1px solid #ccc;
     font-size: 16px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: $base-font-family;
     cursor: pointer
 }
 
@@ -153,7 +153,7 @@ export default {
     background: #fff;
     border: 1px solid #b90012;
     font-size: 16px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: $base-font-family;
     cursor: pointer;
 }
 

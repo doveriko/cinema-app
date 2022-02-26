@@ -12,6 +12,6 @@ export default {
 .not-found {
     text-align: center;
     padding-top: 1em;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: $base-font-family;
 }
 </style>

@@ -124,7 +124,7 @@ export default {
   }
 .select-tickets, .select-seats {
     color: $base-color;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: $base-font-family;
     font-weight: bold;
     font-size: 13pt;
 }

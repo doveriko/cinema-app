@@ -26,7 +26,7 @@ img.movie-img {
 }
 h3.movie-title {
     text-align: center;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: $base-font-family;
     font-size: 16pt;
     color: $base-color;
 }

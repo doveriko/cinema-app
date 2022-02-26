@@ -117,7 +117,7 @@ export default {
 
 <style lang="scss">
 #offsite-products {
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: $base-font-family;
   background: #d7b9ff;
   padding: 10px;
   margin: 1rem 0;
@@ -179,7 +179,7 @@ export default {
   font-weight: bold;
   cursor: pointer;
   display: inline-block;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: $base-font-family;
 }
 
 .qty-selector .add-btn {

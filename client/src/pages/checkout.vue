@@ -304,7 +304,7 @@ export default {
     flex-basis: 70%;
     margin-left: 2em;
     text-align: center;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: $base-font-family;
 }
 .booking-data {
     text-align: initial;

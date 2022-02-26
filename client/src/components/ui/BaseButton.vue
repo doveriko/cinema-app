@@ -39,7 +39,7 @@ a {
   border-radius: 30px;
   margin-right: 0.5rem;
   display: inline-block;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: $base-font-family;
 }
 
 a:hover,

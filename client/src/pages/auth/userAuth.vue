@@ -174,7 +174,7 @@ form {
 }
 
 form label {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: $base-font-family;
 }
 
 .form-control {
@@ -196,7 +196,7 @@ label {
   padding: 0.15rem;
   height: 32px;
   border-bottom: 1px solid #ccc;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: $base-font-family;
   color:$base-secondary-color;
   font-size: 11pt;
 }
@@ -219,7 +219,7 @@ textarea:focus {
   text-align: center;
   padding: 1rem 0;
   margin-bottom: 0.5rem;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: $base-font-family;
   font-size: 11pt;
 }
 
@@ -244,7 +244,7 @@ textarea:focus {
     background: lightgreen;
     color: darkgreen;
     font-size: 10pt;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: $base-font-family;
     text-align: center;
     margin: 0 2em;
 }
@@ -260,7 +260,7 @@ textarea:focus {
   border-radius: 30px;
   margin-right: 0.5rem;
   display: inline-block;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: $base-font-family;
 }
 
 .auth-button:hover, .accept-button:hover {
@@ -275,7 +275,7 @@ textarea:focus {
 
 .auth-errors {
   color: red;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: $base-font-family;
   font-size: 10pt;
 }
 

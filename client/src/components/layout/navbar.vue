@@ -63,18 +63,18 @@ a {
   margin-left: 5px;
   color: $base-secondary-color;
   font-size: 15pt;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-}
-.fa-w-16 path {
-    fill: $base-color;
+  font-family: $base-font-family;
 }
 .fa-w-16 {
-    font-size: 16pt
+  font-size: 16pt;
+  path {
+    fill: $base-color;
+  }
 }
 .login-text {
     color: $base-secondary-color;
     font-size: 13pt;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: $base-font-family;
     margin-left: 5px;
     font-weight: bold;
 }
@@ -84,21 +84,21 @@ a {
 }
 .icon-wrapper {
   height: min-content;
-}
-.icon-wrapper .hidden-text {
-  display: none;
-}
-.icon-wrapper:hover .hidden-text {
-  display: initial;
-  visibility: visible;
-}
-.hidden-text.logout {
-  cursor: pointer
-}
-.hidden-text {
-      color: $base-secondary-color;
+
+  .hidden-text {
+    display: none;
+    color: $base-secondary-color;
     font-size: 13pt;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: $base-font-family;
     margin-left: 5px;
+    &.logout {
+      cursor: pointer
+    }
+  }
+
+  &:hover .hidden-text {
+    display: initial;
+    visibility: visible;
+  }
 }
 </style>

@@ -200,7 +200,7 @@ export default {
     flex-basis: 50%;
 }
 .movie-description, .available-label {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: $base-font-family;
     text-align: justify;
 }
 .mobile .movie-details {
@@ -219,7 +219,7 @@ export default {
     background: $base-color;
     border-radius: 30px;
     margin-right: 15px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: $base-font-family;
 }
 .movie-details .room-label {
     text-align: center;
@@ -255,7 +255,7 @@ export default {
     margin-left: 0;
     padding: 5px;
     min-width: 150px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: $base-font-family;
 }
 .filter-session {
     margin-right: 1em;
@@ -286,7 +286,7 @@ button.atc-btn.continue-button {
   cursor: pointer;
   border-radius: 30px;
   display: inline-block;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: $base-font-family;
 }
 @media (max-width: 768px) {
     .filters-wrapper, .session-selectors-wrapper, .seats-selectors-wrapper {

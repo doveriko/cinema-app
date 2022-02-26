@@ -50,7 +50,7 @@ export default {
 
 <style lang="scss">
 #shopping-cart {
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: $base-font-family;
   background: #ffeddf;
   padding: 1rem 2rem;
   margin: 1rem 0;
