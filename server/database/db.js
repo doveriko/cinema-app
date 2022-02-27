@@ -6,7 +6,6 @@ const sequelize = new Sequelize(
     dbconfig.username,
     dbconfig.password, {
         host: dbconfig.host,
-        server: dbconfig.server,
         dialect: 'mssql',
         dialectOptions: {
         options: {

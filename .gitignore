@@ -5,4 +5,5 @@
 .env.production.local
 node_modules
 .vscode
-
+static.json
+vercel.json
